@@ -13,4 +13,15 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require bootstrap-sprockets
+//= require jquery-ui
+//= require jquery.turbolinks
+//= require jquery.readyselector
+//= require jquery.simplePagination
+//= require handlebars
+//= require bootbox
+//= require numeral.min
+//= require picker
+//= require picker.date
+//= require legacy
 //= require_tree .
