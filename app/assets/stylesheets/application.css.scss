@@ -16,8 +16,10 @@
  *= require_self
  */
 
+@import '../../../vendor/assets/stylesheets/_variables.scss';
 @import 'bootstrap';
 @import 'bootstrap-sprockets';
+@import '../../../vendor/assets/stylesheets/_bootswatch.scss';
 @import 'font-awesome';
 @import 'default';
 @import 'default.date';
