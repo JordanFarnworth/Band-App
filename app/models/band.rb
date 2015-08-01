@@ -9,8 +9,8 @@ class Band < ActiveRecord::Base
   validates :name, presence: true
   validates :owner, presence: true
   validates :email, uniqueness: true
-                    presence: true
-  vaidates :phone_number, presence: true
+  validates :email,  presence: true
+  validates :phone_number, presence: true
   validates :mailing_address, presence: true
 
   serialize :social_media, Hash
