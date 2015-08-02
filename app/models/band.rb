@@ -1,4 +1,5 @@
 class Band < Entity
+  scope :genre, -> (genre) { where("data -> 'genre' = ?", genre.to_s) }
   REQUIRED_DATA_ATTRIBUTES = %w(genre)
 
   def validate_data

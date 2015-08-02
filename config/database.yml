@@ -6,7 +6,7 @@
 #
 default: &default
   adapter: postgresql
-  host: localhost
+  encoding: unicode
   pool: 5
   timeout: 5000
 
@@ -20,6 +20,8 @@ development:
 test:
   <<: *default
   database: band_app_test
+  username: postgres
+  password:
 
 production:
   <<: *default
