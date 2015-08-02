@@ -28,7 +28,6 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
   gem 'factory_girl_rails'
   gem 'timecop'
-  gem 'sqlite3'
   gem 'simplecov'
   gem 'pry-rails'
   gem 'spring'
@@ -39,6 +38,4 @@ group :production do
   gem 'rails_12factor'
 end
 
-group :postgres do
-  gem 'pg'
-end
+gem 'pg'

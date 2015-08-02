@@ -3,10 +3,11 @@ services:
   - postgres:9.3
 before_script:
   - apt-get update
-  - apt-get install -y nodejs
+  - apt-get install -y nodejs postgresql
+  - service postgresql start
   - gem install bundler
   - bundle install --without production
-  - rake db:setup
+  - RAILS_ENV=test rake db:setup
 rspec:
   script: rake spec
   type: test
