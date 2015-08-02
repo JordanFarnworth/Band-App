@@ -1,0 +1,7 @@
+<% if @user %>
+  window.location.pathname = '/'
+<% else %>
+  $('.login-form').html(
+    '<%= escape_javascript(render(partial: 'shared/login', locals: { show_incorrect: true })) %>'
+  );
+<% end %>

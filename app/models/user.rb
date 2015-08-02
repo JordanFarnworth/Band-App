@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   validates_presence_of :username, :display_name, :email, :state
   validates_inclusion_of :state, in: %w(pending_approval active)
 
+  scope :active, -> { where(state: :active) }
+
   before_validation do
     self.state ||= 'pending_approval'
   end

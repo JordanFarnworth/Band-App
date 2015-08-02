@@ -21,6 +21,7 @@ gem 'will_paginate-bootstrap'
 gem 'font-awesome-rails'
 gem 'paranoia'
 gem 'unicorn'
+gem 'jquery-ui-rails'
 
 group :development, :test do
   gem 'byebug'

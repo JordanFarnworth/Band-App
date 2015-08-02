@@ -19,7 +19,7 @@
 //= require jquery.readyselector
 //= require jquery.simplePagination
 //= require handlebars
-//= require bootbox
+//= require bootbox.min
 //= require numeral.min
 //= require picker
 //= require picker.date

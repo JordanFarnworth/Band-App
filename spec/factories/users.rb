@@ -10,6 +10,7 @@ FactoryGirl.define do
       "user#{n}@example.com"
     end
     password 'password'
+    state 'active'
   end
 
 end

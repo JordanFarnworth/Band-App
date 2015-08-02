@@ -1,0 +1,8 @@
+<% if show_incorrect %>
+  <div class="alert alert-danger">Incorrect username or password</div>
+<% end %>
+<%= bootstrap_form_tag url: login_path, method: :post, remote: true do |t| %>
+  <%= t.text_field :username %>
+  <%= t.password_field :password %>
+  <%= t.submit 'Submit' %>
+<% end %>
