@@ -1,18 +1,13 @@
-class Band < ActiveRecord::Base
-  acts_as_paranoid
+class Band < Entity
+  REQUIRED_DATA_ATTRIBUTES = %w(genre)
 
-  has_many :ad_applications
-  has_many :ads, through: :ad_applications
-  has_many :message_particiapnts, foreign_key: :entity_id
-  has_many :reviews
+  def validate_data
+    REQUIRED_DATA_ATTRIBUTES.each do |attr|
+      errors.add("data.#{attr}", 'is required') unless data.has_key?(attr) && data[attr]
+    end
+  end
 
-  validates :name, presence: true
-  validates :owner, presence: true
-  validates :email, uniqueness: true
-  validates :email,  presence: true
-  validates :phone_number, presence: true
-  validates :mailing_address, presence: true
-
-  serialize :social_media, Hash
-
+  def genre
+    data['genre']
+  end
 end
