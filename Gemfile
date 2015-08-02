@@ -23,6 +23,10 @@ gem 'paranoia'
 gem 'unicorn'
 gem 'jquery-ui-rails'
 
+group :development do
+  gem 'letter_opener'
+end
+
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
