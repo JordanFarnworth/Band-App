@@ -24,6 +24,11 @@ class ApplicationController < ActionController::Base
     @current_user
   end
 
+  def current_entity
+    return nil unless current_user
+    @current_entity ||= current_user.entities.find_by(id: session[:current_entity_id])
+  end
+
   def logged_in?
     !!current_user
   end
@@ -31,4 +36,5 @@ class ApplicationController < ActionController::Base
   private :set_current_user
   helper_method :current_user
   helper_method :logged_in?
+  helper_method :current_entity
 end

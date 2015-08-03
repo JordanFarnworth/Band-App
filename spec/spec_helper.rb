@@ -95,3 +95,11 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
+
+def logged_in_user(user = nil)
+  session[:current_user_id] = user ? user.id : create(:user).id
+end
+
+def log_out
+  session.delete :current_user_id
+end
