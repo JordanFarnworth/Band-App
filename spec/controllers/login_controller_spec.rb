@@ -59,4 +59,29 @@ RSpec.describe LoginController, :type => :controller do
       expect(response).to redirect_to(:root)
     end
   end
+
+  context 'registration' do
+    it 'renders a registration page' do
+      get :register
+      expect(response).to render_template 'register'
+    end
+
+    it 'redirects to a landing page after successful initiation' do
+      post :verify_register, user: attributes_for(:user)
+      expect(response).to redirect_to register_finish_path
+    end
+
+    it 'renders the register template upon failure' do
+      user = create :user
+      post :register, user: attributes_for(:user).merge(username: user.username)
+      expect(response).to render_template 'register'
+    end
+
+    it 'confirms a user\'s registration' do
+      user = create :user, state: :pending_approval
+      get :confirm_registration, token: user.registration_token
+      expect(response).to redirect_to :root
+      expect(user.reload.state).to eql 'active'
+    end
+  end
 end

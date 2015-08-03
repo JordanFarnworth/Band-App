@@ -4,5 +4,6 @@
 <%= bootstrap_form_tag url: login_path, method: :post, remote: true do |t| %>
   <%= t.text_field :username %>
   <%= t.password_field :password %>
-  <%= t.submit 'Submit' %>
+  <%= t.primary 'Log in' %>
+  <%= link_to 'Sign up', register_path, class: 'btn btn-default pull-right' %> 
 <% end %>

@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   get 'login' => 'login#index'
   post 'login' => 'login#verify'
   delete 'login' => 'login#logout'
+  get 'register' => 'login#register'
+  post 'register' => 'login#verify_register'
+  get 'register/finish' => 'login#finish_registration'
+  get 'register/confirm' => 'login#confirm_registration'
 
   scope :api, defaults: { format: :json }, constraints: { format: :json } do
     scope :v1 do

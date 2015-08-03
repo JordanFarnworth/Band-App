@@ -13,5 +13,11 @@ module ApplicationHelper
     end
     nil
   end
+
+  def host_url
+    url = "#{request.scheme}://#{request.host}"
+    url += ":#{request.port}" if (request.scheme == 'http' && request.port != 80) || (request.scheme == 'https' && request.port != 443)
+    url
+  end
   # :nocov:
 end

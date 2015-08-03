@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150802181940) do
+ActiveRecord::Schema.define(version: 20150802230736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,8 +64,9 @@ ActiveRecord::Schema.define(version: 20150802181940) do
     t.string   "password_digest"
     t.string   "state"
     t.datetime "deleted_at"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "registration_token"
   end
 
   add_index "users", ["deleted_at"], name: "index_users_on_deleted_at", using: :btree

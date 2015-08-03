@@ -36,6 +36,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'spring'
   gem 'rspec-rails', '~> 3.0'
+  gem 'database_cleaner'
 end
 
 group :production do
