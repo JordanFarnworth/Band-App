@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :entities, through: :entity_users
   has_many :bands, through: :entity_users, source: :entity, class_name: 'Band'
   has_many :parties, through: :entity_users, source: :entity, class_name: 'Party'
+  has_many :api_keys
 
   acts_as_paranoid
   has_secure_password

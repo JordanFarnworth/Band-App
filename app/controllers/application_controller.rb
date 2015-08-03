@@ -5,7 +5,18 @@ class ApplicationController < ActionController::Base
 
   before_action :set_current_user
 
+  def api_request?
+    request.format.symbol == :json
+  end
+
   def set_current_user
+    if api_request?
+      if request.headers['Authorization'] && request.headers['Authorization'].match(/Bearer (.+)/)
+        token = request.headers['Authorization'].match(/Bearer (.+)/)[1]
+      end
+      token ||= params[:access_token]
+      @current_user ||= User.active.joins("LEFT JOIN api_keys AS a on a.user_id = users.id").where("a.key = ? AND a.expires_at > ?", SecurityHelper.sha_hash(token), Time.now).first if token
+    end
     @current_user ||= User.active.find_by(id: session[:current_user_id])
   end
 

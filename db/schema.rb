@@ -11,11 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150802230736) do
+ActiveRecord::Schema.define(version: 20150803030235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+
+  create_table "api_keys", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "key"
+    t.string   "key_hint"
+    t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "api_keys", ["user_id"], name: "index_api_keys_on_user_id", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -73,6 +84,7 @@ ActiveRecord::Schema.define(version: 20150802230736) do
   add_index "users", ["email"], name: "index_users_on_email", using: :btree
   add_index "users", ["username"], name: "index_users_on_username", using: :btree
 
+  add_foreign_key "api_keys", "users"
   add_foreign_key "entity_users", "entities"
   add_foreign_key "entity_users", "users"
 end
