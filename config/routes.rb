@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  resources :bands
+
   root to: 'dashboard#index'
   get 'login' => 'login#index'
   post 'login' => 'login#verify'
