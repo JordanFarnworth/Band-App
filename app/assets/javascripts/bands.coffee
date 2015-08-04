@@ -48,15 +48,6 @@ getBandData = ->
       console.log data
       populatePage(data)
 
-getUserBands = ->
-  user = window.location.pathname.match(/\/users\/(\d+)/)[1]
-  $.ajax "/api/v1/users/#{user}/group_memberships?include[]=group",
-    type: "get"
-    dataType: "json"
-    success: (data) ->
-      $.each data, ->
-        addGrouptotable(this.group)
-
 createBand = ->
   $.ajax '/api/v1/bands',
     type: 'post'

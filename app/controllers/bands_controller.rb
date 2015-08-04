@@ -7,10 +7,21 @@ class BandsController < ApplicationController
 
   def find_band
     @band = Band.find params[:id]
+    unless @band.data.has_value?("youtube_converted_yes")
+      yt_convert = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
+      yt_id = @band.data["youtube_link"].match(yt_convert)[2]
+      @band.data["youtube_embed_link"] = "https://www.youtube.com/embed/#{yt_id}"
+      @band.data["youtube_converted"] = "youtube_converted_yes"
+      @band.save
+    end
   end
 
   def find_bands
     @bands = Band.all
+  end
+
+  def convert_youtube_link
+
   end
 
   def index
@@ -49,7 +60,7 @@ class BandsController < ApplicationController
       format.html do
         if @band.save
           flash[:success] = 'Group created!'
-          redirect_to @group
+          redirect_to @band
         else
           render 'new'
         end
