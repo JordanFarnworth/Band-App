@@ -24,4 +24,6 @@
 //= require picker
 //= require picker.date
 //= require legacy
+//= require parsley
+//= require parsley.remote
 //= require_tree .

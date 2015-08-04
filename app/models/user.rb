@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  EMAIL_PATTERN = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i
+
   has_many :entity_users
   has_many :entities, through: :entity_users
   has_many :bands, through: :entity_users, source: :entity, class_name: 'Band'
@@ -10,6 +12,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :username, :email, :registration_token
   validates_presence_of :username, :display_name, :email, :state, :registration_token
   validates_inclusion_of :state, in: %w(pending_approval active)
+  validates_format_of :email, with: EMAIL_PATTERN
 
   scope :active, -> { where(state: :active) }
   scope :pending, -> { where(state: :pending_approval) }
