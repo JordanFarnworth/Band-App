@@ -1,10 +1,10 @@
 <div class="col-md-offset-2 col-md-10">
-  <%= bootstrap_form_for @user, url: register_path, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-6' do |u| %>
-    <%= u.text_field :username %>
-    <%= u.text_field :display_name %>
-    <%= u.text_field :email %>
-    <%= u.password_field :password %>
-    <%= u.password_field :password_confirmation %>
+  <%= bootstrap_form_for @user, url: register_path, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-6', html: { 'data-parsley-validate' => true } do |u| %>
+    <%= u.text_field :username, minlength: 1, required: true, 'data-parsley-trigger' => 'change' %>
+    <%= u.text_field :display_name, minlength: 1, required: true, 'data-parsley-trigger' => 'change' %>
+    <%= u.email_field :email, required: true, 'data-parsley-pattern' => User::EMAIL_PATTERN, 'data-parsley-trigger' => 'change' %>
+    <%= u.password_field :password, minlength: 1, required: true, 'data-parsley-trigger' => 'change' %>
+    <%= u.password_field :password_confirmation, required: true, 'data-parsley-trigger' => 'change', 'data-parsley-equalto' => '#user_password' %>
     <div class="col-md-offset-2 col-md-4" style="padding-left: 5px;">
       <%= u.primary %>
     </div>
