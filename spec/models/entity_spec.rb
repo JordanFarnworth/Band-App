@@ -11,6 +11,9 @@ RSpec.describe Entity, type: :model do
   describe 'associations' do
     it { expect(entity).to respond_to :entity_users }
     it { expect(entity).to respond_to :users }
+    it { expect(entity).to respond_to :messages }
+    it { expect(entity).to respond_to :message_participants }
+    it { expect(entity).to respond_to :unread_messages }
   end
 
   describe 'adding users' do
