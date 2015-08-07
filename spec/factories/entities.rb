@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :entity do
-    name "MyString"
-    description "MyText"
+    name { Forgery('name').company_name }
+    description { Forgery('lorem_ipsum').paragraph }
     social_media { Hash.new }
     data { Hash.new }
   end

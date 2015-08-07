@@ -1,15 +1,9 @@
 FactoryGirl.define do
   factory :user do
-    sequence :username do |n|
-      "user#{n}"
-    end
-    sequence :display_name do |n|
-      "user#{n}"
-    end
-    sequence :email do |n|
-      "user#{n}@example.com"
-    end
-    password 'password'
+    username { Forgery('internet').user_name }
+    display_name { Forgery('name').full_name }
+    email { Forgery('email').address }
+    password { Forgery('basic').password }
     state 'active'
   end
 

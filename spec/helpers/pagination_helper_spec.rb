@@ -25,7 +25,7 @@ RSpec.describe PaginationHelper, :type => :helper do
     before(:all) do
       User.transaction do
         150.times do |i|
-          create :user
+          create :user, username: "user#{i}", email: "user#{i}@example.com"
         end
       end
     end
