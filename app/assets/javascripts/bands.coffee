@@ -47,7 +47,7 @@ getBandData = ->
     success: (data) ->
       console.log data
       populatePage(data)
-
+      
 createBand = ->
   $.ajax '/api/v1/bands',
     type: 'post'
