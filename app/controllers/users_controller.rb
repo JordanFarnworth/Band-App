@@ -18,6 +18,9 @@ class UsersController < ApplicationController
       format.json do
         render json: pagination_json(@users, :users_json), status: :ok
       end
+      format.html do
+        @users
+      end
     end
   end
 
@@ -25,6 +28,9 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.json do
         render json: user_json(@user), status: :ok
+      end
+      format.html do
+        @user
       end
     end
   end

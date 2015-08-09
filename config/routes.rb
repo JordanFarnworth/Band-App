@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   resources :bands
+  resources :users
 
   root to: 'dashboard#index'
   get 'login' => 'login#index'

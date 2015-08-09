@@ -1,5 +1,5 @@
 class BandsController < ApplicationController
-  include Api::V1::Entity
+  include Api::V1::Band
   include PaginationHelper
 
   before_action :find_band, only: [:show, :edit, :update, :destroy]
@@ -7,21 +7,10 @@ class BandsController < ApplicationController
 
   def find_band
     @band = Band.find params[:id]
-    unless @band.data.has_value?("youtube_converted_yes")
-      yt_convert = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
-      yt_id = @band.data["youtube_link"].match(yt_convert)[2]
-      @band.data["youtube_embed_link"] = "https://www.youtube.com/embed/#{yt_id}"
-      @band.data["youtube_converted"] = "youtube_converted_yes"
-      @band.save
-    end
   end
 
   def find_bands
     @bands = Band.all
-  end
-
-  def convert_youtube_link
-
   end
 
   def index
@@ -30,7 +19,7 @@ class BandsController < ApplicationController
 
       end
       format.json do
-        render json: pagination_json(@bands, :entities_json), status: 200
+        render json: pagination_json(@bands, :bands_json), status: 200
       end
     end
   end
@@ -41,8 +30,46 @@ class BandsController < ApplicationController
 
       end
       format.json do
-        render json: entity_json(@band), status: :ok
+        render json: band_json(@band), status: :ok
       end
     end
+  end
+
+  def new
+    respond_to do |format|
+      format.json do
+        @band = Band.new
+      end
+    end
+  end
+
+  def create
+    @band = Band.new band_parameters
+    respond_to do |format|
+      format.html do
+        if @band.save
+          flash[:success] = 'Group created!'
+          redirect_to @group
+        else
+          render 'new'
+        end
+      end
+      format.json do
+        if @band.save
+          render json: band_json(@band), status: :ok
+        else
+          render json: { errors: @band.errors.full_messages }, status: :bad_request
+        end
+      end
+    end
+  end
+
+  def update
+
+  end
+
+  private
+  def band_parameters
+    params.require(:band).permit(:name, :description, social_media: [:twitter, :instagram, :facebook], data: [:email, :genre, :address, :phone_number, :youtube_link])
   end
 end
