@@ -34,4 +34,22 @@ class UsersController < ApplicationController
       end
     end
   end
+
+  def available_usernames
+    @user = User.find_by username: params[:user].try(:[], :username)
+    if @user
+      render json: { valid: false }, status: :bad_request
+    else
+      render json: { valid: true }, status: :ok
+    end
+  end
+
+  def available_emails
+    @user = User.find_by email: params[:user].try(:[], :email)
+    if @user
+      render json: { valid: false }, status: :bad_request
+    else
+      render json: { valid: true }, status: :ok
+    end
+  end
 end
