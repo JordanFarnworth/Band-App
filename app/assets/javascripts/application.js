@@ -26,4 +26,7 @@
 //= require legacy
 //= require parsley
 //= require parsley.remote
+//= require formValidation/formValidation
+//= require formValidation/en_US
+//= require formValidation/bootstrap
 //= require_tree .
