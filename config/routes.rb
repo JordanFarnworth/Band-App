@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resources :bands
   resources :users
+  resources :parties
 
   root to: 'dashboard#index'
   get 'login' => 'login#index'
@@ -27,6 +28,7 @@ Rails.application.routes.draw do
       resources :entities, only: [] do
         resources :message_threads, except: [:new, :edit, :update], shallow: true
       end
+      resources :parties, except: [:new, :edit]
     end
   end
 end

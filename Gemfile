@@ -23,6 +23,7 @@ gem 'paranoia'
 gem 'unicorn'
 gem 'jquery-ui-rails'
 gem 'parsley-rails'
+gem 'clndr-rails'
 
 group :development do
   gem 'letter_opener'

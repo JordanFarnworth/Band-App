@@ -4,7 +4,7 @@
 
 $('.bands.show').ready ->
   getBandData()
-  $('a[href="#band-contact"]').trigger( "click" )
+  $('#sticky-buttons').sticky topSpacing: 50
 
 $('.users.show').ready ->
   $('#create-band').on 'click', ->
@@ -19,20 +19,13 @@ $('.users.show').ready ->
           if $('#band-audio-sample-form').parsley().isValid()
             createBand()
 
-  $('#create-party').on 'click', ->
-    validateParsely($('#party-general-info-form').parsley().validate(), "party-general-info-tab")
-    validateParsely($('#party-social-media-form').parsley().validate(), "party-social-media-tab")
-    validateParsely($('#party-contact-info-form').parsley().validate(), "party-contact-info-tab")
-    # If the form is valid, will proceed with submission.
-    if $('#party-general-info-form').parsley().isValid()
-      if $('#party-social-media-form').parsley().isValid()
-        if $('#party-contact-info-form').parsley().isValid()
-          createParty()
+
   $('#clear-band-modal').on 'click', ->
     bootbox.confirm 'Are you sure you want to clear ALL fields?', (result) ->
       clearBandModal()
 
 validateParsely = (pass, id) ->
+  debugger
   if pass == true
     $('#' + id).css('color', 'white')
   else
@@ -54,25 +47,21 @@ createBand = ->
     dataType: 'json'
     data:
       band:
-        name: $('#bandName').val()
-        description: $('#bandDescription').val()
+        name: $('#band-name').val()
+        description: $('#band-description').val()
         social_media:
-          twitter: $('#twitter').val()
-          facebook: $('#facebook').val()
-          instagram: $('#instagram').val()
+          twitter: $('#band-twitter').val()
+          facebook: $('#band-facebook').val()
+          instagram: $('#band-instagram').val()
         data:
-          email: $('#email').val()
+          email: $('#band-email').val()
           genre: $('#genre').val()
-          address: $('#mailingAddress').val()
-          phone_number: $('#phoneNumber').val()
-          youtube_link: $('#youtube').val()
+          address: $('#band-mailing-address').val()
+          phone_number: $('#band-phone-number').val()
+          youtube_link: $('#band-youtube').val()
     success: (data) ->
       clearBandModal()
       $('#createBandModal').modal('hide')
-
-createParty = ->
-  console.log 'party created'
-
 
 clearBandModal = ->
   $('#bandName').val("")
@@ -89,10 +78,11 @@ clearBandModal = ->
 
 populatePage = (band) ->
   compileHbsTemplate("band-social-media", "social-media", band.social_media)
-  compileHbsTemplate("band-contact-info", "contact-info", band)
+  compileHbsTemplate("band-contact-data", "contact-info", band.data)
+  compileHbsTemplate("band-description", "description", band)
   compileHbsTemplate("band-name", "band-name", band)
-  compileHbsTemplate("band-contact-data", "band-contact", band.data)
   compileHbsTemplate("band-youtube-video", "youtube-video", band.data)
+  compileHbsTemplate("band-music-sample", "band-music-sample-show", band.data)
   compileHbsTemplate("band-reviews", "reviews", band)
 
 

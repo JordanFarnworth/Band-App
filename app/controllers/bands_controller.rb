@@ -48,7 +48,7 @@ class BandsController < ApplicationController
     respond_to do |format|
       format.html do
         if @band.save
-          flash[:success] = 'Group created!'
+          flash[:success] = 'Band Created!'
           redirect_to @band
         else
           render 'new'
@@ -56,6 +56,7 @@ class BandsController < ApplicationController
       end
       format.json do
         if @band.save
+          flash[:success] = 'Band Created!'
           render json: band_json(@band), status: :ok
         else
           render json: { errors: @band.errors.full_messages }, status: :bad_request

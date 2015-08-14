@@ -29,12 +29,12 @@
                   </div>
                   <div class="form group">
                     <label for="band-name">Name <i class="fa fa-code"></i></label>
-                    <input minlength="3" required="required" data-parsley-trigger="change" class="form-control" type="text" id="band-name" placeholder="Party Name..">
+                    <input minlength="3" required="required" data-parsley-trigger="change" class="form-control" type="text" id="band-name" placeholder="Band Name..">
                   </div>
                   <br>
                   <div class="form group">
                     <label for="band-description">Description of Band <i class="fa fa-pencil"></i></label>
-                    <textarea class="form-control" data-parsley-trigger="change" minlength="20" required id="band-description" rows="3" placeholder="Party Description.."></textarea>
+                    <textarea class="form-control" data-parsley-trigger="change" minlength="20" required id="band-description" rows="3" placeholder="Band's Description.."></textarea>
                   </div>
                   <br>
                   <div class="form-group">
@@ -126,23 +126,16 @@
 
 
 
-
-
-
-
-
-
-
-<div class="modal fade" id="createPartyModal" role="dialog" aria-labelledby="gridSystemModalLabel">
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="gridSystemModalLabel">Create Party</h4>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
-          <div>
 <!-- Nav tabs -->
             <div class="row text-center">
               <div role="tablist">
@@ -204,7 +197,7 @@
                     </div>
                     <div class="form group">
                       <label for="party-email">Email Address <i class="fa fa-envelope"></i></label>
-                      <input type="email" class="form-control" id="email" data-parsley-trigger="change" required placeholder="Party's Email Address">
+                      <input type="email" class="form-control" id="party-email" data-parsley-trigger="change" required placeholder="Party's Email Address">
                     </div>
                     <br>
                     <div class="form group">
@@ -224,13 +217,12 @@
                   </form>
                 </div>
             </div>
-          </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" id="create-party" class="btn btn-primary">Create Party</button>
+        <button type="button" id="create-party-button" class="btn btn-primary">Save changes</button>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div>
+  </div>
+</div>

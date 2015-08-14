@@ -29,4 +29,23 @@
 //= require formValidation/formValidation
 //= require formValidation/en_US
 //= require formValidation/bootstrap
+//= require jquery.sticky
+//= require moment
+//=require underscore
+//=require clndr-rails
 //= require_tree .
+
+$(document).ready(function(){
+	$('a[href^="#"]').on('click',function (e) {
+	    e.preventDefault();
+
+	    var target = this.hash;
+	    var $target = $(target);
+
+	    $('html, body').stop().animate({
+	        'scrollTop': $target.offset().top
+	    }, 900, 'swing', function () {
+	        window.location.hash = target;
+	    });
+	});
+});
