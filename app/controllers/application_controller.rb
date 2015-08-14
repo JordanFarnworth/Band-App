@@ -26,6 +26,7 @@ class ApplicationController < ActionController::Base
 
   def current_entity
     return nil unless current_user
+    @current_entity ||= current_user.entities.find_by(id: params[:entity_id]) if api_request?
     @current_entity ||= current_user.entities.find_by(id: session[:current_entity_id])
   end
 

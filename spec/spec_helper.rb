@@ -19,7 +19,12 @@
 require 'simplecov'
 require 'factory_girl_rails'
 
-SimpleCov.start
+SimpleCov.start do
+  add_filter '/spec'
+  add_filter do |source_file|
+    source_file.lines.count < 5
+  end
+end
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   # rspec-expectations config goes here. You can use an alternate
