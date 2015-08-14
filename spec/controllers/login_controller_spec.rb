@@ -71,6 +71,11 @@ RSpec.describe LoginController, :type => :controller do
       expect(response).to redirect_to register_finish_path
     end
 
+    it 'renders register if the user contains errors' do
+      post :verify_register, user: { display_name: '' }
+      expect(response).to render_template 'register'
+    end
+
     it 'renders the register template upon failure' do
       user = create :user
       post :register, user: attributes_for(:user).merge(username: user.username)

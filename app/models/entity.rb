@@ -2,7 +2,8 @@ class Entity < ActiveRecord::Base
   has_many :entity_users
   has_many :users, through: :entity_users
   has_many :message_participants, dependent: :destroy
-  has_many :messages, through: :message_participants
+  has_many :message_threads, through: :message_participants
+  has_many :messages, through: :message_threads
   has_many :unread_messages, -> { MessageParticipant.unread }, through: :message_participants,
     foreign_key: :entity_id, class_name: 'Message', source: :message
   acts_as_paranoid

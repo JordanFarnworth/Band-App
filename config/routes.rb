@@ -20,6 +20,9 @@ Rails.application.routes.draw do
         end
       end
       resources :bands, except: [:new, :edit]
+      resources :entities, only: [] do
+        resources :message_threads, except: [:new, :edit, :update], shallow: true
+      end
     end
   end
 end
