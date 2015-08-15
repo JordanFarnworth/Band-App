@@ -21,7 +21,11 @@ Rails.application.routes.draw do
       end
       resources :bands, except: [:new, :edit]
       resources :entities, only: [] do
-        resources :message_threads, except: [:new, :edit, :update], shallow: true
+        resources :message_threads, except: [:new, :edit, :update], shallow: true do
+          resources :messages, only: [:index], shallow: true
+        end
+
+        resources :messages, only: [:create]
       end
     end
   end
