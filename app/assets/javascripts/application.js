@@ -24,15 +24,14 @@
 //= require picker
 //= require picker.date
 //= require legacy
-//= require parsley
-//= require parsley.remote
 //= require formValidation/formValidation
 //= require formValidation/en_US
 //= require formValidation/bootstrap
 //= require jquery.sticky
 //= require moment
-//=require underscore
-//=require clndr-rails
+//= require underscore.min
+//= require gmaps/google
+//= require clndr-rails
 //= require_tree .
 
 $(document).ready(function(){
@@ -49,3 +48,31 @@ $(document).ready(function(){
 	    });
 	});
 });
+
+function gmap_show(company) {
+	if ((company.latitude == null) || (company.longitude == null) ) {    // validation check if coordinates are there
+		return 0;
+	}
+
+	handler = Gmaps.build('Google');    // map init
+	handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+		markers = handler.addMarkers([    // put marker method
+			{
+				"lat": company.latitude,    // coordinates from parameter company
+				"lng": company.longitude,
+				"picture": {    // setup marker icon
+					"url": 'http://www.planet-action.org/img/2009/interieur/icons/orange-dot.png',
+					"width":  32,
+					"height": 32
+				},
+				"infowindow": "<b>" + company.name + "</b> " + company.address + ", " + company.postal_code + " " + company.city
+			}
+		]);
+		handler.bounds.extendWith(markers);
+		handler.fitMapToBounds();
+		handler.getMap().setZoom(12);    // set the default zoom of the map
+	});
+}
+
+
+/* end google maps */

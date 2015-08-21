@@ -22,8 +22,9 @@ gem 'font-awesome-rails'
 gem 'paranoia'
 gem 'unicorn'
 gem 'jquery-ui-rails'
-gem 'parsley-rails'
 gem 'clndr-rails'
+gem 'geocoder'
+gem 'gmaps4rails'
 
 group :development do
   gem 'letter_opener'

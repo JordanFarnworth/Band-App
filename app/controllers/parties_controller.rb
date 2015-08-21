@@ -62,6 +62,6 @@ class PartiesController < ApplicationController
 
   private
   def party_parameters
-    params.require(:party).permit(:name, :description, social_media: [:twitter, :instagram, :facebook], data: [:email, :address, :phone_number, :owner])
+    params.require(:party).permit(:name, :description, :address, :longitude, :latitude, social_media: [:twitter, :instagram, :facebook], data: [:email, :phone_number, :owner])
   end
 end

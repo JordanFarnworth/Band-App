@@ -1,3 +1,22 @@
 // Place all the styles related to the Parties controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#party-profile-picture {
+  height: 200px;
+  width: 300px;
+}
+
+#party-info {
+  margin-top: 20px;
+}
+
+#available-events {
+  height: 350px;
+  max-height: 350px;
+}
+
+#party-social-media-panel {
+  height: 190px;
+  max-height: 190px;
+}

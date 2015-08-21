@@ -7,6 +7,7 @@ class Entity < ActiveRecord::Base
   has_many :unread_messages, -> { MessageParticipant.unread }, through: :message_participants,
     foreign_key: :entity_id, class_name: 'Message', source: :message
   acts_as_paranoid
+  geocoded_by :address
 
   validates :name, presence: true
   validates :description, presence: true
@@ -15,6 +16,8 @@ class Entity < ActiveRecord::Base
   serialize :social_media, Hash
   store_accessor :data
 
+
+  after_validation :geocode
   after_initialize do
     self.data ||= Hash.new
   end

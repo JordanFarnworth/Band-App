@@ -71,6 +71,6 @@ class BandsController < ApplicationController
 
   private
   def band_parameters
-    params.require(:band).permit(:name, :description, social_media: [:twitter, :instagram, :facebook], data: [:email, :genre, :address, :phone_number, :youtube_link])
+    params.require(:band).permit(:name, :description, :address, :longitude, :latitude, social_media: [:twitter, :instagram, :facebook], data: [:email, :genre, :phone_number, :youtube_link])
   end
 end
