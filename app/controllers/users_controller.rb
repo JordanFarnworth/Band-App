@@ -2,11 +2,13 @@ class UsersController < ApplicationController
   include Api::V1::User
   include PaginationHelper
 
-  before_action :find_user, only: [:show, :edit, :update, :destroy]
+  before_action :find_user_and_groups, only: [:show, :edit, :update, :destroy]
   before_action :find_users, only: [:index]
 
-  def find_user
+  def find_user_and_groups
     @user = User.find params[:id]
+    @user_bands = @user.bands
+    @user_parties = @user.parties
   end
 
   def find_users
@@ -25,9 +27,10 @@ class UsersController < ApplicationController
   end
 
   def show
+    includes = params[:include] || []
     respond_to do |format|
       format.json do
-        render json: user_json(@user), status: :ok
+        render json: user_json(@user, includes), status: :ok
       end
       format.html do
         @user

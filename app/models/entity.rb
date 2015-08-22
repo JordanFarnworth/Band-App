@@ -17,7 +17,7 @@ class Entity < ActiveRecord::Base
   store_accessor :data
 
 
-  after_validation :geocode
+  after_save :geocode
   after_initialize do
     self.data ||= Hash.new
   end

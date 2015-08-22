@@ -48,6 +48,7 @@ class PartiesController < ApplicationController
       end
       format.json do
         if @party.save
+          @party.add_user(@current_user, role = "owner")
           render json: party_json(@party), status: :ok
         else
           render json: { errors: @party.errors.full_messages }, status: :bad_request
