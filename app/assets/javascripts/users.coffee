@@ -30,6 +30,8 @@ class User
       dataType: 'json'
       success: (data) ->
         new User().compileHbsTemplate('user-data', 'band-data-div', data)
+        new User().compileHbsTemplate('user-title', 'user-title-div', data)
+        new User().populateEditModal(data)
         $('#user-bands-list').empty()
         $.each data['bands'], (i) ->
           new User().appendHbsTemplate('user-bands', 'user-bands-list', this)
@@ -43,6 +45,11 @@ class User
         $.each data.parties, (i) ->
           new User().appendHbsTemplate('user-parties', 'user-parties-list', this)
   #end get calls
+
+  populateEditModal: (data) =>
+    $('#username-edit').val("#{data.username}")
+    $('#user-display-name').val("#{data.display_name}")
+    $('#user-email-edit').val("#{data.email}")
 
   # create band and parties
   createBand: =>
@@ -64,9 +71,10 @@ class User
             phone_number: $('#band-phone-number').val()
             youtube_link: $('#band-youtube').val()
       success: (data) ->
-        @clearBandModal()
+        new User().clearBandModal()
         $('#createBandModal').modal('hide')
         bootbox.alert('Band Created!', null)
+        new User().getUserBands()
 
   createParty: =>
     $.ajax '/api/v1/parties',
@@ -91,6 +99,42 @@ class User
         bootbox.alert('Party Created!', null)
         new User().getUserParties()
   #end create
+
+  #update user info/passwords
+  updateUserInfo: =>
+    $.ajax "/api/v1/users/#{@user}",
+      type: 'put'
+      dataType: 'json'
+      data:
+        user:
+          username: $('#username-edit').val()
+          display_name: $('#user-display-name').val()
+          email: $('#user-email-edit').val()
+      success: (data) ->
+        $('#userEditModal').modal('hide')
+        $('#edit-user-data-form').data('formValidation').resetForm()
+        new User().getUserBands()
+        bootbox.alert('User Updated!', null)
+
+  updateUserPassword: =>
+    $.ajax "/api/v1/users/#{@user}",
+      type: 'put'
+      dataType: 'json'
+      data:
+        user:
+          password: $('#new-password').val()
+      success: (data) ->
+        $('#changePasswordModal').modal('hide')
+        new User().clearChangePasswordModal()
+        bootbox.alert('Password Updated', null)
+  #end updates
+
+  clearChangePasswordModal: =>
+    $('#old-password').val('')
+    $('#new-password').val('')
+    $('#confirm-new-password').val('')
+    $('#change-password-modal-form').data('formValidation').resetForm()
+
 
   clearBandModal: =>
     $('#band-name').val('')
@@ -139,6 +183,10 @@ $('.users.show').ready ->
       excluded: ':disabled'
   $('#party-contact-info-form').formValidation
     excluded: ':disabled'
+  $('#edit-user-data-form').formValidation
+    excluded: ':disabled'
+  $('#change-password-modal-form').formValidation
+    excluded: ':disabled'
   new User().getUserBands()
   new User().getUserParties()
 
@@ -168,3 +216,14 @@ $('.users.show').ready ->
     # If the form is valid, will proceed with submission.
     if $('#party-general-info-form').data('formValidation').isValid() && $('#party-social-media-form').data('formValidation').isValid() && $('#party-contact-info-form').data('formValidation').isValid()
       user.createParty()
+
+  $('#update-user-data-btn').on 'click', ->
+    user = new User()
+    $('#edit-user-data-form').formValidation 'validate'
+    if $('#edit-user-data-form').data('formValidation').isValid()
+      user.updateUserInfo()
+
+  $('#update-user-password').on 'click', ->
+    user = new User()
+    if $('#change-password-modal-form').data('formValidation').isValid()
+      user.updateUserPassword()

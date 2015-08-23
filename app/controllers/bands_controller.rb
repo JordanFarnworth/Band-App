@@ -57,7 +57,6 @@ class BandsController < ApplicationController
       format.json do
         if @band.save
           @band.add_user(@current_user, role = "owner")
-          debugger
           render json: band_json(@band), status: :ok
         else
           render json: { errors: @band.errors.full_messages }, status: :bad_request

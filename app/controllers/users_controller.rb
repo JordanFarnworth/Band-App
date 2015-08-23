@@ -38,6 +38,25 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    respond_to do |format|
+      format.json do
+        if @user.update user_parameters
+          render json: user_json(@user), status: :ok
+        end
+      end
+    end
+  end
+
+  def password_confirmation
+    @user = @current_user.try(:authenticate, params[:oldpassword])
+    if @user
+      render json: { valid: true }, status: :ok
+    else
+      render json: { valid: false }, status: :bad_request
+    end
+  end
+
   def available_usernames
     @user = User.find_by username: params[:user].try(:[], :username)
     if @user
@@ -54,5 +73,10 @@ class UsersController < ApplicationController
     else
       render json: { valid: true }, status: :ok
     end
+  end
+
+  private
+  def user_parameters
+    params.require(:user).permit(:username, :display_name, :email, :password, :state)
   end
 end
