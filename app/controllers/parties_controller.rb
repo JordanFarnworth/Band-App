@@ -49,6 +49,7 @@ class PartiesController < ApplicationController
       format.json do
         if @party.save
           @party.add_user(@current_user, role = "owner")
+          @party.delay.geocode_address
           render json: party_json(@party), status: :ok
         else
           render json: { errors: @party.errors.full_messages }, status: :bad_request
@@ -58,7 +59,12 @@ class PartiesController < ApplicationController
   end
 
   def update
-
+    @party.geocode_address
+    if @party.update party_parameters
+      render json: band_json(@party), status: :ok
+    else
+      render json: { errors: @party.errors.full_messages }, status: :bad_request
+    end
   end
 
   private

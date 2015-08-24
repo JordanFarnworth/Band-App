@@ -1,4 +1,5 @@
 class Entity < ActiveRecord::Base
+  include ActiveModel::Dirty
   has_many :entity_users
   has_many :users, through: :entity_users
   has_many :message_participants, dependent: :destroy
@@ -16,10 +17,13 @@ class Entity < ActiveRecord::Base
   serialize :social_media, Hash
   store_accessor :data
 
-
-  after_save :geocode
   after_initialize do
     self.data ||= Hash.new
+  end
+
+  def geocode_address
+    self.geocode
+    self.save
   end
 
   def add_user(user, role = 'member')

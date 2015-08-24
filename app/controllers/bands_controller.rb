@@ -16,7 +16,6 @@ class BandsController < ApplicationController
   def index
     respond_to do |format|
       format.html do
-
       end
       format.json do
         render json: pagination_json(@bands, :bands_json), status: 200
@@ -57,6 +56,7 @@ class BandsController < ApplicationController
       format.json do
         if @band.save
           @band.add_user(@current_user, role = "owner")
+          @band.delay.geocode_address
           render json: band_json(@band), status: :ok
         else
           render json: { errors: @band.errors.full_messages }, status: :bad_request
@@ -66,7 +66,12 @@ class BandsController < ApplicationController
   end
 
   def update
-
+    @band.geocode_address
+    if @band.update band_parameters
+      render json: band_json(@band), status: :ok
+    else
+      render json: { errors: @band.errors.full_messages }, status: :bad_request
+    end
   end
 
   private
