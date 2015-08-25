@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   post 'entities/:id/switch' => 'entities#switch', as: 'entity_switch'
   delete 'entities/cancel_view' => 'entities#cancel_view', as: 'entity_cancel_view'
+  resources :messages, only: [:index]
+  resources :message_threads, only: [:show]
 
   scope :api, defaults: { format: :json }, constraints: { format: :json } do
     scope :v1 do

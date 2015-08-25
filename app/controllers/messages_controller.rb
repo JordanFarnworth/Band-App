@@ -3,7 +3,7 @@ class MessagesController < ApplicationController
   include PaginationHelper
   skip_before_action :verify_authenticity_token, only: [:create]
 
-  before_action :find_message_thread, only: [:index]
+  before_action :find_message_thread, only: [:index], if: :api_request?
   before_action :find_entity, only: [:create]
 
   def find_message_thread
@@ -15,8 +15,16 @@ class MessagesController < ApplicationController
   end
 
   def index
-    @messages = @message_thread.messages
-    render json: pagination_json(@messages, :messages_json), status: :ok
+    respond_to do |format|
+      format.html do
+        redirect_to root_path and return unless current_entity
+        @message_threads = current_entity.message_threads.includes(:latest_message, :entities)
+      end
+      format.json do
+        @messages = @message_thread.messages.reverse_chronological
+        render json: pagination_json(@messages, :messages_json, params[:include] || []), status: :ok
+      end
+    end
   end
 
   def create
@@ -30,6 +38,7 @@ class MessagesController < ApplicationController
     @message = @message_thread.messages.new message_params
     @message.sender = @entity
     if @message.save
+      @message_thread.message_participants.find_by(entity_id: @recipient.id).update(state: :unread)
       render json: message_json(@message), status: :ok
     else
       render json: @message.errors, status: :bad_request

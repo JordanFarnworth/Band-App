@@ -1,0 +1,16 @@
+<script id="message_row_template" type="text/x-handlebars-template">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4>{{subject}}</h4>
+      <h5>
+        {{#with sender}}{{name}}{{/with}}
+        <span class="pull-right">
+          {{created_at}}
+        </span>
+      </h5>
+    </div>
+    <div class="panel-body">
+      {{body}}
+    </div>
+  </div>
+</script>

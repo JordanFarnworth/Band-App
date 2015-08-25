@@ -1,0 +1,16 @@
+<div class="list-group">
+  <% @message_threads.each do |message_thread| %>
+    <%= link_to '#', class: 'list-group-item index-row', data: { message_thread_id: message_thread.id } do %>
+      <h5>
+        <i class="fa fa-circle unread-message"></i>
+        <%= message_thread.latest_message.subject %>
+      </h5>
+      <h5>
+        <%= message_thread.entities.find { |e| e != current_entity }.name %>
+      </h5>
+      <p>
+        <%= message_thread.latest_message.preview_text %>
+      </p>
+    <% end %>
+  <% end %>
+</div>
