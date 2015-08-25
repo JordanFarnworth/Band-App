@@ -67,7 +67,7 @@ class User
             instagram: $('#band-instagram').val()
           data:
             email: $('#band-email').val()
-            genre: $('#genre').val()
+            genre: $('#band-genre').val()
             phone_number: $('#band-phone-number').val()
             youtube_link: $('#band-youtube').val()
       success: (data) ->

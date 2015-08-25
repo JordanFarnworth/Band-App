@@ -10,8 +10,11 @@ class Entity < ActiveRecord::Base
   acts_as_paranoid
   geocoded_by :address
 
+  # ??? after_create :delay.geocode_address
+
   validates :name, presence: true
   validates :description, presence: true
+  validates :address, presence: true
   validate :validate_data
 
   serialize :social_media, Hash

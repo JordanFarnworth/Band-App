@@ -59,7 +59,7 @@ class PartiesController < ApplicationController
   end
 
   def update
-    @party.geocode_address
+    @party.delay.geocode_address
     if @party.update party_parameters
       render json: band_json(@party), status: :ok
     else

@@ -66,7 +66,7 @@ class BandsController < ApplicationController
   end
 
   def update
-    @band.geocode_address
+    @band.delay.geocode_address
     if @band.update band_parameters
       render json: band_json(@band), status: :ok
     else

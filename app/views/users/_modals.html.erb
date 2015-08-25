@@ -41,6 +41,11 @@
                   </div>
                   <br>
                   <div class="form-group">
+                    <label for="genre">Genre <i class="fa fa-music"></i></label>
+                    <input type="text" name="band-genre" data-fv-notempty="true" class="form-control" id="band-genre" placeholder="Genre of music">
+                  </div>
+                  <br>
+                  <div class="form-group">
                     <label for="band-profile-picture">Band Banner Picture <i class="fa fa-camera-retro"></i></label>
                     <input type="file" name="band-profile-picture" id="band-profile-picture" data-fv-notempty>
                   </div>
@@ -97,7 +102,7 @@
                   <br>
                   <div class="form-group">
                     <label for="mailingAddress">Mailing Address <i class="fa fa-location-arrow"></i></label>
-                    <input type="text_field" data-fv-notempty name="band-mailing-address" class="form-control" id="band-mailing-address" placeholder="Band's Mailing Address..">
+                    <input type="text_field" data-fv-notempty name="band-mailing-address" class="form-control" id="band-mailing-address" placeholder="Street Address, City, State Zip Code">
                   </div>
                 </form>
               </div>
@@ -299,7 +304,7 @@
         <form id="change-password-modal-form" ata-fv-framework="bootstrap"
           data-fv-icon-valid="glyphicon glyphicon-ok"
           data-fv-icon-invalid="glyphicon glyphicon-remove"
-          data-fv-icon-validating="glyphicon glyphicon-refresh">
+          data-fv-icon-validating="glyphicon glyphicon-refresh fa-spin">
           <div class="form-group">
             <label for="old-password">Old Password</label>
             <input type="password" name="oldpassword" class="form-control" id="old-password" placeholder="Password" data-fv-remote="true" data-fv-remote-delay="2000" data-fv-remote-url="/api/v1/users/<%= @user.id %>/password_confirmation" data-fv-remote-message="Incorrect Password">
