@@ -1,0 +1,38 @@
+<script type="text/x-handlebars-template" id="party-name-hbs">
+  <h1>{{name}}</h1>
+</script>
+
+<script type="text/x-handlebars-template" id="party-owner-name-hbs">
+  <h4>{{data.owner}}</h4>
+</script>
+
+<script type="text/x-handlebars-template" id="party-created-at-hbs">
+  <p>
+    {{created_at}}
+  </p>
+</script>
+
+<script type="text/x-handlebars-template" id="party-social-media-hbs">
+  <div>
+    <a href="{{facebook}}" target="_blank"><i class="fa fa-facebook-official fa-3x"></i></a>
+    <span class="social-span"></span>
+    <a href="https://twitter.com/{{twitter}}" target="_blank"><i class="fa fa-twitter fa-3x"></i></a>
+    <span class="social-span"></span>
+    <a href="https://instagram.com/{{instagram}}" target="_blank"><i class="fa fa-instagram fa-3x"></i></a>
+  </div>
+</script>
+
+<script type="text/x-handlebars-template" id="party-general-info-hbs">
+    <p>
+      Address: {{address}}
+    </p>
+    <p>
+      Email: {{data.email}}
+    </p>
+    <p>
+      Phone Number: {{data.phone_number}}
+    </p>
+    <p>
+      Description: {{description}}
+    </p>
+</script>

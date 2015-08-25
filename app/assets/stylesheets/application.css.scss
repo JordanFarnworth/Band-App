@@ -11,9 +11,11 @@
  * file per style scope.
  *
  *= require_tree
+ *= require animate
  *= require jquery-ui
  *= require rails_bootstrap_forms
  *= require formValidation
+ *= require clndr-rails
  *= require_self
  */
 
@@ -22,4 +24,3 @@
 @import 'bootstrap';
 @import '../../../vendor/assets/stylesheets/_bootswatch.scss';
 @import 'font-awesome';
-@import 'parsley';

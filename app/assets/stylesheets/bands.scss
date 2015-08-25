@@ -1,3 +1,38 @@
 // Place all the styles related to the bands controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#band-main-image {
+  height:400px;
+  width: 100%;
+}
+#band-btn-nav {
+  height: 800px;
+}
+
+#sticky-buttons {
+  margin-top: 90px;
+  width: 90px;
+  max-width: 90px;
+}
+
+.social-span {
+  width: 50px;
+}
+
+.band-div {
+  margin-top: 150px;
+}
+
+.sticky-button {
+  width: 90px;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto
+}
+
+#band-profile-nav .btn:hover {
+  background-color: #2A9FD6;
+}

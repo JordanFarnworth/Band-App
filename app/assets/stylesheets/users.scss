@@ -1,3 +1,38 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.nav-span {
+  padding-left: 1px;
+  padding-right: 1px;
+}
+
+.tab-button {
+  width: 60px;
+}
+
+#user-info-div {
+  margin-top: 25px;
+}
+
+#party-panel {
+  height: 250px;
+  max-height: 250px;
+  overflow: auto;
+}
+
+#band-panel {
+  height: 250px;
+  max-height: 250px;
+  overflow: auto;
+}
+
+#user-prof-pic {
+  margin-top: 15px;
+  height: 200px;
+  width: 200px;
+}
+
+#user-prof-btns {
+  margin-top: 50px;
+}

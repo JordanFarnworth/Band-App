@@ -1,0 +1,69 @@
+<!-- Button trigger modal -->
+<div class="container">
+
+  <div class="row text-center" id="user-title-div">
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-12" id="user-info-div">
+      <div class="panel panel-default">
+        <div class="panel-heading text-center">
+          <h5>My Info</h5>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+              <div class="col-md-6 text-center">
+                <img id="user-prof-pic" src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTwvbdhz42g3kaFhD2Hy3DofxVfubBuZkMSIUMwbCj9qJo-6Y-U4UK4En4" alt="" />
+              </div>
+              <div class="col-md-6" id="band-data-div">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div class="row">
+    <div class="col-md-6" >
+      <div class="panel panel-default" id="party-panel">
+        <div class="panel-heading text-center">
+          <h5 >My Parties/Company</h5>
+        </div>
+        <div class="panel-body" id="party-panel-body">
+          <ul class="list-group" id="user-parties-list">
+
+          </ul>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        Create a Party
+      </button>
+    </div>
+
+    <div class="col-md-6">
+      <div class="panel panel-default" id="band-panel">
+        <div class="panel-heading text-center">
+          <h5 >My Bands</h5>
+        </div>
+        <div class="panel-body" id="band-panel-body" >
+          <ul class="list-group" id="user-bands-list">
+
+          </ul>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#createBandModal">
+        Create a Band
+      </button>
+    </div>
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<%= render 'modals' %>
+<%= render 'scriptstore' %>

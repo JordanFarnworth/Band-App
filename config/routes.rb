@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+
+  resources :bands
+  resources :users
+  resources :parties
+
   root to: 'dashboard#index'
   get 'login' => 'login#index'
   post 'login' => 'login#verify'
@@ -16,6 +21,7 @@ Rails.application.routes.draw do
   scope :api, defaults: { format: :json }, constraints: { format: :json } do
     scope :v1 do
       resources :users, except: [:new, :edit] do
+        get 'password_confirmation'
         collection do
           get 'available_usernames'
           get 'available_emails'
@@ -29,6 +35,7 @@ Rails.application.routes.draw do
 
         resources :messages, only: [:create]
       end
+      resources :parties, except: [:new, :edit]
     end
   end
 end
