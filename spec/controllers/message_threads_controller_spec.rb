@@ -3,8 +3,7 @@ require 'rails_helper'
 RSpec.describe MessageThreadsController, type: :controller do
   let!(:user) { create :user }
   let!(:sender) { create :band }
-  let!(:entity_user) { create :entity_user, user: user, entity: sender }
-  let!(:entity1) { create :band }
+  let!(:entity1) { create :band, user: user }
   let!(:message_thread) { create :message_thread }
   let!(:participant1) { create :message_participant, message_thread: message_thread, entity: sender }
   let!(:participant2) { create :message_participant, message_thread: message_thread, entity: entity1 }

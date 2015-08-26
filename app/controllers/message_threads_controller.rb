@@ -5,7 +5,7 @@ class MessageThreadsController < ApplicationController
   before_action :find_message_thread, only: [:show, :destroy]
 
   def find_entity
-    @entity = current_user.entities.find params[:entity_id]
+    @entity = current_user.entity
   end
 
   def find_message_thread

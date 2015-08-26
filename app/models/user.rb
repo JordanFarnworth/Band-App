@@ -1,10 +1,9 @@
 class User < ActiveRecord::Base
   EMAIL_PATTERN = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i
 
-  has_many :entity_users
-  has_many :entities, through: :entity_users
-  has_many :bands, through: :entity_users, source: :entity, class_name: 'Band'
-  has_many :parties, through: :entity_users, source: :entity, class_name: 'Party'
+  has_one :entity
+  has_one :band, class_name: 'Band'
+  has_one :party, class_name: 'Party'
   has_many :api_keys
 
   acts_as_paranoid

@@ -74,12 +74,9 @@ class UsersController < ApplicationController
       render json: { valid: true }, status: :ok
     end
   end
-<<<<<<< HEAD
-=======
 
   private
   def user_parameters
     params.require(:user).permit(:username, :display_name, :email, :password, :state)
   end
->>>>>>> band_show
 end
