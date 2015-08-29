@@ -15,10 +15,35 @@ class User < ActiveRecord::Base
 
   scope :active, -> { where(state: :active) }
   scope :pending, -> { where(state: :pending_approval) }
+  # scope :no_entity, -> {where (user_data[:user_entity_type] = 'none') }
+  # scope :band_type, -> {where (user_data[:user_entity_type] = 'band') }
+  # scope :party_type, -> {where (user_data[:user_entity_type] = 'party') }
+
+  after_create :new_user
+
+  store_accessor :user_data
+  serialize :user_data, Hash
 
   before_validation do
     self.state ||= 'pending_approval'
+    self.user_data ||= Hash.new
     generate_registration_token unless registration_token
+  end
+
+  def new_user
+    self.user_data[:user_entity_type] = 'none'
+    self.save
+  end
+
+  #delete after testing
+  def reset
+    self.user_data[:user_entity_type] = 'none'
+    self.save
+  end
+
+  def update_entity(choice)
+    self.user_data[:user_entity_type] = choice
+    self.save
   end
 
   def generate_registration_token

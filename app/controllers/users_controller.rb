@@ -7,8 +7,6 @@ class UsersController < ApplicationController
 
   def find_user_and_groups
     @user = User.find params[:id]
-    @user_bands = @user.bands
-    @user_parties = @user.parties
   end
 
   def find_users
@@ -48,6 +46,21 @@ class UsersController < ApplicationController
     end
   end
 
+  def entity_type
+    respond_to do |format|
+      format.json do
+        @user = User.find params[:id]
+        @user.update_entity params[:user][:entity_type]
+        if @user
+          render json: user_json(@user), status: :ok
+        else
+          render json: { errors: @user.errors.full_messages }, status: :bad_request
+        end
+      end
+    end
+  end
+
+
   def password_confirmation
     @user = @current_user.try(:authenticate, params[:oldpassword])
     if @user
@@ -77,6 +90,6 @@ class UsersController < ApplicationController
 
   private
   def user_parameters
-    params.require(:user).permit(:username, :display_name, :email, :password, :state)
+    params.require(:user).permit(:id, :entity_type, :username, :display_name, :email, :password, :state)
   end
 end

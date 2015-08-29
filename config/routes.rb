@@ -21,7 +21,10 @@ Rails.application.routes.draw do
   scope :api, defaults: { format: :json }, constraints: { format: :json } do
     scope :v1 do
       resources :users, except: [:new, :edit] do
-        get 'password_confirmation'
+        member do
+          get 'password_confirmation'
+          put 'entity_type'
+        end
         collection do
           get 'available_usernames'
           get 'available_emails'

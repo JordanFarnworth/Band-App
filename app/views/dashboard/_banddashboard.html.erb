@@ -1,0 +1,21 @@
+<% if @current_user.entity === nil %>
+  <div class="container">
+    <div class="row text-center">
+      <h1>You need to <a href="#" data-toggle="modal" data-target="#createBandModal">create your Band</a>!</h1>
+    </div>
+    <div class="row text-center">
+      <%= image_tag('logo.png') %>
+    </div>
+    <div class="row text-center">
+      <h2>Or, click the search option to look through some Companies</h2>
+      <br>
+      <a href="#"><i class="fa fa-search fa-4x">Company Listings</i></a>
+    </div>
+  </div>
+<% else %>
+<div class="container">
+  <div class="row">
+    <h1>Dashboard for <%= @current_user.entity.name %></h1>
+  </div>
+</div>
+<% end %>
