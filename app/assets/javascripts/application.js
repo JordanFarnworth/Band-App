@@ -34,6 +34,7 @@
 //= require clndr-rails
 //= require vegas
 //= require classie
+//= require fullcalendar.min
 //= require_tree .
 
 $(document).ready(function(){

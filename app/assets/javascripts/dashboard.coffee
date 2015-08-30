@@ -100,6 +100,8 @@ class Dashboard
     $('#party-social-media-form').data('formValidation').resetForm()
     $('#party-contact-info-form').data('formValidation').resetForm()
 
+$('.dashboard.calendar').ready ->
+  $('#calendar').fullCalendar()
 
 $('.dashboard.index').ready ->
   db = new Dashboard()
