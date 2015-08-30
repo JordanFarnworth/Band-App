@@ -15,6 +15,11 @@ class LoginController < ApplicationController
     @user ||= User.new
   end
 
+  def landing
+    @user ||= User.new
+  end
+
+
   def verify_register
     @user = User.new register_params
     if @user.save

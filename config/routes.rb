@@ -6,6 +6,9 @@ Rails.application.routes.draw do
 
   root to: 'dashboard#index'
   get 'login' => 'login#index'
+  get 'dashboard' => 'dashboard#index'
+  get 'landing' => 'login#landing'
+  get 'about' => 'dashboard#about'
   post 'login' => 'login#verify'
   delete 'login' => 'login#logout'
   get 'register' => 'login#register'

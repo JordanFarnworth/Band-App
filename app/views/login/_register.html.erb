@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-md-offset-2 col-md-12">
+    <%= bootstrap_form_for @user, url: register_path, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-6', html: { 'data-fv-framework' => 'bootstrap', 'data-fv-icon-valid' => 'glyphicon glyphicon-ok', 'data-fv-icon-invalid' => 'glyphicon glyphicon-remove', 'data-fv-icon-validating' => 'glyphicon glyphicon-refresh fa-spin' } do |u| %>
+      <%= u.text_field :username, 'data-fv-notempty' => true, 'data-fv-remote' => true, 'data-fv-remote-url' => '/api/v1/users/available_usernames', 'data-fv-remote-delay' => '1000', 'data-fv-remote-message' => 'This username is not available' %>
+      <%= u.text_field :display_name, 'data-fv-notempty' => true %>
+      <%= u.email_field :email, 'data-fv-notempty' => true, 'data-fv-remote' => true, 'data-fv-remote-url' => '/api/v1/users/available_emails', 'data-fv-remote-delay' => '1000', 'data-fv-remote-message' => 'This email has been registered' %>
+      <%= u.password_field :password, 'data-fv-notempty' => true %>
+      <%= u.password_field :password_confirmation, 'data-fv-identical' => true, 'data-fv-identical-field' => 'user[password]', 'data-fv-identical-message' => 'Passwords do not match' %>
+      <div class="col-md-offset-2 col-md-4" style="padding-left: 5px;">
+        <%= u.primary 'Submit', disabled: true %>
+      </div>
+    <% end %>
+  </div>
+
+</div>

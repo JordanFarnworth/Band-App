@@ -4,3 +4,6 @@
 
 $ ->
   $('#new_user').formValidation()
+
+$('.login.landing').ready ->
+  $('.navbar').addClass 'hidden'

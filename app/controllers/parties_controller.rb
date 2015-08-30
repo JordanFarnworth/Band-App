@@ -48,7 +48,8 @@ class PartiesController < ApplicationController
       end
       format.json do
         if @party.save
-          @party.add_user(@current_user, role = "owner")
+          @current_user.add_party @party
+          @party.add_user @current_user
           @party.delay.geocode_address
           render json: party_json(@party), status: :ok
         else

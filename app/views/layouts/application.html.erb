@@ -10,11 +10,10 @@
   <script type="text/javascript">
       ENV = {
           current_user: <%= logged_in? ? @current_user.id : nil %>,
-          permissions: {
-            // permission business here
-          }
       };
   </script>
+  <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
 </head>
 <body class="<%= params[:controller].gsub(/\//, '-') %> <%= params[:action] %>">
 <nav class="navbar navbar-default">
@@ -60,13 +59,6 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.display_name %> <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><%= link_to 'Logout', login_path, method: :delete %></li>
-            </ul>
-          </li>
-        <% else %>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
-            <ul class="dropdown-menu login-form">
-              <%= render partial: 'shared/login', locals: { show_incorrect: false } %>
             </ul>
           </li>
         <% end %>
