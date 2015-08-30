@@ -34,5 +34,32 @@ class Party
     temp = $(template(data))
     $("#" + elid).html(temp)
 
+autocompletePartyParams = ->
+  {
+    appendTo: '#party-search-results'
+    minLength: 3
+    source:(request, response) ->
+      $.ajax
+        url: "/api/v1/parties",
+        dataType: "json"
+        data:
+          search_term: request.term
+        success: (data) ->
+          console.log data
+          # data = $.map data['results'], (obj, i) ->
+          #   {label: obj.name, value: obj.id, obj: obj}
+          # response data
+    select:(event, ui) ->
+      event.preventDefault()
+      return unless ui.item
+      console.log(ui.item)
+  }
+
+
 $('.parties.show').ready ->
   new Party().getPartyInfo()
+
+$('.parties.search').ready ->
+  $('#party-search-form label').css({'font-size': '24px', 'color': '#2ECBFF'})
+  $('#party-simple-search-bar').autocomplete autocompletePartyParams()
+  $('#simple-search-tab').click()

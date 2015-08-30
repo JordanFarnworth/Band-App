@@ -1,7 +1,6 @@
 class Entity < ActiveRecord::Base
   include ActiveModel::Dirty
-  has_many :entity_users
-  has_many :users, through: :entity_users
+  belongs_to :user
   has_many :message_participants, dependent: :destroy
   has_many :message_threads, through: :message_participants
   has_many :messages, through: :message_threads
@@ -9,8 +8,6 @@ class Entity < ActiveRecord::Base
     foreign_key: :entity_id, class_name: 'Message', source: :message
   acts_as_paranoid
   geocoded_by :address
-
-  # ??? after_create :delay.geocode_address
 
   validates :name, presence: true
   validates :description, presence: true
@@ -24,15 +21,14 @@ class Entity < ActiveRecord::Base
     self.data ||= Hash.new
   end
 
-  def geocode_address
-    self.geocode
+  def add_user(user)
+    self.user = user
     self.save
   end
 
-  def add_user(user, role = 'member')
-    entity_user = entity_users.where(user: user).first_or_create
-    entity_user.update! role: role unless entity_user.role == role
-    entity_user
+  def geocode_address
+    self.geocode
+    self.save
   end
 
   def validate_data

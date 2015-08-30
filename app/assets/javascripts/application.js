@@ -32,6 +32,8 @@
 //= require underscore.min
 //= require gmaps/google
 //= require clndr-rails
+//= require vegas
+//= require classie
 //= require_tree .
 
 $(document).ready(function(){

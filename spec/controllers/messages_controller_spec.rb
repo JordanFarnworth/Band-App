@@ -10,7 +10,7 @@ RSpec.describe MessagesController, type: :controller do
   describe '#index' do
     it 'returns messages in a thread' do
       message = create :message, message_thread: message_thread
-      get :index, message_thread_id: message_thread.id
+      get :index, format: :json, message_thread_id: message_thread.id
       json = JSON.parse response.body
       expect(json['results'].map { |m| m['id'] }).to eql [message.id]
     end

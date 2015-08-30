@@ -14,22 +14,8 @@ RSpec.describe User, type: :model do
   end
 
   describe 'associations' do
-    it { expect(user).to respond_to :entities }
-    it { expect(user).to respond_to :entity_users }
-    it { expect(user).to respond_to :bands }
-    it { expect(user).to respond_to :parties }
-
-    describe 'entities' do
-      let!(:band) { create :band }
-      let!(:band_user) { band.add_user(user) }
-      let!(:party) { create :party }
-      let!(:party_user) { party.add_user(user) }
-
-      it 'determines proper inheritance of entities in assocations' do
-        expect(user.entities.pluck(:id)).to include(band.id, party.id)
-        expect(user.bands.pluck(:id)).to eql [band.id]
-        expect(user.parties.pluck(:id)).to eql [party.id]
-      end
-    end
+    it { expect(user).to respond_to :entity }
+    it { expect(user).to respond_to :band }
+    it { expect(user).to respond_to :party }
   end
 end

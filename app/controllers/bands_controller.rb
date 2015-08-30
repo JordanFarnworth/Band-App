@@ -3,7 +3,7 @@ class BandsController < ApplicationController
   include PaginationHelper
 
   before_action :find_band, only: [:show, :edit, :update, :destroy]
-  before_action :find_bands, only: [:index]
+  before_action :find_bands, only: [:index, :search]
 
   def find_band
     @band = Band.find params[:id]
@@ -13,7 +13,15 @@ class BandsController < ApplicationController
     @bands = Band.all
   end
 
+  def search
+
+  end
+
   def index
+    if params[:search_term]
+      t = params[:search_term]
+      @bands = @bands.where('name LIKE ?', "%#{t}%")
+    end
     respond_to do |format|
       format.html do
       end
@@ -55,7 +63,7 @@ class BandsController < ApplicationController
       end
       format.json do
         if @band.save
-          @band.add_user(@current_user, role = "owner")
+          @band.add_user(@current_user)
           @band.delay.geocode_address
           render json: band_json(@band), status: :ok
         else

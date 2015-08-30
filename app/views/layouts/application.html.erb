@@ -6,6 +6,14 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= yield :scripts %>
   <%= csrf_meta_tags %>
+
+  <script type="text/javascript">
+      ENV = {
+          current_user: <%= logged_in? ? @current_user.id : nil %>,
+      };
+  </script>
+  <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
 </head>
 <body class="<%= params[:controller].gsub(/\//, '-') %> <%= params[:action] %>">
 <nav class="navbar navbar-default">
@@ -18,47 +26,33 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to 'Brand', root_path, class: 'navbar-brand' %>
+      <a href="/landing">
+        <%= image_tag 'logo.png', height: '50', width: '55', class: 'nav-bar-logo-img' %>
+      </a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
+        <li class="active">
+          <a href="/">Dashboard <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="">
+          <a href="#">Calendar</a>
+        </li>
+        <li>
+          <a href="/about">About Us</a>
         </li>
       </ul>
-      <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
       <ul class="nav navbar-nav navbar-right">
         <% if logged_in? %>
-          <%= render partial: 'shared/entities_menu' %>
+          <li>
+            <a href="#">Messages</a>
+          </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.display_name %> <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><%= link_to 'Logout', login_path, method: :delete %></li>
-            </ul>
-          </li>
-        <% else %>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
-            <ul class="dropdown-menu login-form">
-              <%= render partial: 'shared/login', locals: { show_incorrect: false } %>
             </ul>
           </li>
         <% end %>

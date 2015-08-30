@@ -1,0 +1,295 @@
+<!-- Create Band Modal -->
+<div class="modal fade" id="createBandModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Create a Band</h4>
+      </div>
+        <div class="modal-body">
+          <div class="containter-fluid">
+
+            <div class="row text-center">
+              <div role="tablist">
+                <a class="btn btn-default tab-button" href="#band-general-info" role="button tab" data-toggle="tab"><i class="fa fa-volume-up fa-3x" id="band-general-info-tab"></i></a>
+                <span class="nav-span"></span>
+                <a class="btn btn-default tab-button" href="#band-social-media" role="button tab" data-toggle="tab"><i class="fa fa-twitter fa-3x" id="band-social-media-tab"></i></a>
+                <span class="nav-span"></span>
+                <a class="btn btn-default tab-button" href="#band-contact-info" role="button tab" data-toggle="tab"> <i class="fa fa-mobile fa-3x" id="band-contact-info-tab"></i></i></a>
+                <span class="nav-span"></span>
+                <a class="btn btn-default tab-button" href="#band-audio-sample" role="button tab" data-toggle="tab"> <i class="fa fa-headphones fa-3x" id="band-audio-sample-tab"></i></i></a>
+              </div>
+            </div>
+
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="band-general-info">
+                <form id="band-general-info-form" data-fv-framework="bootstrap"
+                  data-fv-icon-valid="glyphicon glyphicon-ok"
+                  data-fv-icon-invalid="glyphicon glyphicon-remove"
+                  data-fv-icon-validating="glyphicon glyphicon-refresh">
+                  <div class="row text-center">
+                    <legend class="text-primary">General Band Info</legend>
+                  </div>
+                  <div class="form-group">
+                    <label for="band-name">Name <i class="fa fa-code"></i></label>
+                    <input minlength="3" name="band-name" data-fv-notempty class="form-control" type="text" id="band-name" placeholder="Band Name..">
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    <label for="band-description">Description of Band <i class="fa fa-pencil"></i></label>
+                    <textarea class="form-control" name="band-description" minlength="20" data-fv-notempty id="band-description" rows="3" placeholder="Band's Description.."></textarea>
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    <label for="genre">Genre <i class="fa fa-music"></i></label>
+                    <input type="text" name="band-genre" data-fv-notempty="true" class="form-control" id="band-genre" placeholder="Genre of music">
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    <label for="band-profile-picture">Band Banner Picture <i class="fa fa-camera-retro"></i></label>
+                    <input type="file" name="band-profile-picture" id="band-profile-picture" data-fv-notempty>
+                  </div>
+                </form>
+              </div>
+
+              <div role="tabpanel" class="tab-pane" id="band-social-media">
+                <form id="band-social-media-form" data-fv-framework="bootstrap"
+                  data-fv-icon-valid="glyphicon glyphicon-ok"
+                  data-fv-icon-invalid="glyphicon glyphicon-remove"
+                  data-fv-icon-validating="glyphicon glyphicon-refresh">
+                  <div class="row text-center">
+                    <legend class="text-primary">Social Media</legend>
+                  </div>
+                  <div class="form-group">
+                    <label for="instagram">Instagram <i class="fa fa-instagram"></i></label>
+                    <input type="text" name="band-instagram" class="form-control" id="band-instagram" placeholder="Instagram Username">
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    <label for="facebook">Facebook <i class="fa fa-facebook-official"></i></label>
+                    <input type="text" data-fv-notempty="true" name="band-facebook" data-fv-regexp="true" data-fv-regexp-message="Not a valid Facebook URL" data-fv-regexp-regexp="(?:https?:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*?(\/)?([^/?]*)" class="form-control" id="band-facebook" placeholder="The Band's direct link to Facebook page: 'https://www.facebook.com/TheBlackKeys' ">
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    <label for="twitter">Twitter <i class="fa fa-twitter"></i></label>
+                    <input type="text" name="band-twitter" class="form-control" id="band-twitter" placeholder="Twitter Username with no '@'">
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    <label for="youtube">Youtube Link <i class="fa fa-youtube"></i></label>
+                    <input type="text" data-fv-notempty="true" name="band-youtube" data-fv-regexp="true" data-fv-regexp-message="Not a valid YouTube URL" data-fv-regexp-regexp="^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$" data-parsley-pattern="^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$" class="form-control" id="band-youtube" placeholder="The direct link to your Youtube Video">
+                  </div>
+                </form>
+              </div>
+
+              <div role="tabpanel" class="tab-pane" id="band-contact-info">
+                <form id="band-contact-info-form" data-fv-framework="bootstrap"
+                  data-fv-icon-valid="glyphicon glyphicon-ok"
+                  data-fv-icon-invalid="glyphicon glyphicon-remove"
+                  data-fv-icon-validating="glyphicon glyphicon-refresh">
+                  <div class="row text-center">
+                      <legend class="text-primary">Contact Information</i></legend>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email Address <i class="fa fa-envelope"></i></label>
+                    <input type="email" data-fv-notempty name="band-email" class="form-control" id="band-email" data-fv-emailaddress-message="The value is not a valid email address" placeholder="Band's Email Address..">
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    <label for="phoneNumber">Phone Number <i class="fa fa-phone"></i></label>
+                    <input type="phone_number" data-fv-notempty name="band-phone" data-fv-regexp="true" data-fv-regexp-message="Not a valid phone number" data-fv-regexp-regexp="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$"  class="form-control" id="band-phone-number" placeholder="Band's Phone Number..">
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    <label for="mailingAddress">Mailing Address <i class="fa fa-location-arrow"></i></label>
+                    <input type="text_field" data-fv-notempty name="band-mailing-address" class="form-control" id="band-mailing-address" placeholder="Street Address, City, State Zip Code">
+                  </div>
+                </form>
+              </div>
+
+              <div role="tabpanel" class="tab-pane" id="band-audio-sample">
+                <form id="band-audio-sample-form" data-fv-framework="bootstrap"
+                  data-fv-icon-valid="glyphicon glyphicon-ok"
+                  data-fv-icon-invalid="glyphicon glyphicon-remove"
+                  data-fv-icon-validating="glyphicon glyphicon-refresh">
+                  <div class="row text-center">
+                    <legend class="text-primary">More Audio Samples</i></legend>
+                  </div>
+                  <div class="form-group">
+                    <label for="audio-file-1">Audio Example 1</label>
+                    <input type="file" data-fv-notempty name="file1" data-fv-file="true" data-fv-file-type="audio/mpeg,audio/mp3" id="audip-file-2">
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    <label for="audio-file-2">Audio Example 2</label>
+                    <input type="file" data-fv-notempty name="file2" data-fv-file="true" data-fv-file-type="audio/mpeg,audio/mp3" id="audio-file-2">
+                  </div>
+                </form>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" id='create-band' class="btn btn-primary">Create Group!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="createPartyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+<!-- Nav tabs -->
+            <div class="row text-center">
+              <div role="tablist">
+                <a class="btn btn-default tab-button" href="#party-general-info" role="button tab" data-toggle="tab"><i class="fa fa-building-o fa-3x" id="party-general-info-tab"></i></a>
+                <span class="nav-span"></span>
+                <a class="btn btn-default tab-button" href="#party-social-media" role="button tab" data-toggle="tab"><i class="fa fa-facebook fa-3x" id="party-social-media-tab"></i></a>
+                <span class="nav-span"></span>
+                <a class="btn btn-default tab-button" href="#party-contact-info" role="button tab" data-toggle="tab"> <i class="fa fa-mobile fa-3x" id="party-contact-info-tab"></i></i></a>
+              </div>
+            </div>
+          <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="party-general-info">
+                  <form id="party-general-info-form" ata-fv-framework="bootstrap"
+                    data-fv-icon-valid="glyphicon glyphicon-ok"
+                    data-fv-icon-invalid="glyphicon glyphicon-remove"
+                    data-fv-icon-validating="glyphicon glyphicon-refresh">
+                    <div class="row text-center">
+                      <legend class="text-primary">General Party/Company Info</legend>
+                    </div>
+                    <div class="form-group">
+                      <label for="party-name">Name <i class="fa fa-code"></i></label>
+                      <input minlength="3" name="party-name" data-fv-notempty class="form-control" type="text" id="party-name" placeholder="Party Name..">
+                    </div>
+                    <br>
+                      <div class="form-group">
+                      <label for="party-description">Description of Company <i class="fa fa-pencil"></i></label>
+                      <textarea class="form-control" name="party-description" minlength="20" data-fv-notempty id="party-description" rows="3" placeholder="Party Description.."></textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <label for="party-profile-picture">Party Profile Picture <i class="fa fa-camera-retro"></i></label>
+                      <input type="file" name="party-profile" id="party-profile-picture-input" data-fv-notempty>
+                    </div>
+                  </form>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="party-social-media">
+                  <form id="party-social-media-form" ata-fv-framework="bootstrap"
+                    data-fv-icon-valid="glyphicon glyphicon-ok"
+                    data-fv-icon-invalid="glyphicon glyphicon-remove"
+                    data-fv-icon-validating="glyphicon glyphicon-refresh">
+                    <div class="row text-center">
+                      <legend class="text-primary">Social Media</legend>
+                    </div>
+                    <div class="form-group">
+                      <label for="party-instagram">Instagram <i class="fa fa-instagram"></i></label>
+                      <input type="text_field" class="form-control" id="party-instagram" placeholder="Instagram Username">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <label for="party-facebook">Facebook <i class="fa fa-facebook-official"></i></label>
+                      <input type="text_field" name="band-facebook" data-fv-regexp="true" data-fv-regexp-message="Not a valid Facebook URL" data-fv-regexp-regexp="(?:https?:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*?(\/)?([^/?]*)" pattern="/^(https?:\/\/){0,1}(www\.){0,1}facebook\.com/" class="form-control" id="party-facebook" placeholder="Use direct link to facebook page, ie: 'https://www.facebook.com/TheBlackKeys' ">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <label for="party-twitter">Twitter <i class="fa fa-twitter"></i></label>
+                      <input type="text_field" class="form-control" id="party-twitter" placeholder="Twitter Username with no '@'">
+                    </div>
+                  </form>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="party-contact-info">
+                  <form id="party-contact-info-form" ata-fv-framework="bootstrap"
+                    data-fv-icon-valid="glyphicon glyphicon-ok"
+                    data-fv-icon-invalid="glyphicon glyphicon-remove"
+                    data-fv-icon-validating="glyphicon glyphicon-refresh">
+                    <div class="row text-center">
+                      <legend class="text-primary">Contact Information</legend>
+                    </div>
+                    <div class="form-group">
+                      <label for="party-email">Email Address <i class="fa fa-envelope"></i></label>
+                      <input type="email" name="party-email" class="form-control" id="party-email" data-fv-notempty data-fv-emailaddress-message="The value is not a valid email address" placeholder="Party's Email Address">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <label for="party-phone-number">Phone Number <i class="fa fa-phone"></i></label>
+                      <input type="phone_number" name="party-phone" data-fv-notempty data-fv-regexp="true" data-fv-regexp-message="Not a valid phone number" data-fv-regexp-regexp="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$" class="form-control" id="party-phone-number" placeholder="Party's Phone Number..">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <label for="party-mailing-address">Mailing Address <i class="fa fa-location-arrow"></i></label>
+                      <input type="text" name="party-mailing-address" data-fv-notempty class="form-control" id="party-mailing-address" placeholder="Party's Mailing Address..">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <label for="party-owner">Party's Owner Name <i class="fa fa-user"></i></label>
+                      <input type="text" name="party-owner-name" data-fv-notempty class="form-control" id="party-owner" placeholder="Party's Owner Name..">
+                    </div>
+                  </form>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="create-party" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- User Edit Modal -->
+<div class="modal fade" id="userEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <form id="edit-user-data-form" ata-fv-framework="bootstrap"
+          data-fv-icon-valid="glyphicon glyphicon-ok"
+          data-fv-icon-invalid="glyphicon glyphicon-remove"
+          data-fv-icon-validating="glyphicon glyphicon-refresh">
+          <div class="form-group">
+            <label for="user-display-name">Display Name <i class="fa fa-code"></i></label>
+            <input minlength="3" data-fv-notempty name="user-display-name" data-fv-notempty class="form-control" type="text" id="user-display-name">
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="username-edit">UserName <i class="fa fa-user"></i></label>
+            <input minlength="3" data-fv-notempty name="username-edit" data-fv-notempty class="form-control" type="text" id="username-edit">
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="user-email-edit">Email Address <i class="fa fa-envelope"></i></label>
+            <input type="email" data-fv-notempty name="user-email-edit" class="form-control" id="user-email-edit" data-fv-notempty data-fv-emailaddress-message="The value is not a valid email address">
+          </div>
+          <br>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="update-user-data-btn" class="btn btn-primary">Update Information</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Change Password Modal -->
