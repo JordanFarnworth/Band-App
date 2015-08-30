@@ -3,7 +3,7 @@ class PartiesController < ApplicationController
   include PaginationHelper
 
   before_action :find_party, only: [:show, :edit, :update, :destroy]
-  before_action :find_parties, only: [:index]
+  before_action :find_parties, only: [:index, :search]
 
   def find_party
     @party = Party.find params[:id]
@@ -13,7 +13,15 @@ class PartiesController < ApplicationController
     @parties = Party.all
   end
 
+  def search
+
+  end
+
   def index
+    if params[:search_term]
+      t = params[:search_term]
+      @parties = @parties.where('name LIKE ?', "%#{t}%")
+    end
     respond_to do |format|
       format.html do
 
