@@ -55,7 +55,7 @@ class BandsController < ApplicationController
       end
       format.json do
         if @band.save
-          @band.add_user(@current_user, role = "owner")
+          @band.add_user(@current_user)
           @band.delay.geocode_address
           render json: band_json(@band), status: :ok
         else

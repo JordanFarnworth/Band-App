@@ -21,6 +21,11 @@ class Entity < ActiveRecord::Base
     self.data ||= Hash.new
   end
 
+  def add_user(user)
+    self.user = user
+    self.save
+  end
+
   def geocode_address
     self.geocode
     self.save

@@ -35,9 +35,6 @@ class User < ActiveRecord::Base
     self.save
   end
 
-  def add_party party
-    self.
-
   #delete after testing
   def reset
     self.user_data[:user_entity_type] = 'none'

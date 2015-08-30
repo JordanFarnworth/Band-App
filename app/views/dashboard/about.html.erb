@@ -26,9 +26,15 @@
                 <li>
                     <a class="page-scroll" href="#map">Map</a>
                 </li>
+                <% unless logged_in? %>
                 <li>
-                    <a class="page-scroll">Login/Signup</a> 
+                    <a class="page-scroll" href="/landing">Login/Signup</a>
                 </li>
+                <% else %>
+                <li>
+                    <a href="/">Dashboard</a>
+                </li>
+                <% end %>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -38,7 +44,7 @@
 
 <!-- Header -->
 <header>
-    <div class="container">
+    <div class="container" id="about-layout">
         <div class="row">
             <div class="col-md-4 col-md-offset-7 col-xs-12">
                 <div class="intro-text">

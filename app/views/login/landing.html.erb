@@ -12,7 +12,10 @@
             <div class="button-farm">
               <% if logged_in? %>
                 <span class="learn-more-button text-center">
-                  <%= link_to 'Go to your Dashboard', root_path, class: 'landing-page-button' %>
+                  <%= link_to 'About', about_path, class: 'landing-page-button' %>
+                </span>
+                <span class="learn-more-button text-center">
+                  <%= link_to 'Dashboard', root_path, class: 'landing-page-button' %>
                 </span>
               <% else %>
                 <span class="learn-more-button text-center">
@@ -71,7 +74,7 @@ $('.myButton').width(
     )
 );
 $(function() {
-    $('body').vegas({
+    $('.login.landing').vegas({
         slides: [
           { src: '/assets/hands.jpg'},
           { src: '/assets/dj.jpg' },
