@@ -1,8 +1,9 @@
 class BandsController < ApplicationController
   include Api::V1::Band
+  include Api::V1::Event
   include PaginationHelper
 
-  before_action :find_band, only: [:show, :edit, :update, :destroy]
+  before_action :find_band, only: [:show, :edit, :update, :destroy, :events]
   before_action :find_bands, only: [:index, :search]
 
   def find_band
@@ -15,6 +16,15 @@ class BandsController < ApplicationController
 
   def search
 
+  end
+
+  def events
+    @band_events = @band.events
+    respond_to  do |format|
+      format.json do
+        render json: events_json(@band_events), status: :ok
+      end
+    end
   end
 
   def index

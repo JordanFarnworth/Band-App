@@ -6,6 +6,8 @@ class Entity < ActiveRecord::Base
   has_many :messages, through: :message_threads
   has_many :unread_messages, -> { MessageParticipant.unread }, through: :message_participants,
     foreign_key: :entity_id, class_name: 'Message', source: :message
+  has_many :event_joiners
+  has_many :events, through: :event_joiners  
   acts_as_paranoid
   geocoded_by :address
 

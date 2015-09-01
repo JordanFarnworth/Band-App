@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150829164836) do
+ActiveRecord::Schema.define(version: 20150901012830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,29 @@ ActiveRecord::Schema.define(version: 20150829164836) do
   add_index "entities", ["data"], name: "index_entities_on_data", using: :gin
   add_index "entities", ["user_id"], name: "index_entities_on_user_id", using: :btree
 
+  create_table "event_joiners", force: :cascade do |t|
+    t.integer  "entity_id"
+    t.integer  "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "event_joiners", ["entity_id"], name: "index_event_joiners_on_entity_id", using: :btree
+  add_index "event_joiners", ["event_id"], name: "index_event_joiners_on_event_id", using: :btree
+
+  create_table "events", force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string   "recurrence_pattern"
+    t.datetime "recurrence_ends_at"
+    t.string   "state"
+    t.integer  "price"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "title"
+    t.text     "description"
+  end
+
   create_table "message_participants", force: :cascade do |t|
     t.integer  "message_thread_id"
     t.integer  "entity_id"
@@ -111,6 +134,8 @@ ActiveRecord::Schema.define(version: 20150829164836) do
 
   add_foreign_key "api_keys", "users"
   add_foreign_key "entities", "users"
+  add_foreign_key "event_joiners", "entities"
+  add_foreign_key "event_joiners", "events"
   add_foreign_key "message_participants", "entities"
   add_foreign_key "message_participants", "message_threads"
   add_foreign_key "messages", "message_threads"

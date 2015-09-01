@@ -10,6 +10,7 @@
   <script type="text/javascript">
       ENV = {
           current_user: <%= logged_in? ? @current_user.id : nil %>,
+          current_entity: <%= logged_in? ? @current_user.entity.id : nil %>
       };
   </script>
   <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
