@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   include Api::V1::Event
 
-  before_action :find_event, only: [:show, :edit, :update, :destroy, :events]
+  before_action :find_event, only: [:show, :edit, :update, :destroy]
   before_action :find_entity, only: :events
 
 
@@ -11,6 +11,16 @@ class EventsController < ApplicationController
 
   def find_entity
     @entity = Entity.find params[:id]
+  end
+
+  def destroy
+    joiners = EventJoiner.where(event_id: @event.id)
+    joiners.destroy_all
+    if @event.destroy
+      render json: event_json(@event), status: :ok
+    else
+      render json: { error: 'deleting user failed' }, status: :bad_request
+    end
   end
 
   def show

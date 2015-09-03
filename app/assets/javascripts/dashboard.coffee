@@ -33,10 +33,10 @@ class Dashboard
     $.ajax "/api/v1/entities/#{@entity}/events",
       type: 'get'
       dataType: 'json'
-      success: (data) ->
+      success: (data) =>
         events = $.map data, (obj, i) ->
           {id: obj['id'], description: obj['description'], title: obj['title'], start: obj['start_time'], end: obj['end_time']}
-        $('#calendar').fullCalendar(new Dashboard().calendarParams(events))
+        $('#calendar').fullCalendar(@calendarParams(events))
 
   assignEntityType: =>
     $.ajax "/api/v1/users/#{@user}/entity_type",
@@ -61,6 +61,15 @@ class Dashboard
           start_time: $('#event-start-date-edit').val()
           end_time: $('#event-end-date-edit').val()
       success: (data) ->
+        window.location = window.location
+
+  deleteEvent: =>
+    event = $('#event-edit-id').val()
+    $.ajax "/api/v1/events/#{event}",
+      type: 'delete'
+      dataType: 'json'
+      success: (data) =>
+        console.log data
         window.location = window.location
 
   # create band and parties
@@ -149,6 +158,10 @@ $('.dashboard.calendar').ready ->
     $('#modal-body-edit').toggleClass('hidden')
   $('#event-update').on 'click', ->
     new Dashboard().udpdateEvent()
+  $('#event-delete').on 'click', ->
+    bootbox.confirm 'Are you sure?', (result) ->
+      if result == true
+        new Dashboard().deleteEvent()
 
 
 $('.dashboard.index').ready ->
