@@ -1,5 +1,6 @@
 class PartiesController < ApplicationController
   include Api::V1::Party
+  include Api::V1::Event
   include PaginationHelper
 
   before_action :find_party, only: [:show, :edit, :update, :destroy]
@@ -56,7 +57,6 @@ class PartiesController < ApplicationController
       end
       format.json do
         if @party.save
-          @current_user.add_party @party
           @party.add_user @current_user
           @party.delay.geocode_address
           render json: party_json(@party), status: :ok

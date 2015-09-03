@@ -5,12 +5,38 @@
 class Dashboard
   constructor: ->
     @user = ENV.current_user
+    @entity = ENV.current_entity
 
   validateForm: (pass, id) =>
     if pass == true
       $('#' + id).css('color', 'white')
     else
       $('#' + id).css('color', 'red')
+
+  calendarParams: (events) =>
+    {
+      events: events
+      eventClick: (event) ->
+        $('#event-title').text(event.title)
+        $('#event-start-date').text(event.start)
+        $('#event-end-date').text(event.end)
+        $('#event-description').text(event.description)
+        $('#event-edit-id').val(event.id)
+        $('#event-title-edit').val(event.title)
+        $('#event-start-date-edit').val(event.start)
+        $('#event-end-date-edit').val(event.end)
+        $('#event-description-edit').val(event.description)
+        $('#eventModal').modal('show')
+    }
+
+  getCalendarData: =>
+    $.ajax "/api/v1/entities/#{@entity}/events",
+      type: 'get'
+      dataType: 'json'
+      success: (data) =>
+        events = $.map data, (obj, i) ->
+          {id: obj['id'], description: obj['description'], title: obj['title'], start: obj['start_time'], end: obj['end_time']}
+        $('#calendar').fullCalendar(@calendarParams(events))
 
   assignEntityType: =>
     $.ajax "/api/v1/users/#{@user}/entity_type",
@@ -21,6 +47,29 @@ class Dashboard
           id: @user
           entity_type: if $('#band-option').is(":checked") == true then 'band' else if $('#party-option').is(":checked") == true then 'party'
       success: (data) ->
+        window.location = window.location
+
+  udpdateEvent: =>
+    event = $('#event-edit-id').val()
+    $.ajax "/api/v1/events/#{event}",
+      type: 'put'
+      dataType: 'json'
+      data:
+        event:
+          title: $('#event-title-edit').val()
+          description: $('#event-description-edit').val()
+          start_time: $('#event-start-date-edit').val()
+          end_time: $('#event-end-date-edit').val()
+      success: (data) ->
+        window.location = window.location
+
+  deleteEvent: =>
+    event = $('#event-edit-id').val()
+    $.ajax "/api/v1/events/#{event}",
+      type: 'delete'
+      dataType: 'json'
+      success: (data) =>
+        console.log data
         window.location = window.location
 
   # create band and parties
@@ -99,6 +148,20 @@ class Dashboard
     $('#party-general-info-form').data('formValidation').resetForm()
     $('#party-social-media-form').data('formValidation').resetForm()
     $('#party-contact-info-form').data('formValidation').resetForm()
+
+$('.dashboard.calendar').ready ->
+  new Dashboard().getCalendarData()
+  $('#edit-event-toggle').on 'click', ->
+    $('#modal-body-show').toggleClass('hidden')
+    $('#event-update').toggleClass('hidden')
+    $('#event-delete').toggleClass('hidden')
+    $('#modal-body-edit').toggleClass('hidden')
+  $('#event-update').on 'click', ->
+    new Dashboard().udpdateEvent()
+  $('#event-delete').on 'click', ->
+    bootbox.confirm 'Are you sure?', (result) ->
+      if result == true
+        new Dashboard().deleteEvent()
 
 
 $('.dashboard.index').ready ->

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   root to: 'dashboard#index'
   get 'login' => 'login#index'
   get 'dashboard' => 'dashboard#index'
+  get 'calendar' => 'dashboard#calendar'
   get 'landing' => 'login#landing'
   get 'about' => 'dashboard#about'
   post 'login' => 'login#verify'
@@ -29,6 +30,7 @@ Rails.application.routes.draw do
 
   scope :api, defaults: { format: :json }, constraints: { format: :json } do
     scope :v1 do
+      resources :events
       resources :users, except: [:new, :edit] do
         member do
           get 'password_confirmation'
@@ -45,6 +47,10 @@ Rails.application.routes.draw do
         end
       end
       resources :entities, only: [] do
+        member do
+          get 'events' => 'events#events'
+          put 'update' => 'events#update'
+        end
         resources :message_threads, except: [:new, :edit, :update], shallow: true do
           resources :messages, only: [:index], shallow: true
         end
