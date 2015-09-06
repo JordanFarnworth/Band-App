@@ -52,48 +52,13 @@ class User
     $('#user-email-edit').val("#{data.email}")
 
   #update user info/passwords
-  updateUserInfo: =>
-    $.ajax "/api/v1/users/#{@user}",
-      type: 'put'
-      dataType: 'json'
-      data:
-        user:
-          username: $('#username-edit').val()
-          display_name: $('#user-display-name').val()
-          email: $('#user-email-edit').val()
-      success: (data) ->
-        $('#userEditModal').modal('hide')
-        $('#edit-user-data-form').data('formValidation').resetForm()
-        new User().getUserBands()
-        bootbox.alert('User Updated!', null)
 
-  updateUserPassword: =>
-    $.ajax "/api/v1/users/#{@user}",
-      type: 'put'
-      dataType: 'json'
-      data:
-        user:
-          password: $('#new-password').val()
-      success: (data) ->
-        $('#changePasswordModal').modal('hide')
-        new User().clearChangePasswordModal()
-        bootbox.alert('Password Updated', null)
+
+
   #end updates
 
-  clearChangePasswordModal: =>
-    $('#old-password').val('')
-    $('#new-password').val('')
-    $('#confirm-new-password').val('')
-    $('#change-password-modal-form').data('formValidation').resetForm()
 
 $('.users.show').ready ->
-  $('#update-user-data-btn').on 'click', ->
-    user = new User()
-    $('#edit-user-data-form').formValidation 'validate'
-    if $('#edit-user-data-form').data('formValidation').isValid()
-      user.updateUserInfo()
 
-  $('#update-user-password').on 'click', ->
-    user = new User()
-    if $('#change-password-modal-form').data('formValidation').isValid()
-      user.updateUserPassword()
+
+  

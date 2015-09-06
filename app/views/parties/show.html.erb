@@ -4,6 +4,23 @@
 <% end %>
 
   <div class="container">
+    <% if logged_in? && @current_user.user_data[:user_entity_type] === 'band' %>
+      <div class="row text-center" id="band-application-div">
+        <% if @current_user.entity.has_application(@party.id) %>
+          <div class="alert alert-success" role="alert">
+            <h5>
+              You have already applied to play for this company! Check your application status on your <a href="/dashboard">Dashboard</a>
+            </h5>
+          </div>
+        <% else %>
+          <div class="alert alert-info" role="alert">
+            <h5>
+              <a href="#" data-toggle="modal" data-target="#application-modal">Apply for a gig</a>, or you can browse through this company's <a href="#" data-toggle="modal" data-target="#party-open-ads">open ads</a>
+            </h5>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
     <div class="row">
       <div class="col-md-4">
         <img id="party-profile-picture" src="http://www.yashdevelopers.com/images/elevation-oakwoodhills-build-A-large.jpg" alt="" />
@@ -72,3 +89,4 @@
   </div>
 
 <%= render 'scriptstore' %>
+<%= render 'partymodals' %>

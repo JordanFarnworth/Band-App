@@ -30,6 +30,7 @@ Rails.application.routes.draw do
 
   scope :api, defaults: { format: :json }, constraints: { format: :json } do
     scope :v1 do
+      post 'application' => 'applications#create'
       resources :events
       resources :users, except: [:new, :edit] do
         member do
@@ -46,7 +47,7 @@ Rails.application.routes.draw do
           get 'search'
         end
       end
-      resources :entities, only: [] do
+      resources :entities do
         member do
           get 'events' => 'events#events'
           put 'update' => 'events#update'

@@ -7,7 +7,9 @@ class Entity < ActiveRecord::Base
   has_many :unread_messages, -> { MessageParticipant.unread }, through: :message_participants,
     foreign_key: :entity_id, class_name: 'Message', source: :message
   has_many :event_joiners
-  has_many :events, through: :event_joiners  
+  has_many :events, through: :event_joiners
+  has_many :applications, through: :application_joiners
+  has_many :application_joiners
   acts_as_paranoid
   geocoded_by :address
 
@@ -26,6 +28,21 @@ class Entity < ActiveRecord::Base
   def add_user(user)
     self.user = user
     self.save
+  end
+
+  def has_application(party)
+    if self.applications === []
+      return false
+    else
+      a = self.applications
+      a.each do |x|
+        if x.party_id === party
+            return true
+        else
+          return false
+        end
+      end
+    end
   end
 
   def geocode_address

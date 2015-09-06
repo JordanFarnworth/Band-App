@@ -41,9 +41,13 @@
         <li class="">
           <a href="/calendar">Calendar</a>
         </li>
-        <li>
-          <a href="/about">About Us</a>
-        </li>
+        <% if @current_user.user_data[:user_entity_type] === 'band' %>
+          <li>
+            <a href="/parties/search">Search Companies</a>
+          </li>
+        <% elsif @current_user.user_data[:user_entity_type] === 'party' %>
+          <a href="/bands/search">Search Bands</a>
+        <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if logged_in? %>
@@ -53,6 +57,9 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.display_name %> <span class="caret"></span></a>
             <ul class="dropdown-menu">
+              <li>
+                <a href="/about">About Us</a>
+              </li>
               <li><%= link_to 'Logout', login_path, method: :delete %></li>
             </ul>
           </li>

@@ -11,11 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150901012830) do
+ActiveRecord::Schema.define(version: 20150906002916) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+
+  create_table "ad_applications", force: :cascade do |t|
+    t.text     "note"
+    t.string   "state"
+    t.integer  "ad_id"
+    t.integer  "entity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "ad_applications", ["ad_id"], name: "index_ad_applications_on_ad_id", using: :btree
+  add_index "ad_applications", ["entity_id"], name: "index_ad_applications_on_entity_id", using: :btree
+
+  create_table "ads", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "start_time"
+    t.string   "location"
+    t.datetime "end_time"
+    t.string   "state"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "entity_id"
+  end
+
+  add_index "ads", ["entity_id"], name: "index_ads_on_entity_id", using: :btree
 
   create_table "api_keys", force: :cascade do |t|
     t.integer  "user_id"
@@ -27,6 +53,27 @@ ActiveRecord::Schema.define(version: 20150901012830) do
   end
 
   add_index "api_keys", ["user_id"], name: "index_api_keys_on_user_id", using: :btree
+
+  create_table "application_joiners", force: :cascade do |t|
+    t.integer  "entity_id"
+    t.string   "relation"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "application_id"
+  end
+
+  add_index "application_joiners", ["application_id"], name: "index_application_joiners_on_application_id", using: :btree
+  add_index "application_joiners", ["entity_id"], name: "index_application_joiners_on_entity_id", using: :btree
+
+  create_table "applications", force: :cascade do |t|
+    t.string   "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "band_id"
+    t.integer  "party_id"
+    t.date     "start_time"
+    t.date     "end_time"
+  end
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -85,6 +132,11 @@ ActiveRecord::Schema.define(version: 20150901012830) do
     t.text     "description"
   end
 
+  create_table "favorites", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "message_participants", force: :cascade do |t|
     t.integer  "message_thread_id"
     t.integer  "entity_id"
@@ -115,6 +167,26 @@ ActiveRecord::Schema.define(version: 20150901012830) do
   add_index "messages", ["message_thread_id"], name: "index_messages_on_message_thread_id", using: :btree
   add_index "messages", ["sender_id"], name: "index_messages_on_sender_id", using: :btree
 
+  create_table "review_joiners", force: :cascade do |t|
+    t.integer  "entity_id"
+    t.integer  "review_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "review_joiners", ["entity_id"], name: "index_review_joiners_on_entity_id", using: :btree
+  add_index "review_joiners", ["review_id"], name: "index_review_joiners_on_review_id", using: :btree
+
+  create_table "reviews", force: :cascade do |t|
+    t.text     "description"
+    t.integer  "rating"
+    t.integer  "entity_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "reviews", ["entity_id"], name: "index_reviews_on_entity_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "username"
     t.string   "display_name"
@@ -132,11 +204,19 @@ ActiveRecord::Schema.define(version: 20150901012830) do
   add_index "users", ["email"], name: "index_users_on_email", using: :btree
   add_index "users", ["username"], name: "index_users_on_username", using: :btree
 
+  add_foreign_key "ad_applications", "ads"
+  add_foreign_key "ad_applications", "entities"
+  add_foreign_key "ads", "entities"
   add_foreign_key "api_keys", "users"
+  add_foreign_key "application_joiners", "applications"
+  add_foreign_key "application_joiners", "entities"
   add_foreign_key "entities", "users"
   add_foreign_key "event_joiners", "entities"
   add_foreign_key "event_joiners", "events"
   add_foreign_key "message_participants", "entities"
   add_foreign_key "message_participants", "message_threads"
   add_foreign_key "messages", "message_threads"
+  add_foreign_key "review_joiners", "entities"
+  add_foreign_key "review_joiners", "reviews"
+  add_foreign_key "reviews", "entities"
 end

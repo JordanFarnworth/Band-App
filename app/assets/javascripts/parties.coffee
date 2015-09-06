@@ -15,6 +15,23 @@ class Party
         gmap_show data
         @populatePartyPage data
 
+  createApplication: =>
+    $.ajax "/api/v1/application",
+      type: 'post'
+      dataType: 'json'
+      data:
+        application:
+          start_time: $('#application-start').val()
+          end_time: $('#application-end').val()
+          party_id: window.location.pathname.match(/\/parties\/(\d+)/)[1]
+          band_id: ENV.current_entity
+      success: (data) =>
+        $('#application-modal').modal('hide')
+        bootbox.alert('Your application has been created and delivered!', null)
+        $('#band-application-div').addClass('hidden')
+
+
+
   populatePartyPage: (data) =>
     @compileHbsTemplate("party-name-hbs", "party-name", data)
     @compileHbsTemplate("party-owner-name-hbs", "party-owner", data)
@@ -45,19 +62,23 @@ autocompletePartyParams = ->
         data:
           search_term: request.term
         success: (data) ->
-          console.log data
-          # data = $.map data['results'], (obj, i) ->
-          #   {label: obj.name, value: obj.id, obj: obj}
-          # response data
+          data = $.map data['results'], (obj, i) ->
+            {label: obj.name, value: obj.id, obj: obj}
+          response data
     select:(event, ui) ->
       event.preventDefault()
       return unless ui.item
-      console.log(ui.item)
+      $('#party-simple-search-bar').val('')
+      window.location = "/parties/#{ui.item.value}"
   }
 
 
 $('.parties.show').ready ->
   new Party().getPartyInfo()
+  $('#application-start').datepicker()
+  $('#application-end').datepicker()
+  $('#create-normal-application').on 'click', ->
+    new Party().createApplication()
 
 $('.parties.search').ready ->
   $('#party-search-form label').css({'font-size': '24px', 'color': '#2ECBFF'})

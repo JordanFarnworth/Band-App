@@ -13,6 +13,25 @@ class Dashboard
     else
       $('#' + id).css('color', 'red')
 
+  #get methods for user info and entity info
+  getUserInfo: =>
+    $.ajax "/api/v1/users/#{@user}",
+      type: 'get'
+      dataType: 'json'
+      success: (data) =>
+        @populateUserData(data)
+
+  getEntityInfo: =>
+    $.ajax "/api/v1/entities/#{@entity}",
+      type: 'get'
+      dataType: 'json'
+      success: (data) =>
+        if data.type == "Band"
+          @populateBandData(data)
+        else
+          # populatePartyData()
+          console.log 'party'
+
   calendarParams: (events) =>
     {
       events: events
@@ -62,6 +81,52 @@ class Dashboard
           end_time: $('#event-end-date-edit').val()
       success: (data) ->
         window.location = window.location
+
+  updateBandInfo: =>
+    $.ajax "/api/v1/bands/#{@entity}",
+          type: 'put'
+          dataType: 'json'
+          data:
+            band:
+              name: $('#edit-band-name').val()
+              description: $('#edit-band-description').val()
+              address: $('#edit-band-address').val()
+              social_media:
+                twitter: $('#edit-band-twitter').val()
+                facebook: $('#edit-band-facebook').val()
+                instagram: $('#edit-band-instagram').val()
+              data:
+                email: $('#edit-band-email').val()
+                genre: $('#edit-band-genre').val()
+                phone_number: $('#edit-band-phone-number').val()
+                youtube_link: $('#edit-band-youtube').val()
+          success: (data) =>
+            bootbox.alert('Band Updated', null)
+
+  updateUserInfo: =>
+    $.ajax "/api/v1/users/#{@user}",
+      type: 'put'
+      dataType: 'json'
+      data:
+        user:
+          username: $('#edit-user-username').val()
+          display_name: $('#edit-user-displayname').val()
+          email: $('#edit-user-email').val()
+      success: (data) ->
+        $('#edit-user-data-form').data('formValidation').resetForm()
+        bootbox.alert('User Updated!', null)
+
+  updateUserPassword: =>
+    $.ajax "/api/v1/users/#{@user}",
+      type: 'put'
+      dataType: 'json'
+      data:
+        user:
+          password: $('#new-password').val()
+      success: (data) ->
+        $('#changePasswordModal').modal('hide')
+        new Dashboard().clearChangePasswordModal()
+        bootbox.alert('Password Updated', null)
 
   deleteEvent: =>
     event = $('#event-edit-id').val()
@@ -117,6 +182,27 @@ class Dashboard
         new Dashboard().clearPartyModal()
         $('#createPartyModal').modal('hide')
         window.location = "/parties/#{data.id}"
+
+  #populate edit forms
+  populateBandData: (data) =>
+    $('#edit-band-name').val(data.name)
+    $('#edit-band-description').val(data.description)
+    $('#edit-band-email').val(data.data.email)
+    $('#edit-band-instagram').val(data.social_media.instagram)
+    $('#edit-band-facebook').val(data.social_media.facebook)
+    $('#edit-band-twitter').val(data.social_media.twitter)
+    $('#edit-band-genre').val(data.data.genre)
+    $('#edit-band-phone-number').val(data.data.phone_number)
+    $('#edit-band-youtube').val(data.data.youtube_link)
+    $('#edit-band-address').val(data.address)
+
+  populateUserData: (data) =>
+    $('#edit-user-displayname').val(data.display_name)
+    $('#edit-user-username').val(data.username)
+    $('#edit-user-email').val(data.email)
+
+
+
   #end create
   clearBandModal: =>
     $('#band-name').val('')
@@ -149,6 +235,13 @@ class Dashboard
     $('#party-social-media-form').data('formValidation').resetForm()
     $('#party-contact-info-form').data('formValidation').resetForm()
 
+  clearChangePasswordModal: =>
+    $('#old-password').val('')
+    $('#new-password').val('')
+    $('#confirm-new-password').val('')
+    $('#change-password-modal-form').data('formValidation').resetForm()
+
+
 $('.dashboard.calendar').ready ->
   new Dashboard().getCalendarData()
   $('#edit-event-toggle').on 'click', ->
@@ -166,6 +259,7 @@ $('.dashboard.calendar').ready ->
 
 $('.dashboard.index').ready ->
   db = new Dashboard()
+  $('#band-edit-form').formValidation()
   $('#band-general-info-form').formValidation
     excluded: ':disabled'
   $('#band-social-media-form').formValidation
@@ -184,6 +278,19 @@ $('.dashboard.index').ready ->
     excluded: ':disabled'
   $('#change-password-modal-form').formValidation
     excluded: ':disabled'
+  db.getUserInfo()
+  db.getEntityInfo()
+  $('#update-user-data-btn').on 'click', ->
+    $('#edit-user-data-form').formValidation 'validate'
+    if $('#edit-user-data-form').data('formValidation').isValid()
+      new Dashboard().updateUserInfo()
+  $('#update-user-password').on 'click', ->
+    if $('#change-password-modal-form').data('formValidation').isValid()
+      new Dashboard().updateUserPassword()
+  $('#update-band-btn').on 'click', ->
+    $('#band-edit-form').formValidation 'validate'
+    if $('#band-edit-form').data('formValidation').isValid()
+      new Dashboard().updateBandInfo()
 
   $('#band-or-party').on 'click', ->
     db.assignEntityType()
