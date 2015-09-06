@@ -22,7 +22,7 @@ class MessagesController < ApplicationController
       end
       format.json do
         @messages = @message_thread.messages.reverse_chronological
-        render json: pagination_json(@messages, :messages_json, params[:include] || []), status: :ok
+        render json: messages_json(@messages, params[:include] || []), status: :ok
       end
     end
   end

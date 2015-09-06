@@ -14,7 +14,7 @@ class MessageThreadsController < ApplicationController
 
   def index
     @message_threads = @entity.message_threads
-    render json: pagination_json(@message_threads, :message_threads_json, params[:include] || []), status: :ok
+    render json: message_threads_json(@message_threads, params[:include] || []), status: :ok
   end
 
   def show
