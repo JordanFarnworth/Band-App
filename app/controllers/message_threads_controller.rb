@@ -20,4 +20,10 @@ class MessageThreadsController < ApplicationController
   def show
     render json: message_thread_json(@message_thread, params[:include] || []), status: :ok
   end
+
+  def recipients
+    @recipients = Entity.where.not(id: current_user.entity.try(:id))
+    @recipients = @recipients.where('LOWER(name) LIKE ?', "%#{params[:q].downcase}%") if params[:q]
+    render json: @recipients.map { |e| { id: e.id, name: e.name } }, status: :ok
+  end
 end

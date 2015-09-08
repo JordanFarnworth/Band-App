@@ -56,6 +56,7 @@ Rails.application.routes.draw do
       end
       resources :message_threads, except: [:new, :edit, :update], shallow: true do
         resources :messages, only: [:index], shallow: true
+        get 'recipients', on: :collection
       end
       resources :parties, except: [:new, :edit] do
         collection do

@@ -76,9 +76,74 @@ var ExpandedMessageThread = React.createClass({
   }
 });
 
+var MessageModal = React.createClass({
+  getInitialState: function() {
+    return { recipient_id: undefined, recipient_name: undefined, subject: undefined, body: undefined };
+  },
+  render: function() {
+    return (
+      <Modal onHide={this.close} key={'message_modal'}>
+        <Modal.Header closeButton>
+          New Message
+        </Modal.Header>
+        <Modal.Body className="message-form">
+          <label>Recipient</label>
+          <input type="text" id="message_recipient" className="form-control" value={this.state.recipient_name} onChange={this.updateState} />
+          <label>Subject</label>
+          <input type="text" id="message_subject" className="form-control" value={this.state.subject} onChange={this.updateState} />
+          <label>Body</label>
+          <textarea id="message_body" className="form-control" value={this.state.body} onChange={this.updateState} />
+        </Modal.Body>
+      </Modal>
+    );
+  },
+  updateState: function(e) {
+    if (e.target.id == 'message_recipient') this.setState({ recipient_name: e.target.value })
+    if (e.target.id == 'message_subject') this.setState({ subject: e.target.value });
+    if (e.target.id == 'message_body') this.setState({ body: e.target.value });
+  },
+  close: function() {
+    this.props.messages_page.setState({ show_modal: false });
+  },
+  componentDidUpdate: function() {
+    this.updateAutocomplete();
+  },
+  componentDidMount: function() {
+    this.updateAutocomplete();
+  },
+  componentDidUnmount: function() {
+    $('#message_recipient').autocomplete('destroy');
+  },
+  updateAutocomplete: function() {
+    $('#message_recipient').autocomplete({
+      source: function(request, response) {
+        $.ajax('/api/v1/message_threads/recipients', {
+          type: 'get',
+          dataType: 'json',
+          data: { q: request.term },
+          success: function(data) {
+            response($.map(data, function(obj) {
+              return { value: obj.id, label: obj.name };
+            }));
+          }
+        });
+      },
+      minLength: 3,
+      appendTo: '.message-form',
+      select: function(event, ui) {
+        event.preventDefault();
+        this.setState({ recipient_id: ui.item.value, recipient_name: ui.item.label });
+      }.bind(this)
+    });
+  }
+});
+
 var MessagesPage = React.createClass({
   getInitialState: function() {
-    return { message_thread: undefined };
+    return { message_thread: undefined, show_modal: false };
+  },
+  showModal: function() {
+    this.setState({ show_modal: true });
   },
   render: function() {
     var threadToRender = undefined;
@@ -87,10 +152,13 @@ var MessagesPage = React.createClass({
     else
       threadToRender = '';
 
+    var modal = this.state.show_modal ? <MessageModal messages_page={this} /> : '';
+
     return (
       <div className="row">
+        {modal}
         <div className="col-md-3">
-          <div className="btn btn-primary">
+          <div className="btn btn-primary" onClick={this.showModal}>
             <i className="fa fa-plus" />
             New Message
           </div>

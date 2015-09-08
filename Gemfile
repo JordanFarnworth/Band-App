@@ -26,6 +26,7 @@ gem 'clndr-rails'
 gem 'geocoder'
 gem 'gmaps4rails'
 gem 'react-rails'
+gem 'react-bootstrap-rails'
 
 group :development do
   gem 'letter_opener'
