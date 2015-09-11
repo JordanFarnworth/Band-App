@@ -4,14 +4,9 @@ class MessagesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create]
 
   before_action :find_message_thread, only: [:index], if: :api_request?
-  before_action :find_entity, only: [:create]
 
   def find_message_thread
     @message_thread = MessageThread.find params[:message_thread_id]
-  end
-
-  def find_entity
-    @entity = Entity.find params[:entity_id]
   end
 
   def index
@@ -29,14 +24,14 @@ class MessagesController < ApplicationController
 
   def create
     @recipient = Entity.find params[:message][:recipient_id]
-    @message_thread = MessageThread.between_entities @entity, @recipient
+    @message_thread = MessageThread.between_entities current_entity, @recipient
     unless @message_thread
       @message_thread ||= MessageThread.create
-      @message_thread.message_participants.create entity: @entity
+      @message_thread.message_participants.create entity: current_entity
       @message_thread.message_participants.create entity: @recipient
     end
     @message = @message_thread.messages.new message_params
-    @message.sender = @entity
+    @message.sender = current_entity
     if @message.save
       @message_thread.message_participants.find_by(entity_id: @recipient.id).update(state: :unread)
       render json: message_json(@message), status: :ok

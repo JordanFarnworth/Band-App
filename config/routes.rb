@@ -46,13 +46,13 @@ Rails.application.routes.draw do
           get 'search'
         end
       end
+      resources :messages, only: [:create]
       resources :entities, only: [] do
         member do
           get 'events' => 'events#events'
           put 'update' => 'events#update'
         end
 
-        resources :messages, only: [:create]
       end
       resources :message_threads, except: [:new, :edit, :update], shallow: true do
         resources :messages, only: [:index], shallow: true

@@ -86,16 +86,44 @@ var MessageModal = React.createClass({
         <Modal.Header closeButton>
           New Message
         </Modal.Header>
-        <Modal.Body className="message-form">
-          <label>Recipient</label>
-          <input type="text" id="message_recipient" className="form-control" value={this.state.recipient_name} onChange={this.updateState} />
-          <label>Subject</label>
-          <input type="text" id="message_subject" className="form-control" value={this.state.subject} onChange={this.updateState} />
-          <label>Body</label>
-          <textarea id="message_body" className="form-control" value={this.state.body} onChange={this.updateState} />
+        <Modal.Body>
+          <div className="message-form" data-fv-framework="bootstrap" data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-validating="glyphicon glyphicon-refresh fa-spin">
+            <label>Recipient</label>
+            <input type="text" id="message_recipient" className="form-control" value={this.state.recipient_name} onChange={this.updateState} />
+            <div className="form-group">
+              <label>Subject</label>
+              <input name="message[subject]" data-fv-notempty="true" data-fv-stringlength="true" data-fv-stringlength-min="5" type="text" id="message_subject" className="form-control" value={this.state.subject} onChange={this.updateState} />
+            </div>
+            <div className="form-group">
+              <label>Body</label>
+              <textarea name="message[body]" data-fv-notempty="true" data-fv-stringlength="true" data-fv-stringlength-min="5" id="message_body" className="form-control" value={this.state.body} onChange={this.updateState} />
+            </div>
+          </div>
         </Modal.Body>
+        <Modal.Footer>
+          <div className="btn btn-primary send-message-button" onClick={this.send} disabled="disabled">Send Message</div>
+        </Modal.Footer>
       </Modal>
     );
+  },
+  send: function() {
+    if (!$('.message-form').data('formValidation').isValid() || !this.state.recipient_id) return;
+    $.ajax('/api/v1/messages', {
+      type: 'post',
+      dataType: 'json',
+      data: {
+        message: {
+          recipient_id: this.state.recipient_id,
+          subject: this.state.subject,
+          body: this.state.body
+        }
+      },
+      success: function(data) {
+        this.close();
+        // placeholder reload
+        window.location = window.location.href;
+      }.bind(this)
+    });
   },
   updateState: function(e) {
     if (e.target.id == 'message_recipient') this.setState({ recipient_name: e.target.value })
@@ -115,6 +143,10 @@ var MessageModal = React.createClass({
     $('#message_recipient').autocomplete('destroy');
   },
   updateAutocomplete: function() {
+    $('.message-form').formValidation({
+    }).on('success.field.fv err.field.fv', function(e, data) {
+      $('.send-message-button').attr('disabled', data.fv.getInvalidFields().length > 0 || this.state.recipient_id == undefined);
+    }.bind(this));
     $('#message_recipient').autocomplete({
       source: function(request, response) {
         $.ajax('/api/v1/message_threads/recipients', {
@@ -133,6 +165,7 @@ var MessageModal = React.createClass({
       select: function(event, ui) {
         event.preventDefault();
         this.setState({ recipient_id: ui.item.value, recipient_name: ui.item.label });
+        $('.message-form').data('formValidation').validate();
       }.bind(this)
     });
   }

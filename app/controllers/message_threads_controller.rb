@@ -13,7 +13,7 @@ class MessageThreadsController < ApplicationController
   end
 
   def index
-    @message_threads = @entity.message_threads
+    @message_threads = @entity.message_threads.reverse_chronological
     render json: message_threads_json(@message_threads, params[:include] || []), status: :ok
   end
 
