@@ -7,19 +7,13 @@
   <%= yield :scripts %>
   <%= csrf_meta_tags %>
 
-  <% if logged_in? %>
-    <script type="text/javascript">
-        ENV = {
-            current_user: <%= logged_in? ? @current_user.id : nil.to_json %>,
-            current_entity: <%= @current_user.entity? ? @current_user.entity.id : nil.to_json %>
-        };
-    </script>
-  <% end %>
-
   <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
 </head>
 <body class="<%= params[:controller].gsub(/\//, '-') %> <%= params[:action] %>">
+<script type="text/javascript">
+  ENV = <%= js_env.to_json.html_safe %>;
+</script>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->

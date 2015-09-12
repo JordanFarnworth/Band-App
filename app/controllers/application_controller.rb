@@ -33,7 +33,14 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
 
+  def js_env(opts = {})
+    @js_env ||= { current_user: current_user.try(:id), current_entity: current_entity.try(:id) }
+    @js_env.merge!(opts) unless opts.empty?
+    @js_env
+  end
+
   private :set_current_user
+  helper_method :js_env
   helper_method :current_user
   helper_method :logged_in?
   helper_method :current_entity
