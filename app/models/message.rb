@@ -18,6 +18,10 @@ class Message < ActiveRecord::Base
   validates_length_of :body, in: 5..20000
   validates_presence_of :sender
 
+  after_create do
+    message_thread.touch
+  end
+
   def preview_text
     body[0, 100] + (body.length > 100 ? '...' : '')
   end

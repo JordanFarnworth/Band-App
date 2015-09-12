@@ -13,11 +13,17 @@ class MessageThreadsController < ApplicationController
   end
 
   def index
-    @message_threads = @entity.message_threads
-    render json: pagination_json(@message_threads, :message_threads_json, params[:include] || []), status: :ok
+    @message_threads = @entity.message_threads.reverse_chronological
+    render json: message_threads_json(@message_threads, params[:include] || []), status: :ok
   end
 
   def show
     render json: message_thread_json(@message_thread, params[:include] || []), status: :ok
+  end
+
+  def recipients
+    @recipients = Entity.where.not(id: current_user.entity.try(:id))
+    @recipients = @recipients.where('LOWER(name) LIKE ?', "%#{params[:q].downcase}%") if params[:q]
+    render json: @recipients.map { |e| { id: e.id, name: e.name } }, status: :ok
   end
 end

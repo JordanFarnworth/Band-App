@@ -7,7 +7,7 @@ class MessageThread < ActiveRecord::Base
 
   scope :with_entities, -> { includes(message_participants: :entity) }
   scope :with_messages, -> { includes(:sorted_messages) }
-  scope :reverse_chronological, -> { joins(:messages).order('messages.created_at DESC') }
+  scope :reverse_chronological, -> { order(updated_at: :desc) }
 
   def self.between_entities(entity1, entity2)
     joins("INNER JOIN message_participants mp1 ON mp1.message_thread_id = message_threads.id AND mp1.entity_id = #{entity1.id}

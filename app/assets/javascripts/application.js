@@ -13,6 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require react
+//= require react_ujs
+//= require components
 //= require bootstrap-sprockets
 //= require jquery-ui
 //= require jquery.turbolinks
@@ -35,6 +38,7 @@
 //= require vegas
 //= require classie
 //= require fullcalendar.min
+//= require react_bootstrap
 //= require_tree .
 
 $(document).ready(function(){
@@ -79,3 +83,5 @@ function gmap_show(company) {
 
 
 /* end google maps */
+
+var Modal = ReactBootstrap.Modal;

@@ -9,12 +9,13 @@ module Api::V1::MessageThread
     api_json(message_thread, only: attributes).tap do |hash|
       hash['latest_message'] = message_json(message_thread.latest_message) if includes.include? 'latest_message'
       hash['entities'] = entities_json(message_thread.entities) if includes.include? 'entities'
+      hash['recipient'] = entity_json(message_thread.entities.find { |e| e != current_user.entity }) if includes.include? 'recipient'
     end
   end
 
   def message_threads_json(message_threads, includes = [])
     message_threads = message_threads.includes(:latest_message) if includes.include? 'latest_message'
-    message_threads = message_threads.includes(:entities) if includes.include? 'entities'
+    message_threads = message_threads.includes(:entities) if includes.include?('entities') || includes.include?('recipient')
     message_threads.map { |mt| message_thread_json(mt, includes) }
   end
 end
