@@ -10,6 +10,8 @@ class Entity < ActiveRecord::Base
   has_many :events, through: :event_joiners
   has_many :applications, through: :application_joiners
   has_many :application_joiners
+  has_many :review_joiners
+  has_many :reviews, through: :review_joiners
   acts_as_paranoid
   geocoded_by :address
 

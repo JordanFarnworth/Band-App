@@ -15,7 +15,7 @@
 <% else %>
 <div class="container">
   <div class="row text-center">
-    <h1>Band</h1>
+    <a href="/bands/<%= @current_user.entity.id %>"><h1>Band</h1></a>
     <br>
     <div class="btn-group" id="dashboard-buttons" role="group" aria-label="...">
       <a class="btn btn-default" href="#dashboard" data-toggle="tab" role="tab">dashboard</a>
@@ -27,95 +27,7 @@
   <div class="row">
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane fade in active" id="dashboard">
-        <div class="row">
-          <div class="col-md-4 text-center">
-            <h3>My Upcoming Events</h3>
-            <div class="list-group">
-              <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">...</p>
-              </a>
-              <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">...</p>
-              </a>
-              <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">...</p>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-4 text-center">
-            <h3>My Applications</h3>
-            <div class="list-group">
-              <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">...</p>
-              </a>
-              <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">...</p>
-              </a>
-              <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">...</p>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-4 text-center">
-            <h3>Messages</h3>
-            <div class="list-group">
-              <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">...</p>
-              </a>
-              <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">...</p>
-              </a>
-              <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">...</p>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 text-center">
-            <h3>My Favorites</h3>
-            <div class="list-group">
-              <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">...</p>
-              </a>
-              <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">...</p>
-              </a>
-              <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">...</p>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-6 text-center">
-            <h3>My Reviews</h3>
-            <div class="list-group">
-              <a href="#" class="list-group-item ">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">...</p>
-              </a>
-              <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">...</p>
-              </a>
-              <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">List group item heading</h4>
-                <p class="list-group-item-text">...</p>
-              </a>
-            </div>
-          </div>
-        </div>
+        <%= render 'bands/banddash' %>
       </div>
 
 

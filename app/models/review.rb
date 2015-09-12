@@ -1,3 +1,3 @@
 class Review < ActiveRecord::Base
-  belongs_to :entity
+  has_many :review_joiners
 end

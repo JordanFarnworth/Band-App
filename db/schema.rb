@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150906002916) do
+ActiveRecord::Schema.define(version: 20150912225009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -172,6 +172,7 @@ ActiveRecord::Schema.define(version: 20150906002916) do
     t.integer  "review_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "state"
   end
 
   add_index "review_joiners", ["entity_id"], name: "index_review_joiners_on_entity_id", using: :btree
@@ -180,12 +181,9 @@ ActiveRecord::Schema.define(version: 20150906002916) do
   create_table "reviews", force: :cascade do |t|
     t.text     "description"
     t.integer  "rating"
-    t.integer  "entity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
-
-  add_index "reviews", ["entity_id"], name: "index_reviews_on_entity_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "username"
@@ -218,5 +216,4 @@ ActiveRecord::Schema.define(version: 20150906002916) do
   add_foreign_key "messages", "message_threads"
   add_foreign_key "review_joiners", "entities"
   add_foreign_key "review_joiners", "reviews"
-  add_foreign_key "reviews", "entities"
 end
