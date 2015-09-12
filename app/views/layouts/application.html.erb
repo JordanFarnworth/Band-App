@@ -7,12 +7,15 @@
   <%= yield :scripts %>
   <%= csrf_meta_tags %>
 
-  <script type="text/javascript">
-      ENV = {
-          current_user: <%= logged_in? ? @current_user.id : nil %>,
-          current_entity: <%= logged_in? ? @current_user.entity.id : nil %>
-      };
-  </script>
+  <% if logged_in? %>
+    <script type="text/javascript">
+        ENV = {
+            current_user: <%= logged_in? ? @current_user.id : nil.to_json %>,
+            current_entity: <%= @current_user.entity? ? @current_user.entity.id : nil.to_json %>
+        };
+    </script>
+  <% end %>
+
   <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
 </head>

@@ -30,6 +30,14 @@ class User < ActiveRecord::Base
     generate_registration_token unless registration_token
   end
 
+  def entity?
+    if self.entity == nil
+      false
+    else
+      true
+    end    
+  end
+
   def new_user
     self.user_data[:user_entity_type] = 'none'
     self.save
