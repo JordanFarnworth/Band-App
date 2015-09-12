@@ -4,6 +4,8 @@
 
 class Dashboard
   constructor: ->
+    if typeof ENV == 'undefined'
+      window.location = window.location
     @user = ENV.current_user
     @entity = ENV.current_entity
 
