@@ -14,8 +14,197 @@
   </div>
 <% else %>
 <div class="container">
-  <div class="row">
-    <h1>Dashboard for <%= @current_user.entity.name %></h1>
+  <div class="row text-center">
+    <a href="/bands/<%= @current_user.entity.id %>"><h1>Band</h1></a>
+    <br>
+    <div class="btn-group" id="dashboard-buttons" role="group" aria-label="...">
+      <a class="btn btn-default" href="#dashboard" data-toggle="tab" role="tab">dashboard</a>
+      <a class="btn btn-default" href="#entity" data-toggle="tab" role="tab">entity</a>
+      <a class="btn btn-default" href="#user" data-toggle="tab" role="tab">user</a>
+      <a class="btn btn-default" href="#settings" data-toggle="tab" role="tab">settings</a>
+    </div>
   </div>
+  <div class="row">
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade in active" id="dashboard">
+        <%= render 'bands/banddash' %>
+      </div>
+
+
+      <div role="tabpanel" class="tab-pane fade col-md-offset-3" id="entity">
+        <form class="form-horizontal" id="band-edit-form" ta-fv-framework="bootstrap"
+          data-fv-icon-valid="glyphicon glyphicon-ok"
+          data-fv-icon-invalid="glyphicon glyphicon-remove"
+          data-fv-icon-validating="glyphicon glyphicon-refresh">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="edit-band-picture">Profile Picture</label>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+              <input type="file" id="edit-band-picture">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-band-name" class="col-sm-2 control-label">Band Name</label>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+              <input minlength="3" name="band-name-edit" data-fv-notempty type="text" class="form-control" id="edit-band-name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="band-description-edit" class="col-sm-2 control-label">Short Descrption</label>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <textarea name="band-description-edit" minlength="20" data-fv-notempty type="text" class="form-control" id="edit-band-description">
+              </textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-band-email" class="col-sm-2 control-label">Email</label>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+              <input data-fv-notempty data-fv-emailaddress-message="The value is not a valid email address" name="band-edit-email" type="email" class="form-control" id="edit-band-email">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-band-twitter" class="col-sm-2 control-label">Twitter</label>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+              <input type="text" class="form-control" id="edit-band-twitter">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-band-instagram" class="col-sm-2 control-label">Instagram</label>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+              <input name="band-instagram-edit" type="text" class="form-control" id="edit-band-instagram">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-band-facebook" class="col-sm-2 control-label">Facebook</label>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <input data-fv-notempty="true" name="band-facebook-edit" data-fv-regexp="true" data-fv-regexp-message="Not a valid Facebook URL" data-fv-regexp-regexp="(?:https?:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*?(\/)?([^/?]*)" type="text" class="form-control" id="edit-band-facebook">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-band-genre" class="col-sm-2 control-label">Genre</label>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+              <input name="band-genre-edit" data-fv-notempty="true" type="text" class="form-control" id="edit-band-genre">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-band-phone-number" class="col-sm-2 control-label">Phone Number</label>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <input data-fv-notempty name="band-phone" data-fv-regexp="true" data-fv-regexp-message="Not a valid phone number" data-fv-regexp-regexp="^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$" type="number" class="form-control" id="edit-band-phone-number">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-band-youtube" class="col-sm-2 control-label">Youtube</label>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <input data-fv-notempty="true" name="band-youtube" data-fv-regexp="true" data-fv-regexp-message="Not a valid YouTube URL" data-fv-regexp-regexp="^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$" type="text" class="form-control" id="edit-band-youtube">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-band-address" class="col-sm-2 control-label">Address</label>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <input data-fv-notempty name="band-mailing-address" type="text" class="form-control" id="edit-band-address">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="edit-band-sample-1">Sample Audio 1</label>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+              <input type="file" id="edit-band-sample-1">
+            </div>
+            <p class="help-block">Must be an MP3</p>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="edit-band-sample-2">Sample Audio 2</label>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+              <input type="file" id="edit-band-sample-2">
+            </div>
+            <p class="help-block">Must be an MP3</p>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" id="update-band-btn" class="btn btn-default">Update Band</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div role="tabpanel" class="tab-pane fade col-md-offset-3" id="user">
+        <form id="edit-user-data-form" class="form-horizontal" ata-fv-framework="bootstrap"
+          data-fv-icon-valid="glyphicon glyphicon-ok"
+          data-fv-icon-invalid="glyphicon glyphicon-remove"
+          data-fv-icon-validating="glyphicon glyphicon-refresh">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="edit-user-picture">Profile Picture</label>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+              <input type="file" id="edit-user-picture">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-user-displayname" class="col-sm-2 control-label">Display Name</label>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+              <input minlength="3" data-fv-notempty name="user-display-name" data-fv-notempty type="text" class="form-control" id="edit-user-displayname">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-user-username" class="col-sm-2 control-label">UserName</label>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+              <input minlength="3" data-fv-notempty name="username-edit" data-fv-notempty type="text" class="form-control" id="edit-user-username">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-user-email" class="col-sm-2 control-label">Email</label>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+              <input data-fv-notempty name="user-email-edit" data-fv-emailaddress-message="The value is not a valid email address" type="email" class="form-control" id="edit-user-email">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button data-toggle="modal" data-target="#changePasswordModal" class="btn btn-default">Change Password</button>
+              <button id="update-user-data-btn" class="btn btn-default">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="settings">
+        <h1>settings</h1>
+      </div>
+    </div>
+  </div>
+
 </div>
 <% end %>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <form id="change-password-modal-form" ata-fv-framework="bootstrap"
+          data-fv-icon-valid="glyphicon glyphicon-ok"
+          data-fv-icon-invalid="glyphicon glyphicon-remove"
+          data-fv-icon-validating="glyphicon glyphicon-refresh">
+          <div class="form-group">
+            <label for="old-password">Old Password</label>
+            <input type="password" name="oldpassword" class="form-control" id="old-password" placeholder="Password" data-fv-remote="true" data-fv-remote-delay="2000" data-fv-remote-url="/api/v1/users/<%= @user.id %>/password_confirmation" data-fv-remote-message="Incorrect Password">
+          </div>
+          <div class="form-group">
+            <label for="new-password">New Password</label>
+            <input data-fv-identical="true"
+                data-fv-identical-field="confirm-new-password"
+                data-fv-identical-message="The password and its confirm are not the same" type="password" name="new-password" class="form-control" id="new-password" data-fv-notempty placeholder="Password">
+          </div>
+          <div class="form-group">
+            <label for="confirm-new-password">Confirm New Password</label>
+            <input data-fv-identical="true" data-fv-identical-field="new-password"
+                data-fv-identical-message="The password and its confirm are not the same" type="password" name="confirm-new-password" data-fv-notempty class="form-control" id="confirm-new-password" placeholder="Password">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="update-user-password" class="btn btn-primary">Update Password</button>
+      </div>
+    </div>
+  </div>
+</div>
