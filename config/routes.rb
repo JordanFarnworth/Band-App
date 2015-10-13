@@ -48,7 +48,6 @@ Rails.application.routes.draw do
         end
       end
       resources :messages, only: [:create]
-      resources :entities, only: [] do
       resources :entities do
         member do
           get 'events' => 'events#events'
