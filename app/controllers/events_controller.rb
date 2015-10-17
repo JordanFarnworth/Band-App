@@ -1,12 +1,22 @@
 class EventsController < ApplicationController
   include Api::V1::Event
 
-  before_action :find_event, only: [:show, :edit, :update, :destroy]
+  before_action :find_event, only: [:show, :edit, :update, :destroy, :invite]
   before_action :find_entity, only: :events
 
 
   def find_event
     @event = Event.find params[:id]
+  end
+
+  def create
+    @event = Event.new event_params
+    if @event.save
+      EventJoiner.create_party_ej(params[:party], @event.id)
+      render json: event_json(@event), status: :ok
+    else
+      render json: { error: @event.errors.full_messages }, status: :bad_request
+    end
   end
 
   def find_entity
@@ -28,7 +38,18 @@ class EventsController < ApplicationController
       format.json do
         render json: event_json(@event), status: :ok
       end
+      format.html do
+
+      end
     end
+  end
+
+  def invite
+    bands = params[:bands]
+    bands.uniq.each do |band|
+      EventJoiner.create_band_ej(band, @event.id)
+    end
+    render json: event_json(@event), status: :ok
   end
 
   def events
@@ -41,6 +62,7 @@ class EventsController < ApplicationController
   end
 
   def update
+    debugger
     if @event.update event_params
       render json: event_json(@event), status: :ok
     else
@@ -50,7 +72,7 @@ class EventsController < ApplicationController
 
   private
   def event_params
-    params.require(:event).permit(:id, :title, :description, :start_time, :end_time)
+    params.require(:event).permit(:id, :title, :description, :start_time, :end_time, :price, :recurrence_pattern, :recurrence_ends_at, :state)
   end
 
 end

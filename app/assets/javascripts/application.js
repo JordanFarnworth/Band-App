@@ -39,6 +39,7 @@
 //= require classie
 //= require fullcalendar.min
 //= require react_bootstrap
+//= require bootstrap-datetimepicker
 //= require_tree .
 
 // $(document).ready(function(){

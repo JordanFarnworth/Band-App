@@ -1,141 +1,141 @@
 // Place all the styles related to the dashboard controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-html, body {
-    height: 100%
-}
-
-.vegas-overlay{
-  overflow: hidden
-}
-
-.panel-dash{
-  height: 300px;
-  max-height: 300px;
-  overflow: auto;
-}
-
-
-.main-text{
-  margin: 20px auto;
-}
-
-.main-text h1{
-  font-family: "Raleway";
-  color: #2a9fd6;
-  font-size: 72px;
-  text-align: center;
-  font-weight: bold;
-  letter-spacing: .05em;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.main-text h4{
-  text-align: center;
-  color: #FFFFFF;
-  font-family: "Arvo", serif;
-  margin-top: 30px;
-}
-
-.logo-welcome{
-  margin-top: 175px;
-  height: 500px;
-}
-
-.logo-welcome-content{
-  margin-top: 65px;
-}
-
-.button-farm{
-  text-align: center;
-  padding-top: 25px;
-}
-
-.button-farm p{
-  display: inline;
-  padding-right: 10px;
-  padding-top: 30px;
-  min-width: 48px !important;
-  max-width: 48px !important;
-  font-family: "Raleway";
-  letter-spacing:0.03em;
-}
-
-#login-modal{
-  height: 500px;
-  margin: 50px auto;
-}
-
-#signup-modal{
-  height: 550px;
-  margin: 50px auto;
-  position: absolute;
-}
-
-#login-modal p{
-  display: block;
-  text-align: left;
-  font-family: "Raleway";
-  font-size: 1.35em;
-}
-
-#signup-modal p{
-  display: block;
-  text-align: left;
-  font-family: "Raleway";
-  font-size: 1.3em;
-}
-
-.signup-checkboxes{
-  text-align: left;
-}
-
-.myButton{
-  width: 100px;
-}
-
-.login-email-header{
-  width: 100%;
-}
-
-.btn-lg{
-  color: #FFFFFF;
-  background-color: #FFB800;
-  border-color: #FFB800;
-}
-
-.btn-lg:hover{
-  background-color: #FFCF51;
-}
-
-.btn-lg:focus{
-  background-color: #FFCF51 !important;
-}
-
-.btn-lg:active{
-  background-color: #FFCF51 !important;
-}
-
-
-.landing-page-button {
-  display: inline-block;
-  width: 120px;
-  border-radius: 15px;
-  padding: 8px;
-  color: #fff;
-  border: 2px solid #fff;
-  text-align: center;
-  outline: none;
-  text-decoration: none;
-  font-weight: bold;
-  font-size:16px;
-   }
-
-.landing-page-button:hover{
-  text-decoration: none;
-  color: white;
-}
+// html, body {
+//     height: 100%
+// }
+//
+// .vegas-overlay{
+//   overflow: hidden
+// }
+//
+// .panel-dash{
+//   height: 300px;
+//   max-height: 300px;
+//   overflow: auto;
+// }
+//
+//
+// .main-text{
+//   margin: 20px auto;
+// }
+//
+// .main-text h1{
+//   font-family: "Raleway";
+//   color: #2a9fd6;
+//   font-size: 72px;
+//   text-align: center;
+//   font-weight: bold;
+//   letter-spacing: .05em;
+//   font-weight: bold;
+//   text-transform: uppercase;
+// }
+//
+// .main-text h4{
+//   text-align: center;
+//   color: #FFFFFF;
+//   font-family: "Arvo", serif;
+//   margin-top: 30px;
+// }
+//
+// .logo-welcome{
+//   margin-top: 175px;
+//   height: 500px;
+// }
+//
+// .logo-welcome-content{
+//   margin-top: 65px;
+// }
+//
+// .button-farm{
+//   text-align: center;
+//   padding-top: 25px;
+// }
+//
+// .button-farm p{
+//   display: inline;
+//   padding-right: 10px;
+//   padding-top: 30px;
+//   min-width: 48px !important;
+//   max-width: 48px !important;
+//   font-family: "Raleway";
+//   letter-spacing:0.03em;
+// }
+//
+// #login-modal{
+//   height: 500px;
+//   margin: 50px auto;
+// }
+//
+// #signup-modal{
+//   height: 550px;
+//   margin: 50px auto;
+//   position: absolute;
+// }
+//
+// #login-modal p{
+//   display: block;
+//   text-align: left;
+//   font-family: "Raleway";
+//   font-size: 1.35em;
+// }
+//
+// #signup-modal p{
+//   display: block;
+//   text-align: left;
+//   font-family: "Raleway";
+//   font-size: 1.3em;
+// }
+//
+// .signup-checkboxes{
+//   text-align: left;
+// }
+//
+// .myButton{
+//   width: 100px;
+// }
+//
+// .login-email-header{
+//   width: 100%;
+// }
+//
+// .btn-lg{
+//   color: #FFFFFF;
+//   background-color: #FFB800;
+//   border-color: #FFB800;
+// }
+//
+// .btn-lg:hover{
+//   background-color: #FFCF51;
+// }
+//
+// .btn-lg:focus{
+//   background-color: #FFCF51 !important;
+// }
+//
+// .btn-lg:active{
+//   background-color: #FFCF51 !important;
+// }
+//
+//
+// .landing-page-button {
+//   display: inline-block;
+//   width: 120px;
+//   border-radius: 15px;
+//   padding: 8px;
+//   color: #fff;
+//   border: 2px solid #fff;
+//   text-align: center;
+//   outline: none;
+//   text-decoration: none;
+//   font-weight: bold;
+//   font-size:16px;
+//    }
+//
+// .landing-page-button:hover{
+//   text-decoration: none;
+//   color: white;
+// }
 
 /*
 Le Fin

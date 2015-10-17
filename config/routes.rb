@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get 'register/confirm' => 'login#confirm_registration'
 
   resources :messages, only: [:index]
+  resources :events
   resources :favorites, only: [:create, :delete] do
     collection do
       post 'check'
@@ -37,7 +38,12 @@ Rails.application.routes.draw do
   scope :api, defaults: { format: :json }, constraints: { format: :json } do
     scope :v1 do
       post 'application' => 'applications#create'
-      resources :events
+      resources :events do
+        member do
+          post 'invite'
+          put 'update'
+        end
+      end
       resources :users, except: [:new, :edit] do
         member do
           get 'password_confirmation'

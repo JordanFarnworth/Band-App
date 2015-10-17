@@ -293,3 +293,111 @@
 
 
 <!-- Change Password Modal -->
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <form id="change-password-modal-form" ata-fv-framework="bootstrap"
+          data-fv-icon-valid="glyphicon glyphicon-ok"
+          data-fv-icon-invalid="glyphicon glyphicon-remove"
+          data-fv-icon-validating="glyphicon glyphicon-refresh">
+          <div class="form-group">
+            <label for="old-password">Old Password</label>
+            <input type="password" name="oldpassword" class="form-control" id="old-password" placeholder="Password" data-fv-remote="true" data-fv-remote-delay="2000" data-fv-remote-url="/api/v1/users/<%= @user.id %>/password_confirmation" data-fv-remote-message="Incorrect Password">
+          </div>
+          <div class="form-group">
+            <label for="new-password">New Password</label>
+            <input data-fv-identical="true"
+                data-fv-identical-field="confirm-new-password"
+                data-fv-identical-message="The password and its confirm are not the same" type="password" name="new-password" class="form-control" id="new-password" data-fv-notempty placeholder="Password">
+          </div>
+          <div class="form-group">
+            <label for="confirm-new-password">Confirm New Password</label>
+            <input data-fv-identical="true" data-fv-identical-field="new-password"
+                data-fv-identical-message="The password and its confirm are not the same" type="password" name="confirm-new-password" data-fv-notempty class="form-control" id="confirm-new-password" placeholder="Password">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="update-user-password" class="btn btn-primary">Update Password</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Event Create Modal -->
+<!-- Create Event Modal -->
+<div class="modal fade" id="myEventModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">New Event</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <fieldset>
+            <div class="form-group">
+              <label for="event-title" class="col-lg-2 control-label">Title</label>
+              <div class="col-lg-10">
+                <input type="text" class="form-control" id="create-event-title" style="cursor: auto; background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsPDhss3LcOZQAAAU5JREFUOMvdkzFLA0EQhd/bO7iIYmklaCUopLAQA6KNaawt9BeIgnUwLHPJRchfEBR7CyGWgiDY2SlIQBT/gDaCoGDudiy8SLwkBiwz1c7y+GZ25i0wnFEqlSZFZKGdi8iiiOR7aU32QkR2c7ncPcljAARAkgckb8IwrGf1fg/oJ8lRAHkR2VDVmOQ8AKjqY1bMHgCGYXhFchnAg6omJGcBXEZRtNoXYK2dMsaMt1qtD9/3p40x5yS9tHICYF1Vn0mOxXH8Uq/Xb389wff9PQDbQRB0t/QNOiPZ1h4B2MoO0fxnYz8dOOcOVbWhqq8kJzzPa3RAXZIkawCenHMjJN/+GiIqlcoFgKKq3pEMAMwAuCa5VK1W3SAfbAIopum+cy5KzwXn3M5AI6XVYlVt1mq1U8/zTlS1CeC9j2+6o1wuz1lrVzpWXLDWTg3pz/0CQnd2Jos49xUAAAAASUVORK5CYII=); background-attachment: scroll; background-position: 100% 50%; background-repeat: no-repeat;">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="textArea" class="col-lg-2 control-label">Description</label>
+              <div class="col-lg-10">
+                <textarea class="form-control" rows="3" id="create-event-description"></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-2 control-label">Recurring</label>
+              <div class="col-lg-10">
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                    One time event
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                    Recurring
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-2 control-label">Offering Price</label>
+              <div class="input-group col-lg-8">
+                <span class="input-group-addon">$</span>
+                <input type="text" id="create-event-price" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-2 control-label" for="application-start">Start Date</label>
+              <div class="col-lg-10">
+                <input type="date" class="form-control" id="create-event-start">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-2 control-label" for="application-end">End Date</label>
+              <div class="col-lg-10">
+                <input type="date" class="form-control" id="create-event-end">
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="create-event-btn" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

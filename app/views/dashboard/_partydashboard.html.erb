@@ -14,8 +14,34 @@
   </div>
 <% else %>
 <div class="container">
-  <div class="row">
-    <h1>Dashboard for <%= @current_user.entity.name %></h1>
+  <div class="row text-center">
+    <div class="btn-group btn-group-justified" id="dashboard-buttons" role="group" aria-label="...">
+      <a class="btn btn-default" href="#dashboard" data-toggle="tab" role="tab"><h2>My Dashboard</h2></a>
+      <a class="btn btn-default" href="#entity" data-toggle="tab" role="tab"><h2>My Band & Info</h2></a>
+      <a class="btn btn-default" href="#manage" data-toggle="tab" role="tab"><h2>Manage Events</h2></a>
+      <a class="btn btn-default" href="#settings" data-toggle="tab" role="tab"><h2>Settings</h2></a>
+    </div>
   </div>
+  <div class="row">
+    <div class="tab-content">
+
+      <div role="tabpanel" class="tab-pane fade in active" id="dashboard">
+        <%= render 'parties/partydash' %>
+      </div>
+
+      <div role="tabpanel" class="tab-pane fade in" id="manage">
+        <%= render 'parties/manage' %>
+      </div>
+
+      <div role="tabpanel" class="tab-pane fade" id="entity">
+        <%= render 'parties/editname' %>
+      </div>
+
+      <div role="tabpanel" class="tab-pane fade" id="settings">
+        <%= render 'parties/partysettings' %>
+      </div>
+    </div>
+  </div>
+
 </div>
 <% end %>

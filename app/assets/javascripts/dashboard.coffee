@@ -32,7 +32,7 @@ class Dashboard
           @populateBandData(data)
         else
           # populatePartyData()
-          console.log 'party'
+          console.log 'to do'
 
   calendarParams: (events) =>
     {
@@ -185,6 +185,23 @@ class Dashboard
         $('#createPartyModal').modal('hide')
         window.location = "/parties/#{data.id}"
 
+  createEvent: =>
+    $.ajax '/api/v1/events',
+    type: 'post'
+    dataType: 'json'
+    data:
+      party: @entity
+      event:
+        title: $('#create-event-title').val()
+        description: $('#create-event-description').val()
+        recurrence_pattern: "One Time Event"
+        price: $('#create-event-price').val()
+        start_time: $('#create-event-start').val()
+        end_time: $('#create-event-end').val()
+        state: "No Invitations"
+    success: (data) =>
+      window.location = "/events/#{data.id}"
+
   #populate edit forms
   populateBandData: (data) =>
     $('#edit-band-name').val(data.name)
@@ -292,7 +309,7 @@ $('.dashboard.index').ready ->
   $('#update-band-btn').on 'click', ->
     $('#band-edit-form').formValidation 'validate'
     if $('#band-edit-form').data('formValidation').isValid()
-      new Dashboard().updateBandInfo()    
+      new Dashboard().updateBandInfo()
 
   $('#band-or-party').on 'click', ->
     db.assignEntityType()
@@ -310,6 +327,8 @@ $('.dashboard.index').ready ->
     # If the form is valid, will proceed with submission.
     if $('#band-general-info-form').data('formValidation').isValid() && $('#band-social-media-form').data('formValidation').isValid() && $('#band-contact-info-form').data('formValidation').isValid() && $('#band-audio-sample-form').data('formValidation').isValid()
       db.createBand()
+  $('#create-event-btn').on 'click', ->
+    new Dashboard().createEvent()
 
   $('#create-party').on 'click', ->
     db = new Dashboard()
