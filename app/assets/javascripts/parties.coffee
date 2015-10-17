@@ -6,12 +6,55 @@ class Party
   constructor: ->
     @party = window.location.pathname.match(/\/parties\/(\d+)/)[1]
 
+  addRemoveFavorite: (party, band) =>
+    $.ajax "/favorites/add_remove",
+      type: 'post'
+      dataType: 'json'
+      data:
+        favorite:
+          band_id: band
+          party_id: party
+      success: (data) =>
+        $('i#favorite-party').on 'click', ->
+          new Party().addRemoveFavorite(@party, ENV.current_entity)
+        if data.deleted == 'true'
+          $('.favorite-party-div').html('<h1><a href="#"><i id="favorite-party" class="fa fa-star-o fa-6"></i></a></h1>
+          <em>Favorite This Company?</em>')
+        else
+          $('.favorite-party-div').html('<h1><a href="#"><i id="favorite-party" class="fa fa-star fa-6"></i></a></h1>
+          <em>Favorited!</em>')
+
+        $('i#favorite-party').on 'click', ->
+          @party = window.location.pathname.match(/\/parties\/(\d+)/)[1]
+          new Party().addRemoveFavorite(@party, ENV.current_entity)  
+
+  checkFavorite: (party, band) =>
+    console.log "THIS IS THE BIG PARTY #{party}"
+    $.ajax "/favorites/check",
+      type: 'post'
+      dataType: 'json'
+      data:
+        band_id: band
+        party_id: party
+      success: (data) =>
+        console.log 'data from check fav' + data
+        console.log 'party that is getting added/deleted ' + @party
+        if data.favorite == 'true'
+          $('.favorite-party-div').html('<h1><a href="#"><i id="favorite-party" class="fa fa-star fa-6"></i></a></h1>
+          <em>Favorited!</em>')
+        else
+          $('.favorite-party-div').html('<h1><a href="#"><i id="favorite-party" class="fa fa-star-o fa-6"></i></a></h1>
+          <em>Favorite This Company?</em>')
+
+        $('i#favorite-party').on 'click', ->
+          @party = window.location.pathname.match(/\/parties\/(\d+)/)[1]
+          new Party().addRemoveFavorite(@party, ENV.current_entity)
+
   getPartyInfo: =>
     $.ajax "/api/v1/parties/#{@party}",
       type: 'get'
       dataType: 'json'
       success: (data) =>
-        console.log data
         gmap_show data
         @populatePartyPage data
 
@@ -27,8 +70,7 @@ class Party
           band_id: ENV.current_entity
       success: (data) =>
         $('#application-modal').modal('hide')
-        bootbox.alert('Your application has been created and delivered!', null)
-        $('#band-application-div').addClass('hidden')
+        bootbox.alert('Your application has been created and delivered!', if confirm then window.location = window.location)
 
 
 
@@ -74,11 +116,13 @@ autocompletePartyParams = ->
 
 
 $('.parties.show').ready ->
+  @party = window.location.pathname.match(/\/parties\/(\d+)/)[1]
   new Party().getPartyInfo()
   $('#application-start').datepicker()
   $('#application-end').datepicker()
   $('#create-normal-application').on 'click', ->
     new Party().createApplication()
+  new Party().checkFavorite(@party, ENV.current_entity)
 
 $('.parties.search').ready ->
   $('#party-search-form label').css({'font-size': '24px', 'color': '#2ECBFF'})

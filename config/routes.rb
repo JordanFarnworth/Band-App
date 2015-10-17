@@ -26,6 +26,12 @@ Rails.application.routes.draw do
   get 'register/confirm' => 'login#confirm_registration'
 
   resources :messages, only: [:index]
+  resources :favorites, only: [:create, :delete] do
+    collection do
+      post 'check'
+      post 'add_remove'
+    end
+  end
   resources :message_threads, only: [:show]
 
   scope :api, defaults: { format: :json }, constraints: { format: :json } do

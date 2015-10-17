@@ -12,6 +12,10 @@ class Band < Entity
     end
   end
 
+  def favorites
+    @favorites = Favorite.where(band_id: self.id)
+  end
+
   def genre
     data['genre']
   end

@@ -12,6 +12,7 @@ class Entity < ActiveRecord::Base
   has_many :application_joiners
   has_many :review_joiners
   has_many :reviews, through: :review_joiners
+  has_many :ads
   acts_as_paranoid
   geocoded_by :address
 
@@ -33,17 +34,16 @@ class Entity < ActiveRecord::Base
   end
 
   def has_application(party)
-    if self.applications === []
+    if self.applications == []
       return false
     else
       a = self.applications
       a.each do |x|
-        if x.party_id === party
+        if x.party_id == party && x.status == 'pending'
             return true
-        else
-          return false
         end
       end
+      return false
     end
   end
 

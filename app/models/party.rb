@@ -12,6 +12,22 @@ class Party < Entity
     end
   end
 
+  def favorites
+    @favorites = Favorite.where party_id = self.id
+  end
+
+  def favorited(band_id)
+    
+  end
+
+  def favorite
+
+  end
+
+  def unfavorite
+
+  end
+
   def owner
     data['owner']
   end

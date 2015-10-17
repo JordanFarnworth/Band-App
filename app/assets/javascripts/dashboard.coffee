@@ -292,7 +292,7 @@ $('.dashboard.index').ready ->
   $('#update-band-btn').on 'click', ->
     $('#band-edit-form').formValidation 'validate'
     if $('#band-edit-form').data('formValidation').isValid()
-      new Dashboard().updateBandInfo()
+      new Dashboard().updateBandInfo()    
 
   $('#band-or-party').on 'click', ->
     db.assignEntityType()

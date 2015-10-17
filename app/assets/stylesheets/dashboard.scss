@@ -9,6 +9,12 @@ html, body {
   overflow: hidden
 }
 
+.panel-dash{
+  height: 300px;
+  max-height: 300px;
+  overflow: auto;
+}
+
 
 .main-text{
   margin: 20px auto;

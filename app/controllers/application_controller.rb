@@ -25,8 +25,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_entity
-    return nil unless current_user
-    @current_entity ||= current_user.entity
+    @current_entity = current_user.entity if logged_in?
   end
 
   def logged_in?

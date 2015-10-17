@@ -2,23 +2,18 @@ class ApplicationsController < ApplicationController
 
   def create
     @application = Application.new application_params
+    band = params["application"]["band_id"].to_i
+    party = params["application"]["party_id"].to_i
     respond_to do |format|
       format.json do
         if @application.save
-          debugger
           @requestor = ApplicationJoiner.new
-          @requestor.entity_id = params["application"]["band_id"].to_i
-          @requestor.application_id = @application.id
-          @requestor.relation = 'requestor'
-          @requestor.save
+          @requestor.create_band_joiner(band, @application.id)
           @requestee = ApplicationJoiner.new
-          @requestee.entity_id = params["application"]["party_id"].to_i
-          @requestee.application_id = @application.id
-          @requestee.relation = 'requestee'
-          @requestee.save
+          @requestee.create_party_joiner(party, @application.id)
           render json: nil, status: 200
         else
-          render json: nil, status: 200
+          render json: @application.errors.messages, status: 500
         end
       end
     end
