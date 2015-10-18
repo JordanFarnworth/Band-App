@@ -6,12 +6,56 @@ class Band
   constructor: ->
     @band = window.location.pathname.match(/\/bands\/(\d+)/)[1]
 
+  checkFavorite: (party, band) =>
+    $.ajax "/favorites/check_party",
+      type: 'post'
+      dataType: 'json'
+      data:
+        band_id: band
+        party_id: party
+      success: (data) =>
+        console.log 'data from check fav' + data.favorite
+        if data.favorite == 'true'
+          $('.favorite-band-div').html('<h1><a href="#"><i id="favorite-band" class="fa fa-star fa-6"></i></a></h1>
+          <em>Favorited!</em>')
+        else
+          $('.favorite-band-div').html('<h1><a href="#"><i id="favorite-band" class="fa fa-star-o fa-6"></i></a></h1>
+          <em>Favorite This Band?</em>')
+        $('i#favorite-band').on 'click', ->
+          console.log 'this is getting clicked'
+          @band = window.location.pathname.match(/\/bands\/(\d+)/)[1]
+          new Band().addRemoveFavorite(@band, ENV.current_entity)
+
+  addRemoveFavorite: (band, party) =>
+    $.ajax "/favorites/add_remove_party",
+      type: 'post'
+      dataType: 'json'
+      data:
+        favorite:
+          band_id: band
+          party_id: party
+          owner: 'party'
+      success: (data) =>
+        console.log data
+        $('i#favorite-band').on 'click', ->
+          new Band().addRemoveFavorite(@band, ENV.current_entity)
+        if data.deleted == 'true'
+          $('.favorite-band-div').html('<h1><a href="#"><i id="favorite-band" class="fa fa-star-o fa-6"></i></a></h1>
+          <em>Favorite This Company?</em>')
+        else
+          $('.favorite-band-div').html('<h1><a href="#"><i id="favorite-band" class="fa fa-star fa-6"></i></a></h1>
+          <em>Favorited!</em>')
+
+        $('i#favorite-band').on 'click', ->
+          @band = window.location.pathname.match(/\/bands\/(\d+)/)[1]
+          new Band().addRemoveFavorite(@band, ENV.current_entity)
+
+
   getBandData: =>
     $.ajax "/api/v1/bands/#{@band}",
       type: 'get'
       dataType: 'json'
       success: (data) ->
-        console.log data
         new Band().populatePage(data)
 
   populatePage: (band) =>
@@ -50,8 +94,10 @@ autocompleteBandParams = ->
   }
 
 $('.bands.show').ready ->
+  @band = window.location.pathname.match(/\/bands\/(\d+)/)[1]
   new Band().getBandData()
   $('#sticky-buttons').sticky topSpacing: 50
+  new Band().checkFavorite(ENV.current_entity, @band)
 
 $('.bands.search').ready ->
   $('#bands-search-form label').css({'font-size': '24px', 'color': '#2ECBFF'})

@@ -29,8 +29,10 @@ Rails.application.routes.draw do
   resources :events
   resources :favorites, only: [:create, :delete] do
     collection do
-      post 'check'
-      post 'add_remove'
+      post 'check_band'
+      post 'check_party'
+      post 'add_remove_band'
+      post 'add_remove_party'
     end
   end
   resources :message_threads, only: [:show]

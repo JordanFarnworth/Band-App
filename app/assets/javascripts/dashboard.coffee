@@ -185,6 +185,28 @@ class Dashboard
         $('#createPartyModal').modal('hide')
         window.location = "/parties/#{data.id}"
 
+  updateParty: =>
+    $.ajax '/api/v1/parties',
+      type: 'put'
+      dataType: 'json'
+      data:
+        party:
+          name: $('#party-name').val()
+          description: $('#party-description').val()
+          address: $('#party-mailing-address').val()
+          social_media:
+            facebook: $('#party-facebook').val()
+            twitter: $('#party-twitter').val()
+            instagram: $('#party-instagram').val()
+          data:
+            email: $('#party-email').val()
+            phone_number: $('#party-phone-number').val()
+            owner: $('#party-owner').val()
+      success: (data) ->
+        new Dashboard().clearPartyModal()
+        bootbox.alert "Updated!", ->
+          null
+
   createEvent: =>
     $.ajax '/api/v1/events',
     type: 'post'
@@ -341,3 +363,15 @@ $('.dashboard.index').ready ->
     # If the form is valid, will proceed with submission.
     if $('#party-general-info-form').data('formValidation').isValid() && $('#party-social-media-form').data('formValidation').isValid() && $('#party-contact-info-form').data('formValidation').isValid()
       db.createParty()
+
+  $('#edit-party').on 'click', ->
+    db = new Dashboard()
+    $('#party-general-info-form').formValidation('validate')
+    $('#party-social-media-form').formValidation('validate')
+    $('#party-contact-info-form').formValidation('validate')
+    db.validateForm($('#party-general-info-form').data('formValidation').isValid(), "party-general-info-tab")
+    db.validateForm($('#party-social-media-form').data('formValidation').isValid(), "party-social-media-tab")
+    db.validateForm($('#party-contact-info-form').data('formValidation').isValid(), "party-contact-info-tab")
+    # If the form is valid, will proceed with submission.
+    if $('#party-general-info-form').data('formValidation').isValid() && $('#party-social-media-form').data('formValidation').isValid() && $('#party-contact-info-form').data('formValidation').isValid()
+      db.updateParty()

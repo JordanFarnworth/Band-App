@@ -8,7 +8,9 @@ class Event
     @entity = ENV.current_entity
     @event_id = window.location.pathname.match(/\/events\/(\d+)/)[1]
 
+
   updateEvent: () =>
+    debugger
     $.ajax "/api/v1/events/#{@event_id}",
       type: 'put'
       dataType: 'json'
@@ -16,15 +18,12 @@ class Event
         event:
           title: $('#edit-event-title').val()
           description: $('#edit-event-description').val()
-          start_time: $('#edit-event-st').val()
-          end_time: $('#edit-event-ed').val()
+          start_time: moment().format($('#edit-event-st').val())
+          end_time:  moment().format($('#edit-event-ed').val())
           price: $('#edit-event-price').val()
       success: (data) =>
         bootbox.alert "#{data.title} updated!", ->
           reload()
-
-
-
 
   addBandToInviteList: (band, band_name, e) =>
     if e.target.class == 'fav-list'
@@ -55,6 +54,16 @@ class Event
       success: (data) =>
         bootbox.alert("Bands Invited", null)
 
+updateDate = () ->
+  start = $('#edit-event-st').val()
+  start_frd = new Date(start).toLocaleString()
+  end = $('#edit-event-ed').val()
+  end_frd = new Date(end).toLocaleString()
+  $('#edit-event-st').val(start_frd)
+  $('#edit-event-ed').val(end_frd)
+  $('#edit-event-st').datetimepicker()
+  $('#edit-event-ed').datetimepicker()
+
 
 reload = ->
   window.location = window.location
@@ -72,7 +81,6 @@ bandInfo = (band, band_name) ->
       </h4>
     </div>
   "
-
 
 autocompletePartyParams = ->
   {
@@ -100,5 +108,4 @@ $('.events.show').ready ->
     new Event().inviteBands()
   $('#update-event').on 'click', ->
     new Event().updateEvent()
-  $('#edit-event-st').datetimepicker()
-  $('#edit-event-ed').datetimepicker()
+  updateDate()

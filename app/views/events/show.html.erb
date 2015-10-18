@@ -22,7 +22,7 @@
     <form class="form">
       <div class="form-group">
         <div class="col-md-3">
-          <input type="text" id="edit-event-st" value="<%= @event.start_time %>" class="form-control" aria-describedby="helpBlock">
+          <input type="text" id="edit-event-st" value="<%= @event.start_time %>" class="form-control" aria-describedby="helpBlock"></input>
         </div>
       </div>
       <div class="form-group">
@@ -32,7 +32,7 @@
       </div>
       <div class="form-group">
         <div class="col-md-3">
-          <input type="text" disabled="true" id="inputHelpBlock" value="<%= @event.state %>" class="form-control" aria-describedby="helpBlock">
+          <input type="text" disabled="true" id="inputHelpBlock" class="form-control" aria-describedby="helpBlock"><%= @event.state %></input>
         </div>
       </div>
       <div class="form-group">

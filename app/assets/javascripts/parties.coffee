@@ -7,13 +7,14 @@ class Party
     @party = window.location.pathname.match(/\/parties\/(\d+)/)[1]
 
   addRemoveFavorite: (party, band) =>
-    $.ajax "/favorites/add_remove",
+    $.ajax "/favorites/add_remove_band",
       type: 'post'
       dataType: 'json'
       data:
         favorite:
           band_id: band
           party_id: party
+          owner: 'band'
       success: (data) =>
         $('i#favorite-party').on 'click', ->
           new Party().addRemoveFavorite(@party, ENV.current_entity)
@@ -26,11 +27,10 @@ class Party
 
         $('i#favorite-party').on 'click', ->
           @party = window.location.pathname.match(/\/parties\/(\d+)/)[1]
-          new Party().addRemoveFavorite(@party, ENV.current_entity)  
+          new Party().addRemoveFavorite(@party, ENV.current_entity)
 
   checkFavorite: (party, band) =>
-    console.log "THIS IS THE BIG PARTY #{party}"
-    $.ajax "/favorites/check",
+    $.ajax "/favorites/check_band",
       type: 'post'
       dataType: 'json'
       data:
