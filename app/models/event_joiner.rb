@@ -2,6 +2,16 @@ class EventJoiner < ActiveRecord::Base
   belongs_to :entity
   belongs_to :event
 
+  scope :pending, -> { where(status: 'pending') }
+  scope :owner, -> { where(status: 'owner') }
+  scope :accepted, -> { where(status: 'accepted') }
+  scope :deleted, -> { where(status: 'deleted') }
+  scope :no_invitations, -> { where(status: 'No Invitations') }
+
+  def event
+    Event.find self.event_id
+  end  
+
   def self.create_band_ej(band_id, event_id)
     @ej = EventJoiner.new
     @ej.status = 'pending'

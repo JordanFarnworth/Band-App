@@ -39,12 +39,11 @@ class FavoritesController < ApplicationController
   end
 
   def add_remove_party
-    @favorite = Favorite.party.where(band_id: params[:favorite][:band_id], party_id: params[:favorite][:party_id]).first
-    if @favorite
+    @favorite = Favorite.party.where(favorite_params).first_or_initialize
+    if @favorite.persisted?
       @favorite.destroy
       render json: {deleted: 'true'}, status: :ok
     else
-      @favorite = Favorite.new favorite_params
       @favorite.save
       render json: { created: "true" }, status: :ok
     end

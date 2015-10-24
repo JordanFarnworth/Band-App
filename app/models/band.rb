@@ -16,6 +16,11 @@ class Band < Entity
     @favorites = Favorite.where(band_id: self.id)
   end
 
+  def invitations
+    @invitations = EventJoiner.pending.where(entity_id: self.id)
+    @invitations
+  end
+
   def genre
     data['genre']
   end

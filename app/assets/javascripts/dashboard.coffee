@@ -31,7 +31,7 @@ class Dashboard
         if data.type == "Band"
           @populateBandData(data)
         else
-          # populatePartyData()
+          @populatePartyData(data)
           console.log 'to do'
 
   calendarParams: (events) =>
@@ -84,7 +84,7 @@ class Dashboard
       success: (data) ->
         window.location = window.location
 
-  updateBandInfo: =>
+  updateBand: =>
     $.ajax "/api/v1/bands/#{@entity}",
           type: 'put'
           dataType: 'json'
@@ -103,7 +103,8 @@ class Dashboard
                 phone_number: $('#edit-band-phone-number').val()
                 youtube_link: $('#edit-band-youtube').val()
           success: (data) =>
-            bootbox.alert('Band Updated', null)
+            bootbox.alert 'Band Updated', ->
+              null
 
   updateUserInfo: =>
     $.ajax "/api/v1/users/#{@user}",
@@ -186,24 +187,24 @@ class Dashboard
         window.location = "/parties/#{data.id}"
 
   updateParty: =>
-    $.ajax '/api/v1/parties',
+    console.log 'got here'
+    $.ajax "/api/v1/parties/#{@entity}",
       type: 'put'
       dataType: 'json'
       data:
         party:
-          name: $('#party-name').val()
-          description: $('#party-description').val()
-          address: $('#party-mailing-address').val()
+          name: $('#party-name-edit').val()
+          description: $('#party-description-edit').val()
+          address: $('#party-mailing-address-edit').val()
           social_media:
-            facebook: $('#party-facebook').val()
-            twitter: $('#party-twitter').val()
-            instagram: $('#party-instagram').val()
+            facebook: $('#party-facebook-edit').val()
+            twitter: $('#party-twitter-edit').val()
+            instagram: $('#party-instagram-edit').val()
           data:
-            email: $('#party-email').val()
-            phone_number: $('#party-phone-number').val()
-            owner: $('#party-owner').val()
+            email: $('#party-email-edit').val()
+            phone_number: $('#party-phone-number-edit').val()
+            owner: $('#party-owner-edit').val()
       success: (data) ->
-        new Dashboard().clearPartyModal()
         bootbox.alert "Updated!", ->
           null
 
@@ -242,6 +243,17 @@ class Dashboard
     $('#edit-user-username').val(data.username)
     $('#edit-user-email').val(data.email)
 
+  populatePartyData: (data) =>
+    console.log data
+    $('#party-name-edit').val(data.name)
+    $('#party-description-edit').val(data.description)
+    $('#party-email-edit').val(data.data.email)
+    $('#party-phone-number-edit').val(data.data.phone_number)
+    $('#party-mailing-address-edit').val(data.address)
+    $('#party-owner-edit').val(data.data.owner)
+    $('#party-instagram-edit').val(data.social_media.instagram)
+    $('#party-facebook-edit').val(data.social_media.facebook)
+    $('#party-twitter-edit').val(data.social_media.twitter)
 
 
   #end create
@@ -303,17 +315,31 @@ $('.dashboard.index').ready ->
   $('#band-edit-form').formValidation()
   $('#band-general-info-form').formValidation
     excluded: ':disabled'
+  $('#band-general-info-edit').formValidation
+    excluded: ':disabled'
   $('#band-social-media-form').formValidation
     excluded: ':disabled'
+  $('#band-social-media-edit').formValidation
+    excluded: ':disabled'
   $('#band-contact-info-form').formValidation
+    excluded: ':disabled'
+  $('#band-contact-info-edit').formValidation
     excluded: ':disabled'
   $('#band-audio-sample-form').formValidation
     excluded: ':disabled'
   $('#party-general-info-form').formValidation
       excluded: ':disabled'
+  $('#party-contact-info-form-edit').formValidation
+      excluded: ':disabled'
+  $('#party-general-info-form-edit').formValidation
+      excluded: ':disabled'
   $('#party-social-media-form').formValidation
       excluded: ':disabled'
+  $('#party-social-media-form-edit').formValidation
+      excluded: ':disabled'
   $('#party-contact-info-form').formValidation
+    excluded: ':disabled'
+  $('#party-contact-info-form-edit').formValidation
     excluded: ':disabled'
   $('#edit-user-data-form').formValidation
     excluded: ':disabled'
@@ -328,10 +354,15 @@ $('.dashboard.index').ready ->
   $('#update-user-password').on 'click', ->
     if $('#change-password-modal-form').data('formValidation').isValid()
       new Dashboard().updateUserPassword()
+
   $('#update-band-btn').on 'click', ->
-    $('#band-edit-form').formValidation 'validate'
-    if $('#band-edit-form').data('formValidation').isValid()
-      new Dashboard().updateBandInfo()
+    db = new Dashboard()
+    $('#band-general-info-edit').formValidation('validate')
+    $('#band-contact-info-edit').formValidation('validate')
+    $('#band-social-media-edit').formValidation('validate')
+    # If the form is valid, will proceed with submission
+    if $('#band-general-info-edit').data('formValidation').isValid() && $('#band-contact-info-edit').data('formValidation').isValid() && $('#band-social-media-edit').data('formValidation').isValid()
+      db.updateBand()
 
   $('#band-or-party').on 'click', ->
     db.assignEntityType()
@@ -365,13 +396,12 @@ $('.dashboard.index').ready ->
       db.createParty()
 
   $('#edit-party').on 'click', ->
+    console.log 'clicked'
     db = new Dashboard()
-    $('#party-general-info-form').formValidation('validate')
-    $('#party-social-media-form').formValidation('validate')
-    $('#party-contact-info-form').formValidation('validate')
-    db.validateForm($('#party-general-info-form').data('formValidation').isValid(), "party-general-info-tab")
-    db.validateForm($('#party-social-media-form').data('formValidation').isValid(), "party-social-media-tab")
-    db.validateForm($('#party-contact-info-form').data('formValidation').isValid(), "party-contact-info-tab")
-    # If the form is valid, will proceed with submission.
-    if $('#party-general-info-form').data('formValidation').isValid() && $('#party-social-media-form').data('formValidation').isValid() && $('#party-contact-info-form').data('formValidation').isValid()
+    $('#party-general-info-form-edit').formValidation('validate')
+    $('#party-social-media-form-edit').formValidation('validate')
+    $('#party-contact-info-form-edit').formValidation('validate')
+    # If the form is valid, will proceed with submission
+    debugger
+    if $('#party-general-info-form-edit').data('formValidation').isValid() && $('#party-social-media-form-edit').data('formValidation').isValid() && $('#party-contact-info-form-edit').data('formValidation').isValid()
       db.updateParty()

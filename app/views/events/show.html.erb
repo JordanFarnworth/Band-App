@@ -5,14 +5,14 @@
   <div class="row">
     <form class="form">
       <div class="form-group">
-        <label class="sr-only" for="inputHelpBlock">Event Title</label>
         <div class="col-md-3">
+          <label for="edit-event-title">Event Title</label>
           <input type="text" id="edit-event-title" value="<%= @event.title %>" class="form-control" aria-describedby="helpBlock">
         </div>
       </div>
       <div class="form-group">
-        <label class="sr-only" for="inputHelpBlock">Event Title</label>
         <div class="col-md-9">
+          <label for="edit-event-description">Event Description</label>
           <textarea class="form-control" id="edit-event-description" name="name" rows="3"><%= @event.description %></textarea>
         </div>
       </div>
@@ -22,21 +22,25 @@
     <form class="form">
       <div class="form-group">
         <div class="col-md-3">
+          <label for="edit-event-st">Start Time</label>
           <input type="text" id="edit-event-st" value="<%= @event.start_time %>" class="form-control" aria-describedby="helpBlock"></input>
         </div>
       </div>
       <div class="form-group">
         <div class="col-md-3">
+          <label for="edit-event-ed">End Time</label>
           <input type="text" id="edit-event-ed" value="<%= @event.end_time %>" class="form-control" aria-describedby="helpBlock">
         </div>
       </div>
       <div class="form-group">
         <div class="col-md-3">
-          <input type="text" disabled="true" id="inputHelpBlock" class="form-control" aria-describedby="helpBlock"><%= @event.state %></input>
+          <label for="edit-state">Status of Event</label>
+          <input type="text" disabled="true" id="event-state" value="<%= @event.state %>" class="form-control" aria-describedby="helpBlock">
         </div>
       </div>
       <div class="form-group">
         <div class="col-md-3">
+          <label for="edit-event-price">Money being offered</label>
           <input type="text" id="edit-event-price" value="<%= @event.price %>" class="form-control" aria-describedby="helpBlock">
         </div>
       </div>

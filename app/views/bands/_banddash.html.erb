@@ -53,7 +53,16 @@
         <h3 class="panel-title">Event Invitations</h3>
       </div>
       <div class="panel-body">
-        Panel content
+        <% if current_entity.invitations %>
+          <% current_entity.invitations.each do |ej| %>
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading"><%= ej.event.title %></h4>
+              <p class="list-group-item-text"><%= ej.event.start_time %></p>
+            </a>
+          <% end %>
+        <% else %>
+            <h3>No Invitations :(</h3>
+        <% end %>
       </div>
     </div>
   </div>

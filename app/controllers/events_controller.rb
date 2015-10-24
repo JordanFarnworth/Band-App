@@ -45,10 +45,15 @@ class EventsController < ApplicationController
   end
 
   def invite
+  # debugger
     bands = params[:bands]
-    bands.uniq.each do |band|
+    @event.state = 'pending'
+    @event.save
+    bands = bands.uniq
+    bands.each do |band|
       EventJoiner.create_band_ej(band, @event.id)
     end
+
     render json: event_json(@event), status: :ok
   end
 
@@ -62,7 +67,6 @@ class EventsController < ApplicationController
   end
 
   def update
-    debugger
     if @event.update event_params
       render json: event_json(@event), status: :ok
     else

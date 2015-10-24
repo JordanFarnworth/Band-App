@@ -16,6 +16,10 @@ class Party < Entity
     @favorites = Favorite.where party_id: self.id
   end
 
+  def sent_invitations
+    @events = self.events.pending
+  end
+
   def owner
     data['owner']
   end

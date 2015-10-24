@@ -10,7 +10,6 @@ class Event
 
 
   updateEvent: () =>
-    debugger
     $.ajax "/api/v1/events/#{@event_id}",
       type: 'put'
       dataType: 'json'

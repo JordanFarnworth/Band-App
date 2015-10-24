@@ -70,7 +70,7 @@ class PartiesController < ApplicationController
   def update
     @party.delay.geocode_address
     if @party.update party_parameters
-      render json: band_json(@party), status: :ok
+      render json: party_json(@party), status: :ok
     else
       render json: { errors: @party.errors.full_messages }, status: :bad_request
     end
