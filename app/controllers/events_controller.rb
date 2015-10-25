@@ -52,6 +52,7 @@ class EventsController < ApplicationController
     bands = bands.uniq
     bands.each do |band|
       EventJoiner.create_band_ej(band, @event.id)
+      Notification.create_for_entity!(band, @event, "You've been invited to play at #{@event.title}!")
     end
 
     render json: event_json(@event), status: :ok

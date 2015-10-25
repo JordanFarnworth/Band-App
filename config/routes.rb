@@ -39,6 +39,11 @@ Rails.application.routes.draw do
 
   scope :api, defaults: { format: :json }, constraints: { format: :json } do
     scope :v1 do
+      resources :notifications, only: %i(index destroy) do
+        member do
+          put 'mark_as_read'
+        end
+      end
       post 'application' => 'applications#create'
       resources :events do
         member do
