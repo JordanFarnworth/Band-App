@@ -33,6 +33,19 @@ class Entity < ActiveRecord::Base
     self.save
   end
 
+  def event_applications
+    self.event_joiners.application
+  end
+
+  def accepted_events
+    events = []
+    ej = self.event_joiners.accepted.each do |e|
+      events << e.event
+    end
+
+    events
+  end
+
   def has_application(party)
     if self.applications == []
       return false

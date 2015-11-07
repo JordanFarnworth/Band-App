@@ -19,6 +19,17 @@ class ApplicationsController < ApplicationController
     end
   end
 
+  def decline_app
+    @application = Application.find params[:id]
+    if @application
+      @application.status = 'declined'
+      @application.save
+      render json: "Application Updated", status: :ok
+    else
+      render json: @application.errors.messages, status: 500
+    end
+  end
+
   private
 
   def application_params

@@ -9,6 +9,45 @@ class Dashboard
     @user = ENV.current_user
     @entity = ENV.current_entity
 
+  acceptEvent: (el) =>
+    event = el.attr('id')
+    $.ajax "/api/v1/events/#{event}/accept_invite",
+      type: 'post'
+      dataType: 'json'
+      data:
+        event:
+          id: event
+          entity: ENV.current_entity
+      success: (data) =>
+        window.location = window.location
+
+  declineEvent: (el) =>
+    event = el.attr('id')
+    $.ajax "/api/v1/events/#{event}/decline_invite",
+      type: 'post'
+      dataType: 'json'
+      data:
+        event:
+          id: event
+      success: (data) =>
+        window.location = window.location
+
+  acceptGeneralApplication: (el) =>
+    app = el.attr('id')
+
+
+  declineGeneralApplication: (el) =>
+    app = el.attr('id')
+    $.ajax "/api/v1/applications/#{app}/decline_app",
+      type: 'post'
+      dataType: 'json'
+      data:
+        application:
+          id: app
+      success: (data) =>
+        console.log data
+
+
   validateForm: (pass, id) =>
     if pass == true
       $('#' + id).css('color', 'white')
@@ -354,6 +393,15 @@ $('.dashboard.index').ready ->
   $('#update-user-password').on 'click', ->
     if $('#change-password-modal-form').data('formValidation').isValid()
       new Dashboard().updateUserPassword()
+  $("[name='accept-event']").on 'click', ->
+    db.acceptEvent($(@))
+  $("[name='decline-event']").on 'click', ->
+    db.declineEvent($(@))
+  $("[name='decline-gen-app']").on 'click', ->
+    db.declineGeneralApplication($(@))
+  $("[name='accept-gen-app']").on 'click', ->
+    db.acceptGeneralApplication($(@))
+
 
   $('#update-band-btn').on 'click', ->
     db = new Dashboard()

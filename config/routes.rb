@@ -39,10 +39,20 @@ Rails.application.routes.draw do
 
   scope :api, defaults: { format: :json }, constraints: { format: :json } do
     scope :v1 do
-      post 'application' => 'applications#create'
+      resources :applications do
+        member do
+          post 'decline_app'
+        end
+        collection do
+          post 'application' => 'applications#create'
+        end
+      end
+
       resources :events do
         member do
           post 'invite'
+          post 'accept_invite'
+          post 'decline_invite'
           put 'update'
         end
       end

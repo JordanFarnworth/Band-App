@@ -11,10 +11,23 @@ class Event < ActiveRecord::Base
   end
 
   def set_state
-    if self.event_joiners == []
+    @joiners = []
+    if self.event_joiners.count == 1
       self.state = 'No Invitations'
-      return true
+    else
+      self.event_joiners.each do |ej|
+        @joiners << ej.status
+      end
+      if @joiners.include?('pending') || @joiners.include?('application')
+        self.state = 'pending'
+      elsif @joiners.include?('declined')
+        self.state = 'declined'
+      else
+        self.state = 'accepted'
+      end
     end
+    self.save
+    self
   end
 
 end

@@ -26,7 +26,8 @@ class LoginController < ApplicationController
       UserMailer.register_email(@user, host_url + register_confirm_path(token: @user.registration_token)).deliver_later
       redirect_to register_finish_path
     else
-      render 'register'
+      render 'landing'
+      flash[:error] = "Registration failed, please try signing up again"
     end
   end
 

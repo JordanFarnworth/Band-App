@@ -44,8 +44,35 @@ class EventsController < ApplicationController
     end
   end
 
+  def decline_invite
+    event_id = params['event']['id']
+    ej = EventJoiner.where(event_id: event_id, entity_id: current_entity.id).first
+    if ej
+      ej.status = 'declined'
+      ej.save
+      event = Event.find event_id
+      event.delay.set_state
+      render json: "Event Updated!", status: :ok
+    else
+      render json: 'No Event Joiner Found', status: :bad_request
+    end
+  end
+
+  def accept_invite
+    event_id = params['event']['id']
+    ej = EventJoiner.where(event_id: event_id, entity_id: current_entity.id).first
+    if ej
+      ej.status = 'accepted'
+      ej.save
+      event = Event.find event_id
+      event.delay.set_state
+      render json: "Event Updated!", status: :ok
+    else
+      render json: 'No Event Joiner Found', status: :bad_request
+    end
+  end
+
   def invite
-  # debugger
     bands = params[:bands]
     @event.state = 'pending'
     @event.save
@@ -53,7 +80,7 @@ class EventsController < ApplicationController
     bands.each do |band|
       EventJoiner.create_band_ej(band, @event.id)
     end
-
+    @event.set_state
     render json: event_json(@event), status: :ok
   end
 
@@ -72,6 +99,7 @@ class EventsController < ApplicationController
     else
       render json: { errors: @event.errors.full_messages }, status: :bad_request
     end
+    @event.set_state
   end
 
   private

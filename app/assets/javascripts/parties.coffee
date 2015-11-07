@@ -6,6 +6,11 @@ class Party
   constructor: ->
     @party = window.location.pathname.match(/\/parties\/(\d+)/)[1]
 
+  applyForEvent: (element) =>
+    bootbox.confirm 'Are you sure you want to apply for this event?', (result) ->
+      null
+        # TODO make this create an event_joiner with status of 'application'
+
   addRemoveFavorite: (party, band) =>
     $.ajax "/favorites/add_remove_band",
       type: 'post'
@@ -37,8 +42,6 @@ class Party
         band_id: band
         party_id: party
       success: (data) =>
-        console.log 'data from check fav' + data
-        console.log 'party that is getting added/deleted ' + @party
         if data.favorite == 'true'
           $('.favorite-party-div').html('<h1><a href="#"><i id="favorite-party" class="fa fa-star fa-6"></i></a></h1>
           <em>Favorited!</em>')
@@ -123,6 +126,8 @@ $('.parties.show').ready ->
   $('#create-normal-application').on 'click', ->
     new Party().createApplication()
   new Party().checkFavorite(@party, ENV.current_entity)
+  $('#apply-to-event').on 'click', ->
+    new Party().applyForEvent(this)
 
 $('.parties.search').ready ->
   $('#party-search-form label').css({'font-size': '24px', 'color': '#2ECBFF'})

@@ -1,33 +1,15 @@
 <div class="container">
-  <% if logged_in? && @current_user.user_data[:user_entity_type] === 'party' %>
-    <div class="row text-center" id="band-application-div">
-      <!-- false for now -->
-      <% if @current_user.entity && false %>
-        <div class="alert alert-success" role="alert">
-          <h5>
-            You have already applied to play for this company! Check your application status on your <a href="/dashboard">Dashboard</a>
-          </h5>
-          <div class="favorite-band-div">
-
-          </div>
-        </div>
-      <% elsif @current_user.entity %>
-        <div class="alert alert-info" role="alert">
-          <h5>
-            hello world
-          </h5>
-          <div class="favorite-band-div">
-
-          </div>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
 
   <div class="row">
     <div id="band-btn-nav" class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
       <div class="btn-group-vertical" id="sticky-buttons" role="group" aria-label="...">
-        <a role="button" class="btn btn-default sticky-button" href="#general-info-show"><i class="fa fa-music fa-3x"></i></a>
+        <% if logged_in? && @current_user.entity && @current_user.user_data[:user_entity_type] === 'party' %>
+        <a role="button" class="btn btn-default sticky-button" href="#general-info-show">
+          <div class="favorite-band-div">
+
+          </div>
+        </a>
+        <% end %>
         <a role="button" class="btn btn-default sticky-button" href="#contact-info-show"><i class="fa fa-envelope fa-3x"></i></a>
         <a role="button" class="btn btn-default sticky-button" href="#"><i class="fa fa-calendar fa-3x"></i></a>
         <a role="button" class="btn btn-default sticky-button" href="#band-youtube-show"><i class="fa fa-youtube fa-3x"></i></a>

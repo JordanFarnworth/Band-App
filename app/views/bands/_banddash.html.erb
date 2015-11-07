@@ -6,11 +6,15 @@
       </div>
       <div class="panel-body">
         <div class="list-group">
-          <% current_entity.applications.each do |application| %>
-            <a href="#" class="list-group-item">
-              <h4 class="list-group-item-heading">Application for <%= application.party.name %></h4>
-              <p class="list-group-item-text"><%= application.status %></p>
-            </a>
+          <% if current_entity.applications.pending.any? %>
+            <% current_entity.applications.pending.each do |application| %>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Application for <%= application.party.name %></h4>
+                <p class="list-group-item-text"><%= application.status %></p>
+              </a>
+            <% end %>
+          <% else %>
+            <h5>No Declined Applications</h5>
           <% end %>
         </div>
       </div>
@@ -20,10 +24,21 @@
   <div class="col-md-6">
     <div class="panel panel-default panel-dash">
       <div class="panel-heading">
-        <h3 class="panel-title">Invitations to Play</h3>
+        <h3 class="panel-title">Denied Applications</h3>
       </div>
       <div class="panel-body">
-        Panel content
+        <div class="list-group">
+          <% if current_entity.applications.declined.any? %>
+            <% current_entity.applications.declined.each do |application| %>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Application for <%= application.party.name %></h4>
+                <p class="list-group-item-text"><%= application.status %></p>
+              </a>
+            <% end %>
+          <% else %>
+            <h5>No Declined Applications</h5>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
@@ -34,10 +49,56 @@
   <div class="col-md-6">
     <div class="panel panel-default panel-dash">
       <div class="panel-heading">
+        <h3 class="panel-title">Pending Event Applications</h3>
+      </div>
+      <div class="panel-body">
+        <div class="list-group">
+          <% if current_entity.applications.declined.any? %>
+            <% current_entity.applications.declined.each do |application| %>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Application for <%= application.party.name %></h4>
+                <p class="list-group-item-text"><%= application.status %></p>
+              </a>
+            <% end %>
+          <% else %>
+            <h5>No Declined Applications</h5>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="panel panel-default panel-dash">
+      <div class="panel-heading">
+        <h3 class="panel-title">Denied Event Applications</h3>
+      </div>
+      <div class="panel-body">
+        <div class="list-group">
+          <% if current_entity.applications.declined.any? %>
+            <% current_entity.applications.declined.each do |application| %>
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Application for <%= application.party.name %></h4>
+                <p class="list-group-item-text"><%= application.status %></p>
+              </a>
+            <% end %>
+          <% else %>
+            <h5>No Declined Applications</h5>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default panel-dash">
+      <div class="panel-heading">
         <h3 class="panel-title">Upcoming Events</h3>
       </div>
       <div class="panel-body">
-        <% current_entity.events.each do |event| %>
+        <% current_entity.accepted_events.each do |event| %>
           <a href="#" class="list-group-item">
             <h4 class="list-group-item-heading">Event: <%= event.title %></h4>
             <p class="list-group-item-text"><%=  event.start_time == nil ? 'nil' : event.start_time %></p>
@@ -56,7 +117,12 @@
         <% if current_entity.invitations %>
           <% current_entity.invitations.each do |ej| %>
             <a href="#" class="list-group-item">
-              <h4 class="list-group-item-heading"><%= ej.event.title %></h4>
+              <h4 class="list-group-item-heading"><%= ej.event.title %>
+                <span class="pull-right">
+                  <button id="<%= ej.event.id %>" name="accept-event" type="button" class="btn btn-success">Accept</button>
+                  <button id="<%= ej.event.id %>" name="decline-event" type="button" class="btn btn-danger">Deny</button>
+                </span>
+              </h4>
               <p class="list-group-item-text"><%= ej.event.start_time %></p>
             </a>
           <% end %>
