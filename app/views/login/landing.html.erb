@@ -65,14 +65,6 @@
 </div>
 <!-- JQuery for fixed button width-->
 <script>
-$('.myButton').width(
-    Math.max.apply(
-        Math,
-        $('.myButton').map(function(){
-            return $(this).outerWidth();
-        }).get()
-    )
-);
 $(function() {
     $('.login.landing').vegas({
         slides: [
