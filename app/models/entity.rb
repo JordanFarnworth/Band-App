@@ -13,6 +13,7 @@ class Entity < ActiveRecord::Base
   has_many :review_joiners
   has_many :reviews, through: :review_joiners
   has_many :ads
+  has_many :notifications
   acts_as_paranoid
   geocoded_by :address
 

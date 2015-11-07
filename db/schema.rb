@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151018194014) do
+ActiveRecord::Schema.define(version: 20151025220335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,12 +171,24 @@ ActiveRecord::Schema.define(version: 20151018194014) do
   add_index "messages", ["message_thread_id"], name: "index_messages_on_message_thread_id", using: :btree
   add_index "messages", ["sender_id"], name: "index_messages_on_sender_id", using: :btree
 
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "entity_id"
+    t.integer  "context_id"
+    t.string   "context_type"
+    t.text     "description"
+    t.string   "state"
+    t.datetime "deleted_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "notifications", ["entity_id"], name: "index_notifications_on_entity_id", using: :btree
+
   create_table "review_joiners", force: :cascade do |t|
     t.integer  "entity_id"
     t.integer  "review_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "state"
   end
 
   add_index "review_joiners", ["entity_id"], name: "index_review_joiners_on_entity_id", using: :btree
@@ -185,9 +197,12 @@ ActiveRecord::Schema.define(version: 20151018194014) do
   create_table "reviews", force: :cascade do |t|
     t.text     "description"
     t.integer  "rating"
+    t.integer  "entity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  add_index "reviews", ["entity_id"], name: "index_reviews_on_entity_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "username"
@@ -218,6 +233,8 @@ ActiveRecord::Schema.define(version: 20151018194014) do
   add_foreign_key "message_participants", "entities"
   add_foreign_key "message_participants", "message_threads"
   add_foreign_key "messages", "message_threads"
+  add_foreign_key "notifications", "entities"
   add_foreign_key "review_joiners", "entities"
   add_foreign_key "review_joiners", "reviews"
+  add_foreign_key "reviews", "entities"
 end

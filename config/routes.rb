@@ -48,6 +48,11 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :notifications, only: %i(index destroy) do
+        member do
+          put 'mark_as_read'
+        end
+      end
       resources :events do
         member do
           post 'invite'
