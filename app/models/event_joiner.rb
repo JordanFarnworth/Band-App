@@ -7,7 +7,7 @@ class EventJoiner < ActiveRecord::Base
   scope :accepted, -> { where(status: 'accepted') }
   scope :deleted, -> { where(status: 'deleted') }
   scope :no_invitations, -> { where(status: 'No Invitations') }
-  scope :application, -> { where(status: 'application' ) } 
+  scope :application, -> { where(status: 'application' ) }
 
   def event
     Event.find self.event_id
@@ -16,6 +16,14 @@ class EventJoiner < ActiveRecord::Base
   def self.create_band_ej(band_id, event_id)
     @ej = EventJoiner.new
     @ej.status = 'pending'
+    @ej.entity_id = band_id
+    @ej.event_id = event_id
+    @ej.save
+  end
+
+  def self.accept_band_ej(band_id, event_id)
+    @ej = EventJoiner.new
+    @ej.status = 'accepted'
     @ej.entity_id = band_id
     @ej.event_id = event_id
     @ej.save

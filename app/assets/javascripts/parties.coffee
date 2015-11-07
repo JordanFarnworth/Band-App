@@ -62,7 +62,7 @@ class Party
         @populatePartyPage data
 
   createApplication: =>
-    $.ajax "/api/v1/application",
+    $.ajax "/api/v1/applications",
       type: 'post'
       dataType: 'json'
       data:

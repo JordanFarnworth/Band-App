@@ -19,6 +19,19 @@ class EventsController < ApplicationController
     end
   end
 
+  def create_accepted_event
+    @application = Application.find params[:application]
+    @application.accept_application
+    @event = Event.new event_params
+    if @event.save
+      EventJoiner.create_party_ej(params[:party], @event.id)
+      EventJoiner.accept_band_ej(params[:band], @event.id)
+      render json: event_json(@event), status: :ok
+    else
+      render json: { error: @event.errors.full_messages }, status: :bad_request
+    end
+  end
+
   def find_entity
     @entity = Entity.find params[:id]
   end

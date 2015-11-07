@@ -6,12 +6,13 @@
       </div>
       <div class="panel-body">
         <div class="list-group">
-          <% if current_entity.applications.any? %>
+          <% if current_entity.applications.pending.any? %>
             <% current_entity.applications.pending.each do |application| %>
               <a href="#" class="list-group-item">
                 <h4 class="list-group-item-heading">Application from <%= application.band.name %>
                   <span class="pull-right">
-                    <button id="<%= application.id %>" name="accept-gen-app" type="button" class="btn btn-success">Accept</button>
+                    <button id="<%= application.id %>" name="accept-gen-app" data-name="<%= application.band.name %>" data-id="<%= application.band.id %>" data-s-date="<%= application.start_time %>"
+                      data-e-date="<%= application.end_time %>" type="button" class="btn btn-success">Accept</button>
                     <button id="<%= application.id %>" name="decline-gen-app" type="button" class="btn btn-danger">Deny</button>
                   </span>
                 </h4>
@@ -62,7 +63,7 @@
         <h5 class="panel-title">Upcoming Events</h5>
       </div>
       <div class="panel-body">
-        <% if current_entity.events.any? %>
+        <% if current_entity.events.accepted.any? %>
           <% current_entity.events.accepted.each do |event| %>
             <a href="#" class="list-group-item">
               <h4 class="list-group-item-heading">Event: <%= event.title %></h4>

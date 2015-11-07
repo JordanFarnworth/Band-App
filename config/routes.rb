@@ -44,7 +44,7 @@ Rails.application.routes.draw do
           post 'decline_app'
         end
         collection do
-          post 'application' => 'applications#create'
+          post 'create'
         end
       end
 
@@ -59,6 +59,9 @@ Rails.application.routes.draw do
           post 'accept_invite'
           post 'decline_invite'
           put 'update'
+        end
+        collection do
+          post 'create_accepted_event'
         end
       end
       resources :users, except: [:new, :edit] do

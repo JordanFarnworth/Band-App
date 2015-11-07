@@ -32,8 +32,40 @@ class Dashboard
       success: (data) =>
         window.location = window.location
 
+  createAcceptedEvent: (band_id, app_id) =>
+    $.ajax "/api/v1/events/create_accepted_event",
+      type: 'post'
+      dataType: 'json'
+      data:
+        party: @entity
+        band: band_id
+        application: app_id
+        event:
+          title: $('#accept-event-title').val()
+          description: $('#accept-event-description').val()
+          recurrence_pattern: "One Time Event"
+          price: $('#accept-event-price').val()
+          start_time: $('#accept-event-start').val()
+          end_time: $('#accept-event-end').val()
+          state: "accepted"
+      success: (data) =>
+        window.location = window.location
+
   acceptGeneralApplication: (el) =>
     app = el.attr('id')
+    id = el.attr('data-id')
+    name = el.attr('data-name')
+    endDate = el.attr('data-s-date')
+    startDate = el.attr('data-e-date')
+    $('#myEventAcceptModal').modal('show')
+    $('.modal-body.new-event').prepend("<h3>For: #{name}</h3>
+    <br>
+    <h4>Availability Dates Given:</h4>
+    <br>
+    <p>#{startDate} through #{endDate}</p>")
+    $('#accept-event-btn').on 'click', ->
+      new Dashboard().createAcceptedEvent(id, app)
+
 
 
   declineGeneralApplication: (el) =>
