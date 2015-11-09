@@ -6,10 +6,22 @@ class Party
   constructor: ->
     @party = window.location.pathname.match(/\/parties\/(\d+)/)[1]
 
-  applyForEvent: (element) =>
-    bootbox.confirm 'Are you sure you want to apply for this event?', (result) ->
-      null
-        # TODO make this create an event_joiner with status of 'application'
+  applyForEvent: (id) =>
+    bootbox.confirm "Are you sure you want to apply for this event?", (result) ->
+      new Party().createEventJoiner(id)
+
+  createEventJoiner: (id) =>
+    $.ajax '/api/v1/event_joiners',
+    type: 'post'
+    dataType: 'json'
+    data:
+      event_joiner:
+        event_id: id
+        entity_id: ENV.current_entity
+        status: 'application'
+    success: (data) =>
+      bootbox.alert "Application has been sent! Check your dashboard for updates.", ->
+        window.location = window.location
 
   addRemoveFavorite: (party, band) =>
     $.ajax "/favorites/add_remove_band",
@@ -126,8 +138,8 @@ $('.parties.show').ready ->
   $('#create-normal-application').on 'click', ->
     new Party().createApplication()
   new Party().checkFavorite(@party, ENV.current_entity)
-  $('#apply-to-event').on 'click', ->
-    new Party().applyForEvent(this)
+  $('.btn.btn-default.apply-to-event').on 'click', ->
+    new Party().applyForEvent($(@).attr('id'))
 
 $('.parties.search').ready ->
   $('#party-search-form label').css({'font-size': '24px', 'color': '#2ECBFF'})

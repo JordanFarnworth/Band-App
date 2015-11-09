@@ -86,13 +86,13 @@
             <h3 class="panel-title">Available Events</h3>
           </div>
           <div class="panel-body">
-            <% if @party.events.no_invites.any? %>
-              <% @party.events.no_invites.each do |e| %>
+            <% if @party.events.open.any? %>
+              <% @party.events.open.each do |e| %>
                 <div class="list-group-item">
                   <h4 class="list-group-item-heading"><%= e.title %>
                     <% if logged_in? && @current_user.user_data[:user_entity_type] === 'band' %>
                     <span class="pull-right">
-                      <button type="button" name="<%= e.id %>" id="apply-to-event" class="btn btn-default">Apply</button>
+                      <button type="button" id="<%= e.id %>" class="btn btn-default apply-to-event">Apply</button>
                     </span>
                     <% end %>
                   </h4>

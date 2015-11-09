@@ -39,6 +39,13 @@ Rails.application.routes.draw do
 
   scope :api, defaults: { format: :json }, constraints: { format: :json } do
     scope :v1 do
+
+      resources :event_joiners do
+        collection do
+          post 'create'
+        end
+      end
+
       resources :applications do
         member do
           post 'decline_app'

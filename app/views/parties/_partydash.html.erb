@@ -116,8 +116,8 @@
         <h5 class="panel-title">Favorited Bands </h5>
       </div>
       <div class="panel-body">
-        <% if current_entity.favorites.any? %>
-          <% current_entity.favorites.each do |favorite| %>
+        <% if current_entity.favorites.party.any? %>
+          <% current_entity.favorites.party.each do |favorite| %>
             <a href="#" class="list-group-item">
               <h4 class="list-group-item-heading"><%= favorite.party.name %></h4>
               <p class="list-group-item-text"><%=  favorite.created_at %></p>

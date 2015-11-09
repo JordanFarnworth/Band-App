@@ -4,7 +4,8 @@ class Event < ActiveRecord::Base
 
   scope :pending, -> { where(state: 'pending') }
   scope :accepted, -> { where(state: 'accepted') }
-  scope :no_invites, -> { where(state: 'No Invitations') }
+  scope :open, -> { where(allow_apply: true) }
+  scope :declined, -> { where(state: 'declined') }
 
   def destroy
     self.delete
@@ -12,19 +13,17 @@ class Event < ActiveRecord::Base
 
   def set_state
     @joiners = []
-    if self.event_joiners.count == 1
-      self.state = 'No Invitations'
-    else
-      self.event_joiners.each do |ej|
-        @joiners << ej.status
-      end
-      if @joiners.include?('pending') || @joiners.include?('application')
-        self.state = 'pending'
-      elsif @joiners.include?('declined')
-        self.state = 'declined'
-      else
-        self.state = 'accepted'
-      end
+    self.event_joiners.each do |ej|
+      @joiners << ej.status
+    end
+    if @joiners.include?('pending') && @joiners.exclude?('declined') && @joiners.exclude?('accepted')
+      self.state = 'pending'
+    elsif @joiners.include?('declined') && @joiners.exclude?('pending') && @joiners.exclude?('accepted')
+      self.state = 'declined'
+    elsif @joiners.include?('application') && @joiners.exclude?('pending') && @joiners.exclude?('declined')
+      self.state = 'has applications'
+    elsif @joiners.include?('accepted') && @joiners.exclude?('pending') && @joiners.exclude?('declined') && @joiners.exclude?('application')
+      self.state = 'accepted'
     end
     self.save
     self
