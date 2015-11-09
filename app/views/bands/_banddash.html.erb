@@ -53,11 +53,15 @@
       </div>
       <div class="panel-body">
         <div class="list-group">
-          <% if current_entity.applications.declined.any? %>
-            <% current_entity.applications.declined.each do |application| %>
+          <% if current_entity.event_joiners.application.any? %>
+            <% current_entity.event_joiners.application.each do |application| %>
               <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">Application for <%= application.party.name %></h4>
-                <p class="list-group-item-text"><%= application.status %></p>
+                <h4 class="list-group-item-heading">Application for <%= application.event.title %></h4>
+                <p class="list-group-item-text">
+                  <% if application.status %>
+                  Application Submitted
+                  <% end %>
+                </p>
               </a>
             <% end %>
           <% else %>

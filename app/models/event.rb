@@ -4,7 +4,8 @@ class Event < ActiveRecord::Base
 
   scope :pending, -> { where(state: 'pending') }
   scope :accepted, -> { where(state: 'accepted') }
-  scope :open, -> { where(allow_apply: true) }
+  scope :open, -> { where(is_public: true) }
+  scope :closed, -> { where(is_private: false) }
   scope :declined, -> { where(state: 'declined') }
 
   def destroy

@@ -68,7 +68,7 @@
     </div>
 
     <div class="row">
-      <% if @party.longitude === nil && @party.latitude === nil %>
+      <% if @party.longitude === nil || @party.latitude === nil %>
       <div class="col-md-6">
         <div>
           <h3>Map Loading, Please try refeshing the page in a moment</h3>

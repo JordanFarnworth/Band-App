@@ -293,6 +293,7 @@ class Dashboard
         start_time: $('#create-event-start').val()
         end_time: $('#create-event-end').val()
         state: "No Invitations"
+        is_public: $('#optionsRadios1').prop("checked")
     success: (data) =>
       window.location = "/events/#{data.id}"
 
