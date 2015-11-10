@@ -92,7 +92,11 @@
                   <h4 class="list-group-item-heading"><%= e.title %>
                     <% if logged_in? && @current_user.user_data[:user_entity_type] === 'band' %>
                     <span class="pull-right">
-                      <button type="button" id="<%= e.id %>" class="btn btn-default apply-to-event">Apply</button>
+                      <% unless current_entity.has_event_application?(e.id) %>
+                        <button type="button" id="<%= e.id %>" class="btn btn-default apply-to-event">Apply</button>
+                      <% else %>
+                        <h5>Already Applied for this event</h5>
+                      <% end %>
                     </span>
                     <% end %>
                   </h4>

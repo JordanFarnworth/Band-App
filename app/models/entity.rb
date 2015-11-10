@@ -53,6 +53,15 @@ class Entity < ActiveRecord::Base
     events
   end
 
+  def has_event_application?(event_id)
+    @event_joiner = EventJoiner.where(event_id: event_id, entity_id: self.id)
+    if @event_joiner.any?
+      return true
+    else
+      false
+    end
+  end
+
   def has_application(party)
     if self.applications == []
       return false
