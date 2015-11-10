@@ -8,6 +8,7 @@ class EventJoiner < ActiveRecord::Base
   scope :deleted, -> { where(status: 'deleted') }
   scope :no_invitations, -> { where(status: 'No Invitations') }
   scope :application, -> { where(status: 'application' ) }
+  scope :denied, -> { where(status: 'denied' ) }
 
   def event
     Event.find self.event_id

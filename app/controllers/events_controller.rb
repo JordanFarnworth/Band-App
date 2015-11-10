@@ -19,6 +19,13 @@ class EventsController < ApplicationController
     end
   end
 
+  def deny_applications
+    @ej = EventJoiner.find params[:id]
+    event = ej.event
+    event.delay.deny_applications params[:id]
+    render json: { success: "Applications Denied" }, status: :ok
+  end
+
   def create_accepted_event
     @application = Application.find params[:application]
     @application.accept_application
@@ -65,9 +72,9 @@ class EventsController < ApplicationController
       ej.save
       event = Event.find event_id
       event.delay.set_state
-      render json: "Event Updated!", status: :ok
+      render json: {success: "Event Updated!"}, status: :ok
     else
-      render json: 'No Event Joiner Found', status: :bad_request
+      render json: {error: 'No Event Joiner Found'}, status: :bad_request
     end
   end
 
@@ -79,9 +86,9 @@ class EventsController < ApplicationController
       ej.save
       event = Event.find event_id
       event.delay.set_state
-      render json: "Event Updated!", status: :ok
+      render json: { success: "Event Updated!"}, status: :ok
     else
-      render json: 'No Event Joiner Found', status: :bad_request
+      render json: {error: 'No Event Joiner Found'}, status: :bad_request
     end
   end
 

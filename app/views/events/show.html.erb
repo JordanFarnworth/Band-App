@@ -83,7 +83,7 @@
             <% if current_entity.favorites.party.any? %>
               <% current_entity.favorites.party.each do |favorite| %>
                 <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading"><%= favorite.party.name %></h4>
+                  <h4 class="list-group-item-heading"><%= favorite.band.name %></h4>
                   <p class="list-group-item-text"><%=  favorite.created_at %></p>
                 </a>
               <% end %>

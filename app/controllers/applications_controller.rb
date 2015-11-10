@@ -11,9 +11,9 @@ class ApplicationsController < ApplicationController
           @requestor.create_band_joiner(band, @application.id)
           @requestee = ApplicationJoiner.new
           @requestee.create_party_joiner(party, @application.id)
-          render json: nil, status: 200
+          render json: {success: "Application Created!"}, status: :ok
         else
-          render json: @application.errors.messages, status: 500
+          render json:{error: @application.errors.messages}, status: :bad_request
         end
       end
     end
@@ -24,9 +24,9 @@ class ApplicationsController < ApplicationController
     if @application
       @application.status = 'declined'
       @application.save
-      render json: "Application Updated", status: :ok
+      render json: {success: "Application Updated"}, status: 200
     else
-      render json: @application.errors.messages, status: 500
+      render json: {error: @application.errors.messages}, status: 500
     end
   end
 

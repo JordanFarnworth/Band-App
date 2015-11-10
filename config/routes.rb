@@ -44,6 +44,9 @@ Rails.application.routes.draw do
         collection do
           post 'create'
         end
+        member do
+          put 'update'
+        end
       end
 
       resources :applications do
@@ -68,6 +71,7 @@ Rails.application.routes.draw do
           put 'update'
         end
         collection do
+          post 'deny_applications'
           post 'create_accepted_event'
         end
       end

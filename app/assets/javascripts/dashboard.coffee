@@ -9,6 +9,66 @@ class Dashboard
     @user = ENV.current_user
     @entity = ENV.current_entity
 
+  acceptEventApplication: (el) =>
+    event_joiner = el.attr('id')
+    bootbox.confirm "Are you sure you want to accept this application?", ->
+      if confirm
+        bootbox.dialog
+          message: "Would you like to keep this event open, or delete event and make it private?"
+          title: "Event Availability"
+          buttons:
+            success:
+              label: "Keep Event Open"
+              className: "btn-success"
+              callback: ->
+                $.ajax "/api/v1/event_joiners/#{event_joiner}/update",
+                  type: 'put'
+                  dataType: 'json'
+                  data:
+                    event_joiner:
+                      id: event_joiner
+                      status: 'accepted'
+                  success: (data) =>
+                    bootbox.confirm "Accepted Application, The Event will remain open", ->
+                      window.location = window.location
+            danger:
+              label: "Delete Remaining Applications!"
+              className: "btn-danger"
+              callback: ->
+                $.ajax "/api/v1/event_joiners/#{event_joiner}/update",
+                  type: 'put'
+                  dataType: 'json'
+                  data:
+                    event_joiner:
+                      id: event_joiner
+                      status: 'accepted'
+                  success: (data) =>
+                    $.ajax "/api/v1/events/deny_applicaitons",
+                      type: 'post'
+                      dataType: 'json'
+                      data:
+                        event_joiner:
+                          id: event_joiner
+                          status: 'accepted'
+                      success: (data) =>
+                        bootbox.alert "Event Accepted and all other applications have been deleted", ->
+                          window.location = window.location
+
+  denyEventApplication: (el) =>
+    event_joiner = el.attr('id')
+    bootbox.confirm "Are you sure you want to accept this application?", ->
+      if confirm
+        $.ajax "/api/v1/event_joiners/#{event_joiner}/update",
+          type: 'put'
+          dataType: 'json'
+          data:
+            event_joiner:
+              id: event_joiner
+              status: 'denied'
+          success: (data) =>
+            bootbox.alert "Application Denied", ->
+              window.location = window.location
+
   acceptEvent: (el) =>
     event = el.attr('id')
     $.ajax "/api/v1/events/#{event}/accept_invite",
@@ -19,7 +79,8 @@ class Dashboard
           id: event
           entity: ENV.current_entity
       success: (data) =>
-        window.location = window.location
+        bootbox.alert "Event Invitation Accepted!", ->
+          window.location = window.location
 
   declineEvent: (el) =>
     event = el.attr('id')
@@ -30,7 +91,8 @@ class Dashboard
         event:
           id: event
       success: (data) =>
-        window.location = window.location
+        bootbox.alert "Event Invitation Denied", ->
+          window.location = window.location
 
   createAcceptedEvent: (band_id, app_id) =>
     $.ajax "/api/v1/events/create_accepted_event",
@@ -69,6 +131,7 @@ class Dashboard
 
 
   declineGeneralApplication: (el) =>
+    console.log("Not sure why this won't return json succes ajax call in controller")
     app = el.attr('id')
     $.ajax "/api/v1/applications/#{app}/decline_app",
       type: 'post'
@@ -434,7 +497,10 @@ $('.dashboard.index').ready ->
     db.declineGeneralApplication($(@))
   $("[name='accept-gen-app']").on 'click', ->
     db.acceptGeneralApplication($(@))
-
+  $("[name='accept-event-app']").on 'click', ->
+    db.acceptEventApplication($(@))
+  $("[name='deny-event-app']").on 'click', ->
+    db.denyEventApplication($(@))
 
   $('#update-band-btn').on 'click', ->
     db = new Dashboard()
@@ -483,6 +549,5 @@ $('.dashboard.index').ready ->
     $('#party-social-media-form-edit').formValidation('validate')
     $('#party-contact-info-form-edit').formValidation('validate')
     # If the form is valid, will proceed with submission
-    debugger
     if $('#party-general-info-form-edit').data('formValidation').isValid() && $('#party-social-media-form-edit').data('formValidation').isValid() && $('#party-contact-info-form-edit').data('formValidation').isValid()
       db.updateParty()

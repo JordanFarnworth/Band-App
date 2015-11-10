@@ -85,7 +85,8 @@ class Party
           band_id: ENV.current_entity
       success: (data) =>
         $('#application-modal').modal('hide')
-        bootbox.alert('Your application has been created and delivered!', if confirm then window.location = window.location)
+        bootbox.alert('Your application has been created and delivered!', ->
+          if confirm then window.location = window.location)
 
 
 

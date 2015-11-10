@@ -34,17 +34,19 @@
       </div>
       <div class="panel-body">
         <div class="list-group">
-          <% if current_entity.event_applications.any? %>
-            <% current_entity.event_applications.each do |application| %>
-              <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">Application from <%= application.band.name %>
-                  <span class="pull-right">
-                    <button type="button" class="btn btn-success">Accept</button>
-                    <button type="button" class="btn btn-danger">Deny</button>
-                  </span>
-                </h4>
-                <p class="list-group-item-text"><%= application.status %></p>
-              </a>
+          <% if current_entity.event_applications != [] %>
+            <% current_entity.events.each do |event| %>
+              <% event.applications.each do |application| %>
+                <div class="list-group-item">
+                  <h4 class="list-group-item-heading">Application for <%= link_to application.event.title, application.event %>
+                    <span class="pull-right">
+                      <button name="accept-event-app" id="<%= application.id %>" type="button" class="btn btn-success">Accept</button>
+                      <button name="deny-event-app" id="<%= application.id %>" type="button" class="btn btn-danger">Deny</button>
+                    </span>
+                  </h4>
+                  <p class="list-group-item-text">From <%= link_to application.entity.name, application.entity %></p>
+                </div>
+              <% end %>
             <% end %>
           <% else %>
             <h5>You have no applications!</h5>
@@ -53,7 +55,6 @@
       </div>
     </div>
   </div>
-
 </div>
 
 <div class="row">
@@ -67,7 +68,7 @@
           <% current_entity.events.accepted.each do |event| %>
             <a href="#" class="list-group-item">
               <h4 class="list-group-item-heading">Event: <%= event.title %></h4>
-              <p class="list-group-item-text"><%=  event.start_time == nil ? 'nil' : event.start_time %></p>
+              <p class="list-group-item-text"><%=  event.start_time == nil ? 'Will be set by company' : event.start_time %></p>
             </a>
           <% end %>
         <% else %>
@@ -87,7 +88,7 @@
           <% current_entity.events.pending.each do |e| %>
             <a href="#" class="list-group-item">
               <h4 class="list-group-item-heading"><%= e.title %></h4>
-              <p class="list-group-item-text"><%= e.start_time %></p>
+              <p class="list-group-item-text"><%= e.state %></p>
             </a>
           <% end %>
         <% else %>
@@ -102,10 +103,20 @@
   <div class="col-md-6">
     <div class="panel panel-default panel-dash">
       <div class="panel-heading">
-        <h5 class="panel-title">Promoted Bands</h5>
+        <h5 class="panel-title">Public Events</h5>
       </div>
       <div class="panel-body">
-        Panel content
+        <% if current_entity.events.open.any? %>
+          <% current_entity.events.open.each do |public_event| %>
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading"><%= public_event.title %></h4>
+              <p class="list-group-item-text"><%=  public_event.state %></p>
+            </a>
+          <% end %>
+        <% else %>
+          <h5>You don't have any public events!</h5>
+          <p>Go create one in your Manage Events tab</p>
+        <% end %>
       </div>
     </div>
   </div>

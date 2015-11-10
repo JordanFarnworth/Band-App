@@ -35,7 +35,13 @@ class Entity < ActiveRecord::Base
   end
 
   def event_applications
-    self.event_joiners.application
+    apps = []
+    self.events.each do |event|
+      event.applications.each do |app|
+        apps << app.id
+      end
+    end
+    apps
   end
 
   def accepted_events
