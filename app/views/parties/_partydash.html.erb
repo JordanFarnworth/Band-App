@@ -8,8 +8,8 @@
         <div class="list-group">
           <% if current_entity.applications.pending.any? %>
             <% current_entity.applications.pending.each do |application| %>
-              <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">Application from <%= application.band.name %>
+              <div class="list-group-item">
+                <h4 class="list-group-item-heading">Application from <%= link_to application.band.name, application.band %>
                   <span class="pull-right">
                     <button id="<%= application.id %>" name="accept-gen-app" data-name="<%= application.band.name %>" data-id="<%= application.band.id %>" data-s-date="<%= application.start_time %>"
                       data-e-date="<%= application.end_time %>" type="button" class="btn btn-success">Accept</button>
@@ -17,7 +17,7 @@
                   </span>
                 </h4>
                 <p class="list-group-item-text"><%= application.status %></p>
-              </a>
+              </div>
             <% end %>
           <% else %>
             <h5>You have no applications!</h5>
@@ -66,10 +66,10 @@
       <div class="panel-body">
         <% if current_entity.events.accepted.any? %>
           <% current_entity.events.accepted.each do |event| %>
-            <a href="#" class="list-group-item">
-              <h4 class="list-group-item-heading">Event: <%= event.title %></h4>
+            <div class="list-group-item">
+              <h4 class="list-group-item-heading">Event: <%= link_to event.title, event %></h4>
               <p class="list-group-item-text"><%=  event.start_time == nil ? 'Will be set by company' : event.start_time %></p>
-            </a>
+            </div>
           <% end %>
         <% else %>
           <h5>You have no events! Go schedule some bands in the search menu!</h5>
@@ -85,11 +85,11 @@
       </div>
       <div class="panel-body">
         <% if current_entity.events.pending.any? %>
-          <% current_entity.events.pending.each do |e| %>
-            <a href="#" class="list-group-item">
-              <h4 class="list-group-item-heading"><%= e.title %></h4>
-              <p class="list-group-item-text"><%= e.state %></p>
-            </a>
+          <% current_entity.events.pending.each do |event| %>
+            <div class="list-group-item">
+              <h4 class="list-group-item-heading"><%= link_to event.title, event %></h4>
+              <p class="list-group-item-text"><%= event.state %></p>
+            </div>
           <% end %>
         <% else %>
           <h5>No Pending Events</h5>
@@ -108,10 +108,10 @@
       <div class="panel-body">
         <% if current_entity.events.open.any? %>
           <% current_entity.events.open.each do |public_event| %>
-            <a href="#" class="list-group-item">
-              <h4 class="list-group-item-heading"><%= public_event.title %></h4>
+            <div class="list-group-item">
+              <h4 class="list-group-item-heading"><%= link_to public_event.title, public_event %></h4>
               <p class="list-group-item-text"><%=  public_event.state %></p>
-            </a>
+            </div>
           <% end %>
         <% else %>
           <h5>You don't have any public events!</h5>
@@ -129,10 +129,10 @@
       <div class="panel-body">
         <% if current_entity.favorites.party.any? %>
           <% current_entity.favorites.party.each do |favorite| %>
-            <a href="#" class="list-group-item">
-              <h4 class="list-group-item-heading"><%= favorite.party.name %></h4>
+            <div class="list-group-item">
+              <h4 class="list-group-item-heading"><%= link_to favorite.band.name, favorite.band %></h4>
               <p class="list-group-item-text"><%=  favorite.created_at %></p>
-            </a>
+            </div>
           <% end %>
         <% else %>
           <h5>You don't have any favorites yet! Don't be shy, get out there!</h5>
