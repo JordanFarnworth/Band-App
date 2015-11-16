@@ -431,6 +431,8 @@ class Dashboard
 
 
 $('.dashboard.calendar').ready ->
+  $('#event-end-date-edit').datetimepicker()
+  $('#event-start-date-edit').datetimepicker()
   new Dashboard().getCalendarData()
   $('#edit-event-toggle').on 'click', ->
     $('#modal-body-show').toggleClass('hidden')
@@ -444,9 +446,12 @@ $('.dashboard.calendar').ready ->
       if result == true
         new Dashboard().deleteEvent()
 
-
 $('.dashboard.index').ready ->
   db = new Dashboard()
+  $('#accept-event-start').datetimepicker()
+  $('#accept-event-end').datetimepicker()
+  $('#create-event-start').datetimepicker()
+  $('#create-event-start').datetimepicker()
   $('#band-edit-form').formValidation()
   $('#band-general-info-form').formValidation
     excluded: ':disabled'

@@ -9,6 +9,27 @@ class Event
     @event_id = window.location.pathname.match(/\/events\/(\d+)/)[1]
 
 
+  removeFromFavorites: (favorite) =>
+    bootbox.confirm "Do you want to remove this band From your Favorites list?", (result) ->
+      if result
+        $.ajax "/favorites/add_remove_party",
+          type: 'post'
+          dataType: 'json'
+          data:
+            favorite:
+              band_id: favorite.attr('id')
+              party_id: ENV.current_entity
+          success: (data) =>
+            favorite.parent().parent().parent().remove()
+
+  showHideAddToEventButton: () =>
+    if $('#bands-to-invite').children().length > 0
+      $('#add-band-to-event').show()
+    else
+      $('#add-band-to-event').hide()
+
+
+
   updateEvent: () =>
     $.ajax "/api/v1/events/#{@event_id}",
       type: 'put'
@@ -20,23 +41,37 @@ class Event
           start_time: moment().format($('#edit-event-st').val())
           end_time:  moment().format($('#edit-event-ed').val())
           price: $('#edit-event-price').val()
+          address: $('#edit-event-address').val()
+          is_public: if $('select').val() == "Public" then true else false
       success: (data) =>
         bootbox.alert "#{data.title} updated!", ->
           reload()
 
+  checkIfAlreadyinvited: (band) =>
+    band_id = "band-#{band}"
+    response = null
+    children = $('#bands-to-invite').children().each ->
+      if $(this).attr('id') == band_id
+        response = true
+    return response
+
   addBandToInviteList: (band, band_name, e) =>
-    if e.target.class == 'fav-list'
-      # TO DO add favorites to invite list
-    else
+    if @checkIfAlreadyinvited(band) == null
       $('#bands-to-invite').append(bandInfo(band, band_name))
       new Event().initializeListeners()
+      @showHideAddToEventButton()
+    else
+      bootbox.alert "this band is already on the invite list", ->
+        null
 
   initializeListeners: () =>
     @kids = $('#bands-to-invite').children()
+
     @kids = $.map @kids, (obj, i) ->
       $("#" + obj.id).on 'click', ->
         $(@).remove()
         $(@).unbind()
+        new Event().showHideAddToEventButton()
 
 
   inviteBands: () =>
@@ -73,7 +108,7 @@ bandInfo = (band, band_name) ->
       <h4 class='list-group-item-heading'>
       #{band_name}
       <span class='pull-right'>
-          <a href='#' id='remove-#{band}'>
+          <a id='remove-#{band}'>
             <i class='fa fa-minus-circle'></i>
           </a>
         <span>
@@ -98,13 +133,25 @@ autocompletePartyParams = ->
       event.preventDefault()
       return unless ui.item
       $('#search-band').val('')
-      new Event().addBandToInviteList(ui.item.value, ui.item.name, event)
+      if new Event().checkIfAlreadyinvited(ui.item.value) == null
+        new Event().addBandToInviteList(ui.item.value, ui.item.name, event)
+      else
+        bootbox.alert "this band is already on the invite list", ->
+          null
   }
 
 $('.events.show').ready ->
+  $('#edit-event-st').datetimepicker()
+  $('#edit-event-st').val(new Date($('#edit-event-st').attr('name')).toLocaleString())
+  $('#edit-event-ed').datetimepicker()
+  $('#edit-event-ed').val(new Date($('#edit-event-ed').attr('name')).toLocaleString())
   $('#search-band').autocomplete autocompletePartyParams()
   $('#add-band-to-event').on 'click', ->
     new Event().inviteBands()
   $('#update-event').on 'click', ->
     new Event().updateEvent()
-  updateDate()
+  $('.fav-list').on 'click', ->
+      new Event().addBandToInviteList($(this).attr('id'), $(this).attr('name'), event)
+  $('.trash-list').on 'click', ->
+    new Event().removeFromFavorites($(this))
+  new Event().showHideAddToEventButton()

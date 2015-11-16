@@ -14,6 +14,19 @@ class EventJoiner < ActiveRecord::Base
     Event.find self.event_id
   end
 
+  def self.waiting
+    @event = Event.find params[:id]
+    waiting = []
+    @event.event_joiners.each do |ej|
+      band_name = ej.entity.name
+      status = ej.status
+      unless ej.status == 'application' || ej.status == 'owner'
+        ej << waiting
+      end
+    end
+    waiting
+  end
+
   def self.create_band_ej(band_id, event_id)
     @ej = EventJoiner.new
     @ej.status = 'pending'

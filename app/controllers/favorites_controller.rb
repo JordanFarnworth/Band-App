@@ -27,6 +27,7 @@ class FavoritesController < ApplicationController
   end
 
   def add_remove_band
+    debugger
     @favorite = Favorite.band.where(band_id: params[:favorite][:band_id], party_id: params[:favorite][:party_id]).first
     if @favorite
       @favorite.destroy

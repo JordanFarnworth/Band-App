@@ -16,6 +16,10 @@ class Event < ActiveRecord::Base
     self.event_joiners.application
   end
 
+  def invitations
+    self.event_joiners.pending
+  end
+
   def deny_applications(id)
     ejs = self.event_joiners
     ejs.each do |ej|
@@ -24,6 +28,14 @@ class Event < ActiveRecord::Base
       end
     end
     self.delay.set_state
+  end
+
+  def public?
+    if self.is_public == true
+      return true
+    else
+      return false
+    end
   end
 
   def set_state

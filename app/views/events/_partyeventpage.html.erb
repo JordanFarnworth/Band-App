@@ -1,0 +1,140 @@
+<div class="row text-center">
+  <h1>
+    <a class="test" data-toggle="tooltip" data-placement="left" title="Tooltip on left" role="button" type="button" name="button" ><i id="update-event"  class="fa fa-wrench"></i></a>
+    Edit Event
+    <a ><i id="update-event" name="button" class="fa fa-trash-o"></i></a>
+  </h1>
+</div>
+<br>
+<div class="row">
+  <form class="form">
+    <div class="form-group">
+      <div class="col-md-3">
+        <label for="edit-event-title">Event Title</label>
+        <input type="text" id="edit-event-title" value="<%= @event.title %>" class="form-control" aria-describedby="helpBlock">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-md-9">
+        <label for="edit-event-description">Event Description</label>
+        <textarea class="form-control" id="edit-event-description" name="name" rows="3"><%= @event.description %></textarea>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="row">
+  <form class="form">
+    <div class="form-group">
+      <div class="col-md-3">
+        <label for="edit-event-st">Start Time</label>
+        <input type="text" id="edit-event-st" name="<%= @event.start_time %>" class="form-control" aria-describedby="helpBlock"></input>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-md-3">
+        <label for="edit-event-ed">End Time</label>
+        <input type="text" id="edit-event-ed" name="<%= @event.end_time %>" class="form-control" aria-describedby="helpBlock"></input>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-md-3">
+        <label for="edit-state">Status of Event</label>
+        <input type="text" disabled="true" id="event-state" value="<%= @event.state %>" class="form-control" aria-describedby="helpBlock">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-md-3">
+        <label for="edit-event-price">Money being offered</label>
+        <input type="text" id="edit-event-price" value="$<%= @event.price %>" class="form-control" aria-describedby="helpBlock">
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="row">
+  <form class="form">
+    <div class="form-group">
+      <div class="col-md-6">
+        <label for="edit-event-st">Address</label>
+        <input type="text" id="edit-event-address" value="<%= @event.address %>" class="form-control" aria-describedby="helpBlock"></input>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-md-3">
+        <label for="edit-event-st">Public/Private</label>
+       <select  class="form-control" id="select edit-event-public-private">
+         <% if @event.is_public == true %>
+           <option selected="">
+             Public
+          </option>
+           <option>
+             Private
+           </option>
+        <% else %>
+          <option selected="">
+            Private
+         </option>
+          <option>
+            Public
+          </option>
+        <% end %>
+       </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-md-3">
+        <label for="exampleInputFile">Event Image (optional)</label>
+        <input type="file" id="exampleInputFile">
+        <p class="help-block">Please use .jpg or .png</p>
+      </div>
+    </div>
+  </form>
+</div>
+
+<br>
+
+<div class="row">
+  <!-- Nav tabs -->
+  <div class="btn-group btn-group-justified" role="tablist">
+    <div class="btn-group" role="group">
+      <a href="#simple-search-event" role="tab" data-toggle="tab" type="button" id="simple-search-tab" class="btn btn-info"><h4>Add Favorites/Simple Search</h4></a>
+    </div>
+    <div class="btn-group" role="group">
+      <a href="#advanced-search-event" role="tab" data-toggle="tab" type="button" id="simple-search-tab" class="btn btn-success"><h4>Advanced Band Searching</h4></a>
+    </div>
+    <div class="btn-group" role="group">
+      <a href="#event-map" role="tab" data-toggle="tab" type="button" id="simple-search-tab" class="btn btn-primary"><h4>Map</h4></a>
+    </div>
+    <% if @event.is_public == false %>
+      <div class="btn-group" role="group">
+        <a href="#status-of-invited" role="tab" data-toggle="tab" type="button" id="advanced-search-tab" class="btn btn-warning"><h4>Status of Invited</h4></a>
+      </div>
+    <% else %>
+      <div class="btn-group" role="group">
+        <a href="#event-applications" role="tab" data-toggle="tab" type="button" id="advanced-search-tab" class="btn btn-info"><h4>Event Applications</h4></a>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="simple-search-event">
+    <%= render 'events/simplesearch' %>
+  </div>
+  <div role="tabpanel" class="tab-pane" id="advanced-search-event">
+    <%= render 'events/advancedsearch' %>
+  </div>
+  <% if @event.is_public == false %>
+    <div role="tabpanel" class="tab-pane" id="status-of-invited">
+      <%= render 'events/statusofinvited' %>
+    </div>
+  <% else %>
+  <div role="tabpanel" class="tab-pane" id="event-applications">
+    <%= render 'events/eventapplications' %>
+  </div>
+  <% end %>
+  <div role="tabpanel" class="tab-pane" id="event-map">
+    <%= render 'events/eventmap' %>
+  </div>
+</div>

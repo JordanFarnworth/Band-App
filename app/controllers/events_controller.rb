@@ -10,6 +10,11 @@ class EventsController < ApplicationController
   end
 
   def create
+    debugger
+    start_time = event_params[:event][:start_time]
+    event_params[:event][:start_time] = DateTime.strptime start_time, '%m/%d/%Y %I:%M %p'
+    end_time = event_params[:event][:end_time]
+    event_params[:event][:end_time] = DateTime.strptime end_time, '%m/%d/%Y %I:%M %p'
     @event = Event.new event_params
     if @event.save
       EventJoiner.create_party_ej(params[:party], @event.id)
@@ -115,7 +120,12 @@ class EventsController < ApplicationController
   end
 
   def update
-    if @event.update event_params
+    ep = event_params
+    start_time = event_params[:start_time]
+    ep[:start_time] = DateTime.strptime start_time, '%m/%d/%Y %I:%M %p'
+    end_time = event_params[:end_time]
+    ep[:end_time] = DateTime.strptime end_time, '%m/%d/%Y %I:%M %p'
+    if @event.update ep
       render json: event_json(@event), status: :ok
     else
       render json: { errors: @event.errors.full_messages }, status: :bad_request
@@ -125,7 +135,7 @@ class EventsController < ApplicationController
 
   private
   def event_params
-    params.require(:event).permit(:id, :title, :description, :start_time, :end_time, :price, :recurrence_pattern, :recurrence_ends_at, :state, :is_public)
+    params.require(:event).permit(:id, :address, :title, :description, :start_time, :end_time, :price, :recurrence_pattern, :recurrence_ends_at, :state, :is_public)
   end
 
 end
