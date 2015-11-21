@@ -2,6 +2,8 @@ class Event < ActiveRecord::Base
   has_many :event_joiners, dependent: :destroy
   has_many :entities, through: :event_joiners
 
+  geocoded_by :address
+
   scope :pending, -> { where(state: 'pending') }
   scope :accepted, -> { where(state: 'accepted') }
   scope :open, -> { where(is_public: true) }
@@ -62,6 +64,11 @@ class Event < ActiveRecord::Base
     end
     self.save
     self
+  end
+
+  def geocode_address
+    self.geocode
+    self.save
   end
 
 end

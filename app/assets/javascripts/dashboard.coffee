@@ -355,6 +355,7 @@ class Dashboard
         price: $('#create-event-price').val()
         start_time: $('#create-event-start').val()
         end_time: $('#create-event-end').val()
+        address: $('#create-event-address').val()
         state: "No Invitations"
         is_public: $('#optionsRadios1').prop("checked")
     success: (data) =>

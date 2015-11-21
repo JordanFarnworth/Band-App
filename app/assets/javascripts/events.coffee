@@ -8,6 +8,13 @@ class Event
     @entity = ENV.current_entity
     @event_id = window.location.pathname.match(/\/events\/(\d+)/)[1]
 
+  showMap: (lat, long) =>
+    hash = {
+      "latitude": "#{lat}",
+      "longitude": "#{long}"
+      }
+    gmap_show hash
+
 
   removeFromFavorites: (favorite) =>
     bootbox.confirm "Do you want to remove this band From your Favorites list?", (result) ->
@@ -155,3 +162,4 @@ $('.events.show').ready ->
   $('.trash-list').on 'click', ->
     new Event().removeFromFavorites($(this))
   new Event().showHideAddToEventButton()
+  new Event().showMap($('#event-latitude').val(), $('#event-longitude').val())

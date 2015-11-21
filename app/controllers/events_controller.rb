@@ -14,6 +14,7 @@ class EventsController < ApplicationController
     event_params[:end_time] = DateTime.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p')
     @event = Event.new event_params
     if @event.save
+      @event.delay.geocode_address
       EventJoiner.create_party_ej(params[:party], @event.id)
       render json: event_json(@event), status: :ok
     else
