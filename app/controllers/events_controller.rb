@@ -10,11 +10,8 @@ class EventsController < ApplicationController
   end
 
   def create
-    debugger
-    start_time = event_params[:event][:start_time]
-    event_params[:event][:start_time] = DateTime.strptime start_time, '%m/%d/%Y %I:%M %p'
-    end_time = event_params[:event][:end_time]
-    event_params[:event][:end_time] = DateTime.strptime end_time, '%m/%d/%Y %I:%M %p'
+    event_params[:start_time] = DateTime.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p')
+    event_params[:end_time] = DateTime.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p')
     @event = Event.new event_params
     if @event.save
       EventJoiner.create_party_ej(params[:party], @event.id)

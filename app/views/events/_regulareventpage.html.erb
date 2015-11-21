@@ -1,1 +1,31 @@
-Reg page
+<div class="container">
+  <div class="row">
+    <%= @event.title %>
+    <br>
+    <%= @event.description %>
+    <br>
+    <div>
+      <p>
+        <%= @event.start_time %>
+      </p>
+    </div>
+    <br>
+    <div>
+      <%= @event.end_time %>
+    </div>
+    <br>
+    <%= @event.state %>
+    <br>
+    <%= @event.price %>
+    <br>
+    <%= @event.address %>
+    <br>
+    <%= @event.created_at %>
+  </div>
+  <div class="row">
+
+  </div>
+  <div class="row">
+
+  </div>
+</div>

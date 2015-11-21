@@ -451,7 +451,7 @@ $('.dashboard.index').ready ->
   $('#accept-event-start').datetimepicker()
   $('#accept-event-end').datetimepicker()
   $('#create-event-start').datetimepicker()
-  $('#create-event-start').datetimepicker()
+  $('#create-event-end').datetimepicker()
   $('#band-edit-form').formValidation()
   $('#band-general-info-form').formValidation
     excluded: ':disabled'

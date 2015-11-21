@@ -1,3 +1,5 @@
+echo "disgaurding changes"
+git reset --hard
 echo "Switching to master.."
 git checkout master
 echo "Pulling.."
