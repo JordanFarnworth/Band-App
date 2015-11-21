@@ -40,8 +40,6 @@
 //= require fullcalendar.min
 //= require react_bootstrap
 //= require bootstrap-datetimepicker
-//= require leaflet-src.js
-//= require leaflet.js
 //= require_tree .
 
 // $(document).ready(function(){

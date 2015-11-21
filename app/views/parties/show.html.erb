@@ -30,57 +30,12 @@
     <div class="row">
       <div class="col-md-4">
         <img id="party-profile-picture" src="http://www.yashdevelopers.com/images/elevation-oakwoodhills-build-A-large.jpg" alt="" />
+        <div id="party-name"></div>
+        <div id="party-owner"></div>
+        <div id="party-created-at"></div>
+        <div id="party-social-media"></div>
       </div>
-      <div class="col-md-8 text-center inline">
-        <div id="party-name">
-
-        </div>
-        <div id="party-owner">
-
-        </div>
-        <div id="party-created-at">
-
-        </div>
-      </div>
-    </div>
-
-    <div class="row" id="party-info">
-      <div class="col-md-4">
-        <div class="panel panel-primary" id="party-social-media-panel">
-          <div class="panel-heading text-center">
-            <h3 class="panel-title">Social Media</h3>
-          </div>
-          <div class="panel-body text-center" id="party-social-media">
-
-          </div>
-        </div>
-      </div>
-      <div class="col-md-8">
-        <div class="panel panel-primary">
-          <div class="panel-heading text-center">
-            <h3 class="panel-title">General Info</h3>
-          </div>
-          <div class="panel-body text-center" id="party-general-info">
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <% if @party.longitude === nil || @party.latitude === nil %>
-      <div class="col-md-6">
-        <div>
-          <h3>Map Loading, Please try refeshing the page in a moment</h3>
-        </div>
-      <% else %>
-      </div>
-      <div class="col-md-6">
-        <div id="map" style="width: 550px; height: 350px;"></div>
-      </div>
-      <% end %>
-
-      <div class="col-md-6">
+      <div class="col-md-8 inline">
         <div class="panel panel-primary" id="available-events">
           <div class="panel-heading text-center">
             <h3 class="panel-title">Available Events</h3>
@@ -100,7 +55,7 @@
                     </span>
                     <% end %>
                   </h4>
-                  <p class="list-group-item-text"><%=  e.created_at %></p>
+                  <p class="list-group-item-text"><%= e.created_at %></p>
                 </div>
               <% end %>
             <% else %>
@@ -109,9 +64,28 @@
           </div>
         </div>
       </div>
-
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div id="party-general-info"></div>
+      </div>
+    </div>
+    <div class="row">
+      <% if @party.longitude === nil || @party.latitude === nil %>
+      <div class="col-md-6">
+        <div>
+          <h3>Map Loading, Please try refeshing the page in a moment</h3>
+        </div>
+      <% else %>
+      </div>
+      <div class="col-md-12">
+        <div id="map" style="width: 100%; height: 350px;"></div>
+      </div>
+      <% end %>
     </div>
   </div>
+<!-- TODO Fix :allthethings: regarding the map, if i take it out it deletes everything -->
 
+<!-- TODO Bold the first word of the general info lines -->
 <%= render 'scriptstore' %>
 <%= render 'partymodals' %>

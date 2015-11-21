@@ -193,7 +193,6 @@ ActiveRecord::Schema.define(version: 20151121221305) do
     t.integer  "review_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "state"
   end
 
   add_index "review_joiners", ["entity_id"], name: "index_review_joiners_on_entity_id", using: :btree
@@ -202,9 +201,12 @@ ActiveRecord::Schema.define(version: 20151121221305) do
   create_table "reviews", force: :cascade do |t|
     t.text     "description"
     t.integer  "rating"
+    t.integer  "entity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  add_index "reviews", ["entity_id"], name: "index_reviews_on_entity_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "username"
@@ -238,4 +240,5 @@ ActiveRecord::Schema.define(version: 20151121221305) do
   add_foreign_key "notifications", "entities"
   add_foreign_key "review_joiners", "entities"
   add_foreign_key "review_joiners", "reviews"
+  add_foreign_key "reviews", "entities"
 end

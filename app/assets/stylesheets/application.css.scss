@@ -27,8 +27,12 @@
 @import '../../../vendor/assets/stylesheets/_bootswatch.scss';
 @import 'font-awesome';
 @import 'bootstrap-datetimepicker';
-@import 'leaflet';
+
 
 .nav-bar-logo-img {
   margin-right: 10px;
+}
+
+.container{
+  margin-top: 25px;
 }
