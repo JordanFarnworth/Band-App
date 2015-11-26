@@ -10,8 +10,10 @@ class Event
 
   showMap: (lat, long) =>
     hash = {
-      "latitude": "#{lat}",
-      "longitude": "#{long}"
+      "name": $('#event-name').val(),
+      "address": $('#event-address').val(),
+      "latitude": lat,
+      "longitude": long
       }
     gmap_show hash
 
@@ -38,6 +40,7 @@ class Event
 
 
   updateEvent: () =>
+
     $.ajax "/api/v1/events/#{@event_id}",
       type: 'put'
       dataType: 'json'
@@ -96,10 +99,11 @@ class Event
         bootbox.alert("Bands Invited", null)
 
 updateDate = () ->
+  debugger
   start = $('#edit-event-st').val()
-  start_frd = new Date(start).toLocaleString()
+  start_frd = new Date(start).toLocaleTimeString()
   end = $('#edit-event-ed').val()
-  end_frd = new Date(end).toLocaleString()
+  end_frd = new Date(end).toLocaleTimeString()
   $('#edit-event-st').val(start_frd)
   $('#edit-event-ed').val(end_frd)
   $('#edit-event-st').datetimepicker()
@@ -149,9 +153,9 @@ autocompletePartyParams = ->
 
 $('.events.show').ready ->
   $('#edit-event-st').datetimepicker()
-  $('#edit-event-st').val(new Date($('#edit-event-st').attr('name')).toLocaleString())
+  $('#edit-event-st').val(new Date($('#edit-event-st').attr('name')).toLocaleString().replace(/:\d{2}\s/,' ').replace(/\,/, ''))
   $('#edit-event-ed').datetimepicker()
-  $('#edit-event-ed').val(new Date($('#edit-event-ed').attr('name')).toLocaleString())
+  $('#edit-event-ed').val(new Date($('#edit-event-ed').attr('name')).toLocaleString().replace(/:\d{2}\s/,' ').replace(/\,/, ''))
   $('#search-band').autocomplete autocompletePartyParams()
   $('#add-band-to-event').on 'click', ->
     new Event().inviteBands()

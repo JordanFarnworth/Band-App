@@ -380,7 +380,6 @@ class Dashboard
     $('#edit-user-email').val(data.email)
 
   populatePartyData: (data) =>
-    console.log data
     $('#party-name-edit').val(data.name)
     $('#party-description-edit').val(data.description)
     $('#party-email-edit').val(data.data.email)

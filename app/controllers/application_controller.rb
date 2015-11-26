@@ -9,6 +9,13 @@ class ApplicationController < ActionController::Base
     request.format.symbol == :json
   end
 
+  def date_formatter date
+    date = date
+    min = date.match(/((:)[0-9])\d+/)
+    date.gsub!(/((:)[0-9])\d+/, "#{min}:00").downcase!
+    DateTime.strptime(date, '%m/%d/%Y %I:%M:%S %p')
+  end
+
   def set_current_user
     if api_request?
       if request.headers['Authorization'] && request.headers['Authorization'].match(/Bearer (.+)/)

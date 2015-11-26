@@ -10,9 +10,12 @@ class EventsController < ApplicationController
   end
 
   def create
-    event_params[:start_time] = DateTime.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p')
-    event_params[:end_time] = DateTime.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p')
-    @event = Event.new event_params
+    ep = event_params
+    start_time = event_params[:start_time]
+    ep[:start_time] = DateTime.strptime start_time, '%m/%d/%Y %I:%M %p'
+    end_time = event_params[:end_time]
+    ep[:end_time] = DateTime.strptime end_time, '%m/%d/%Y %I:%M %p'
+    @event = Event.new ep
     if @event.save
       @event.delay.geocode_address
       EventJoiner.create_party_ej(params[:party], @event.id)

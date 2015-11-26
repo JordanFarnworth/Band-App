@@ -1,4 +1,10 @@
 <div class="row text-center">
+  <div class="hidden" hidden="true">
+    <input hidden='true' name="name" id="event-name" value="<%= @event.title %>">
+    <input hidden='true' name="name" id="event-address" value="<%= @event.address %>">
+    <input hidden='true' name="name" id="event-latitude" value="<%= @event.latitude %>">
+    <input hidden='true' name="name" id="event-longitude" value="<%= @event.longitude %>">
+  </div>
   <h1>
     <a class="test" data-toggle="tooltip" data-placement="left" title="Tooltip on left" role="button" type="button" name="button" ><i id="update-event"  class="fa fa-wrench"></i></a>
     Edit Event
@@ -135,6 +141,17 @@
   </div>
   <% end %>
   <div role="tabpanel" class="tab-pane" id="event-map">
-    <%= render 'events/eventmap' %>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Map Address for Event</h2>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div id="map" style="width: 100%; height: 350px;"></div>
+          </div>
+        </div>
+    </div>
   </div>
 </div>

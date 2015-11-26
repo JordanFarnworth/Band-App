@@ -70,6 +70,7 @@ class Party
       type: 'get'
       dataType: 'json'
       success: (data) =>
+        console.log data
         gmap_show data
         @populatePartyPage data
 

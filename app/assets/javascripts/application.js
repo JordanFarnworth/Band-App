@@ -73,7 +73,7 @@ function gmap_show(company) {
 					"width":  32,
 					"height": 32
 				},
-				"infowindow": "<b>" + company.name + "</b> " + company.address + ", " + company.postal_code + " " + company.city
+				"infowindow": "<b>" + company.name + "</b> " + company.address
 			}
 		]);
 		handler.bounds.extendWith(markers);

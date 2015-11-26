@@ -31,7 +31,6 @@ gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 gem 'rails_serve_static_assets'
 gem 'rails_stdout_logging'
-gem "daemons"
 
 group :development do
   gem 'letter_opener'
