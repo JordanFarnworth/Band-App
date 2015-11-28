@@ -18,6 +18,9 @@
  *= require clndr-rails
  *= require vegas
  *= require fullcalendar
+ *= require normalize
+ *= require menu
+ *= require component
  *= require_self
  */
 
@@ -27,12 +30,3 @@
 @import '../../../vendor/assets/stylesheets/_bootswatch.scss';
 @import 'font-awesome';
 @import 'bootstrap-datetimepicker';
-
-
-.nav-bar-logo-img {
-  margin-right: 10px;
-}
-
-.container{
-  margin-top: 25px;
-}

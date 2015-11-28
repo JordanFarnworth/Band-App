@@ -31,9 +31,7 @@ class ApplicationsController < ApplicationController
   end
 
   private
-
   def application_params
     params.require(:application).permit(:id, :start_time, :end_time, :status, :party_id, :band_id)
   end
-
 end

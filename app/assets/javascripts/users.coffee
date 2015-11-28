@@ -51,14 +51,5 @@ class User
     $('#user-display-name').val("#{data.display_name}")
     $('#user-email-edit').val("#{data.email}")
 
-  #update user info/passwords
-
-
-
-  #end updates
-
 
 $('.users.show').ready ->
-
-
-  

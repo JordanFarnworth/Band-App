@@ -17,7 +17,6 @@ class Event
       }
     gmap_show hash
 
-
   removeFromFavorites: (favorite) =>
     bootbox.confirm "Do you want to remove this band From your Favorites list?", (result) ->
       if result
@@ -37,10 +36,7 @@ class Event
     else
       $('#add-band-to-event').hide()
 
-
-
   updateEvent: () =>
-
     $.ajax "/api/v1/events/#{@event_id}",
       type: 'put'
       dataType: 'json'

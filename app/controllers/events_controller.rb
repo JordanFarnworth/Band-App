@@ -1,6 +1,8 @@
 class EventsController < ApplicationController
   include Api::V1::Event
 
+  #probably a lot in this controller could be better
+
   before_action :find_event, only: [:show, :edit, :update, :destroy, :invite]
   before_action :find_entity, only: :events
 
@@ -65,7 +67,6 @@ class EventsController < ApplicationController
         render json: event_json(@event), status: :ok
       end
       format.html do
-
       end
     end
   end
@@ -138,5 +139,4 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event).permit(:id, :address, :title, :description, :start_time, :end_time, :price, :recurrence_pattern, :recurrence_ends_at, :state, :is_public)
   end
-
 end

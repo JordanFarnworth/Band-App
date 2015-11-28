@@ -1,6 +1,5 @@
 class EventJoinersController < ApplicationController
 
-
   def create
     @ej = EventJoiner.new event_joiner_params
     if @ej.save

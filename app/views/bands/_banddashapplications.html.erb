@@ -1,4 +1,3 @@
-<div class="row">
   <div class="col-md-6">
     <div class="panel panel-default panel-dash">
       <div class="panel-heading">
@@ -14,7 +13,7 @@
               </div>
             <% end %>
           <% else %>
-            <h5>No Declined Applications</h5>
+            <h5>No Pending Applications</h5>
           <% end %>
         </div>
       </div>
@@ -43,9 +42,6 @@
     </div>
   </div>
 
-</div>
-
-<div class="row">
   <div class="col-md-6">
     <div class="panel panel-default panel-dash">
       <div class="panel-heading">
@@ -93,76 +89,3 @@
       </div>
     </div>
   </div>
-</div>
-
-<div class="row">
-  <div class="col-md-6">
-    <div class="panel panel-default panel-dash">
-      <div class="panel-heading">
-        <h3 class="panel-title">Upcoming Events</h3>
-      </div>
-      <div class="panel-body">
-        <% current_entity.accepted_events.each do |event| %>
-          <div class="list-group-item">
-            <h4 class="list-group-item-heading">Event: <%= event.title %></h4>
-            <p class="list-group-item-text"><%=  event.start_time == nil ? 'Will by set by the company/party.' : event.start_time %></p>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-6">
-    <div class="panel panel-default panel-dash">
-      <div class="panel-heading">
-        <h3 class="panel-title">Event Invitations</h3>
-      </div>
-      <div class="panel-body">
-        <% if current_entity.invitations.any? %>
-          <% current_entity.invitations.each do |ej| %>
-            <div class="list-group-item">
-              <h4 class="list-group-item-heading"><%= ej.event.title %>
-                <span class="pull-right">
-                  <button id="<%= ej.event.id %>" name="accept-event" type="button" class="btn btn-success">Accept</button>
-                  <button id="<%= ej.event.id %>" name="decline-event" type="button" class="btn btn-danger">Deny</button>
-                </span>
-              </h4>
-              <p class="list-group-item-text"><%= ej.event.start_time %></p>
-            </div>
-          <% end %>
-        <% else %>
-            <h5>No Invitations :(</h5>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-6">
-    <div class="panel panel-default panel-dash">
-      <div class="panel-heading">
-        <h3 class="panel-title">Promote Band</h3>
-      </div>
-      <div class="panel-body">
-        Panel content
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-6">
-    <div class="panel panel-default panel-dash">
-      <div class="panel-heading">
-        <h3 class="panel-title">Favorited Companies</h3>
-      </div>
-      <div class="panel-body">
-        <% current_entity.favorites.band.each do |favorite| %>
-          <div class="list-group-item">
-            <h4 class="list-group-item-heading"><%= link_to favorite.party.name, favorite.party %></h4>
-            <p class="list-group-item-text"><%=  favorite.created_at %></p>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>

@@ -1,5 +1,6 @@
 class LoginController < ApplicationController
   include ApplicationHelper
+
   def verify
     @user = User.active.find_by(username: params[:username]).try(:authenticate, params[:password])
     session[:current_user_id] = @user.id if @user
@@ -18,7 +19,6 @@ class LoginController < ApplicationController
   def landing
     @user ||= User.new
   end
-
 
   def verify_register
     @user = User.new register_params

@@ -8461,7 +8461,6 @@ pre code {
 @media (min-width: 768px) {
   /* line 10, /Users/ccromar/.rvm/gems/ruby-2.2.1/gems/bootstrap-sass-3.3.5.1/assets/stylesheets/bootstrap/_grid.scss */
   .container {
-    width: 750px;
   }
 }
 @media (min-width: 992px) {

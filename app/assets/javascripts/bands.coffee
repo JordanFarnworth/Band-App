@@ -102,4 +102,3 @@ $('.bands.show').ready ->
 $('.bands.search').ready ->
   $('#bands-search-form label').css({'font-size': '24px', 'color': '#2ECBFF'})
   $('#band-simple-search-bar').autocomplete autocompleteBandParams()
-  $('#simple-search-tab').click()

@@ -15,7 +15,7 @@ class BandsController < ApplicationController
   end
 
   def search
-
+    # Search handled through ajax/api
   end
 
   def events
@@ -44,7 +44,6 @@ class BandsController < ApplicationController
   def show
     respond_to do |format|
       format.html do
-
       end
       format.json do
         render json: band_json(@band), status: :ok

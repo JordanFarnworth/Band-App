@@ -6,4 +6,12 @@ $ ->
   $('#new_user').formValidation()
 
 $('.login.landing').ready ->
-  $('.navbar').addClass 'hidden'
+  #TODO fix this frd
+  $('#login').on 'click', ->
+    setTimeout (->
+      $('.modal-backdrop.fade.in').remove()
+      return), 300
+  $('#register').on 'click', ->
+    setTimeout (->
+      $('.modal-backdrop.fade.in').remove()
+      return), 300

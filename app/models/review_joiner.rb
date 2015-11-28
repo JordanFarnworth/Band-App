@@ -4,5 +4,4 @@ class ReviewJoiner < ActiveRecord::Base
 
   scope :reviewer, -> { where(state: :reviewer) }
   scope :reviewee, -> { where(state: :reviewee) }
-
 end

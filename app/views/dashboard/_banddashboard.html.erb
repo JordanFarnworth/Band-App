@@ -1,13 +1,5 @@
 <% if @current_user.entity === nil %>
   <div class="container">
-    <div class="row dashboard-nav">
-      <ul>
-        <li>Nav 1</li>
-        <li>Nav 2</li>
-        <li>Nav 3</li>
-        <li>Nav 4</li>
-      </ul>
-    </div>
     <div class="row text-center">
       <h1>You need to <a href="#" data-toggle="modal" data-target="#createBandModal">create your Band</a>!</h1>
     </div>
@@ -21,68 +13,25 @@
     </div>
   </div>
 <% else %>
-<div class="container">
-  <div class="row text-center">
-    <div class="btn-group btn-group-justified" id="dashboard-buttons" role="group" aria-label="...">
-      <a class="btn btn-primary" href="#dashboard" data-toggle="tab" role="tab"><h3>My Dashboard</h3></a>
-      <a class="btn btn-info" href="#entity" data-toggle="tab" role="tab"><h3>My Band & Info</h3></a>
-      <a class="btn btn-primary" href="#settings" data-toggle="tab" role="tab"><h3>Settings</h3></a>
-    </div>
-  </div>
-  <div class="row">
-    <div class="tab-content">
-      <div role="tabpanel" class="tab-pane fade in active" id="dashboard">
-        <%= render 'bands/banddash' %>
-      </div>
-
-
-      <div role="tabpanel" class="tab-pane fade" id="entity">
-        <%= render 'bands/editname' %>
-      </div>
-
-      <div role="tabpanel" class="tab-pane fade" id="settings">
-        <%= render 'bands/bandsettings' %>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="dashboard-applications">
+            <%= render 'bands/banddashapplications' %>
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="dashboard-events">
+            <%= render 'bands/banddashevents' %>
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="dashboard-favorites">
+            <%= render 'bands/banddashfavorites' %>
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="dashboard-edit-user">
+            <%= render 'dashboard/dashedituser' %>
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="dashboard-edit-band">
+            <%= render 'bands/banddasheditband' %>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-
-</div>
 <% end %>
-
-<!-- Change Password Modal -->
-<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-      </div>
-      <div class="modal-body">
-        <form id="change-password-modal-form" ata-fv-framework="bootstrap"
-          data-fv-icon-valid="glyphicon glyphicon-ok"
-          data-fv-icon-invalid="glyphicon glyphicon-remove"
-          data-fv-icon-validating="glyphicon glyphicon-refresh">
-          <div class="form-group">
-            <label for="old-password">Old Password</label>
-            <input type="password" name="oldpassword" class="form-control" id="old-password" placeholder="Password" data-fv-remote="true" data-fv-remote-delay="2000" data-fv-remote-url="/api/v1/users/<%= @user.id %>/password_confirmation" data-fv-remote-message="Incorrect Password">
-          </div>
-          <div class="form-group">
-            <label for="new-password">New Password</label>
-            <input data-fv-identical="true"
-                data-fv-identical-field="confirm-new-password"
-                data-fv-identical-message="The password and its confirm are not the same" type="password" name="new-password" class="form-control" id="new-password" data-fv-notempty placeholder="Password">
-          </div>
-          <div class="form-group">
-            <label for="confirm-new-password">Confirm New Password</label>
-            <input data-fv-identical="true" data-fv-identical-field="new-password"
-                data-fv-identical-message="The password and its confirm are not the same" type="password" name="confirm-new-password" data-fv-notempty class="form-control" id="confirm-new-password" placeholder="Password">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" id="update-user-password" class="btn btn-primary">Update Password</button>
-      </div>
-    </div>
-  </div>
-</div>

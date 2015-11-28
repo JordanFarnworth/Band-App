@@ -14,7 +14,6 @@ class PartiesController < ApplicationController
     @parties = Party.all
   end
 
-  def search
 
   end
 
@@ -25,7 +24,6 @@ class PartiesController < ApplicationController
     end
     respond_to do |format|
       format.html do
-
       end
       format.json do
         render json: pagination_json(@parties, :parties_json), status: 200
@@ -36,7 +34,6 @@ class PartiesController < ApplicationController
   def show
     respond_to do |format|
       format.html do
-
       end
       format.json do
         render json: party_json(@party), status: :ok
@@ -76,8 +73,7 @@ class PartiesController < ApplicationController
     end
   end
 
-  private
-  def party_parameters
-    params.require(:party).permit(:name, :description, :address, :longitude, :latitude, social_media: [:twitter, :instagram, :facebook], data: [:email, :phone_number, :owner])
-  end
+private
+def party_parameters
+  params.require(:party).permit(:name, :description, :address, :longitude, :latitude, social_media: [:twitter, :instagram, :facebook], data: [:email, :phone_number, :owner])
 end

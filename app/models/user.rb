@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
       false
     else
       true
-    end    
+    end
   end
 
   def new_user

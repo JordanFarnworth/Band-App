@@ -1,4 +1,5 @@
 class FavoritesController < ApplicationController
+
   def create
     @favorite = Favorite.new favorite_params
     if @favorite.save
@@ -26,7 +27,7 @@ class FavoritesController < ApplicationController
     end
   end
 
-  def add_remove_band 
+  def add_remove_band
     @favorite = Favorite.band.where(band_id: params[:favorite][:band_id], party_id: params[:favorite][:party_id]).first
     if @favorite
       @favorite.destroy

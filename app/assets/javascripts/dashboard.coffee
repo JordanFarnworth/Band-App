@@ -2,6 +2,9 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+# pretty much where all the dashboard things happen
+# moby dick
+
 class Dashboard
   constructor: ->
     if typeof ENV == 'undefined'
@@ -448,6 +451,7 @@ $('.dashboard.calendar').ready ->
 
 $('.dashboard.index').ready ->
   db = new Dashboard()
+  $("[name='smt']").show()
   $('#accept-event-start').datetimepicker()
   $('#accept-event-end').datetimepicker()
   $('#create-event-start').datetimepicker()
