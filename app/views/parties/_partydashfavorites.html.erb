@@ -1,0 +1,19 @@
+<div class="col-md-10 col-md-offset-1">
+  <div class="panel panel-default panel-dash">
+    <div class="panel-heading">
+      <h5 class="panel-title">Favorited Bands </h5>
+    </div>
+    <div class="panel-body">
+      <% if current_entity.favorites.party.any? %>
+        <% current_entity.favorites.party.each do |favorite| %>
+          <div class="list-group-item col-md-3">
+            <h4 class="list-group-item-heading"><%= link_to favorite.band.name, favorite.band %></h4>
+            <p class="list-group-item-text"><%=  favorite.created_at %></p>
+          </div>
+        <% end %>
+      <% else %>
+        <h5>You don't have any favorites yet! Don't be shy, get out there!</h5>
+      <% end %>
+    </div>
+  </div>
+</div>

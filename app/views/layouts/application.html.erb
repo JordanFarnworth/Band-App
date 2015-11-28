@@ -32,25 +32,71 @@
 				</div><!-- wrapper -->
 			</div><!-- /container -->
 			<nav class="outer-nav left vertical" id="effect-airbnb" hidden="true">
-				<a href="/"><i class="fa fa-tachometer"></i>    Dashboard</a>
-				<a href="/calendar"><i class="fa fa-calendar"></i>    Calendar</a>
-				<a href="/parties/search"><i class="fa fa-search"></i>    Search</a>
-				<a href="/messages"><i class="fa fa-envelope"></i>    Messages</a>
+  			<a href="/"><i class="fa fa-tachometer"></i>    Dashboard</a>
+  			<a href="/calendar"><i class="fa fa-calendar"></i>    Calendar</a>
+    			<% if @current_user.entity === 'band' %>
+            <a href="/parties/search"><i class="fa fa-search"></i>    Search</a>
+          <% else %>
+            <a href="/bands/search"><i class="fa fa-search"></i>    Search</a>
+          <% end %>
+  			<a href="/messages"><i class="fa fa-envelope"></i>    Messages</a>
         <a rel="nofollow" data-method="delete" href="/login"><i class="fa fa-sign-out"></i>   Logout</a>
 			</nav>
+    <% if @current_user.entity === 'band' %>
       <nav class="outer-nav right vertical" id="effect-moveleft" hidden="true">
 				<a href="#dashboard-applications" role="tab" data-toggle="tab"><i class="fa fa-check-circle-o"></i>  Applications</a>
 				<a href="#dashboard-events" role="tab" data-toggle="tab"><i class="fa fa-calendar-check-o"></i>  Events</a>
 				<a href="#dashboard-favorites" role="tab" data-toggle="tab"><i class="fa fa-star"></i> Favorites</a>
-				<a href="#dashboard-edit-band" role="tab" data-toggle="tab"><i class="fa fa-headphones"></i>  Edit Band</a>
+        <a href="#dashboard-edit-band" role="tab" data-toggle="tab"><i class="fa fa-headphones"></i>  Edit Companies</a>
         <a href="#dashboard-edit-user" role="tab" data-toggle="tab"><i class="fa fa-user"></i>  Edit User</a>
 			</nav>
+    <% else %>
+    <nav class="outer-nav right vertical" id="effect-moveleft" hidden="true">
+      <a href="#dashboard-party-applications" data-toggle="tab" role="tab"><i class="fa fa-check-circle-o"></i>  Applications</a>
+      <a href="#dashboard-party-events" role="tab" data-toggle="tab"><i class="fa fa-calendar-check-o"></i>  Events</a>
+      <a href="#dashboard-party-favorites" role="tab" data-toggle="tab"><i class="fa fa-star"></i> Favorite Bands</a>
+      <a href="#dashboard-edit-party" role="tab" data-toggle="tab"><i class="fa fa-building"></i>  Edit Company</a>
+      <a href="#dashboard-edit-user" role="tab" data-toggle="tab"><i class="fa fa-user"></i>  Edit User</a>
+    </nav>
+    <% end %>
 		</div><!-- /perspective -->
 <%= javascript_include_tag "classietwo" %>
 <%= javascript_include_tag "menu" %>
 
-
 <% if logged_in? %>
+<!-- Modal -->
+<% if @current_user.entity === 'band' %>
+<div class="modal fade" id="application-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Send Application to <%= @party.name %></h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <form class="form-inline text-center" >
+            <h5>Availability</h5>
+            <div class="form-group">
+              <label for="application-start">Start Date</label>
+              <input type="text" class="form-control" id="application-start">
+            </div>
+            <div class="form-group">
+              <label for="application-end">End Date</label>
+              <input type="email" class="form-control" id="application-end">
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="create-normal-application" class="btn btn-primary">Apply!</button>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
 <!-- Create Band Modal -->
 <div class="modal fade" id="createBandModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">

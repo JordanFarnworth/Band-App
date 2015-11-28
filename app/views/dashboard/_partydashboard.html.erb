@@ -13,35 +13,24 @@
     </div>
   </div>
 <% else %>
-<div class="container">
-  <div class="row text-center">
-    <div class="btn-group btn-group-justified" id="dashboard-buttons" role="group" aria-label="...">
-      <a class="btn btn-primary" href="#dashboard" data-toggle="tab" role="tab"><h3>My Dashboard</h3></a>
-      <a class="btn btn-info" href="#entity" data-toggle="tab" role="tab"><h3>My Company & Info</h3></a>
-      <a class="btn btn-primary" href="#manage" data-toggle="tab" role="tab"><h3>Manage Events</h3></a>
-      <a class="btn btn-info" href="#settings" data-toggle="tab" role="tab"><h3>Settings</h3></a>
-    </div>
-  </div>
   <div class="row">
     <div class="tab-content">
-
-      <div role="tabpanel" class="tab-pane fade in active" id="dashboard">
-        <%= render 'parties/partydash' %>
+      <div role="tabpanel" class="tab-pane fade in" id="dashboard-party-events">
+        <%= render 'parties/partydashevents' %>
       </div>
-
-      <div role="tabpanel" class="tab-pane fade in" id="manage">
-        <%= render 'parties/manage' %>
+      <div role="tabpanel" class="tab-pane fade in active" id="dashboard-party-applications">
+        <%= render 'parties/partydashapplication' %>
       </div>
-
-      <div role="tabpanel" class="tab-pane fade" id="entity">
-        <%= render 'parties/editname' %>
+      <div role="tabpanel" class="tab-pane fade in" id="dashboard-party-favorites">
+        <%= render 'parties/partydashfavorites' %>
       </div>
-
-      <div role="tabpanel" class="tab-pane fade" id="settings">
-        <%= render 'parties/partysettings' %>
+      <div role="tabpanel" class="tab-pane fade in" id="dashboard-edit-party">
+        <%= render 'parties/partydasheditparty' %>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="dashboard-edit-user">
+        <%= render 'dashboard/dashedituser' %>
       </div>
     </div>
   </div>
-
 </div>
 <% end %>

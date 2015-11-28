@@ -1,0 +1,81 @@
+<div class="col-md-6">
+  <div class="panel panel-default panel-dash">
+    <div class="panel-heading">
+      <h5 class="panel-title">Upcoming Events</h5>
+    </div>
+    <div class="panel-body">
+      <% if current_entity.events.accepted.any? %>
+        <% current_entity.events.accepted.each do |event| %>
+          <div class="list-group-item">
+            <h4 class="list-group-item-heading">Event: <%= link_to event.title, event %></h4>
+            <p class="list-group-item-text"><%=  event.start_time == nil ? 'Will be set by company' : event.start_time %></p>
+          </div>
+        <% end %>
+      <% else %>
+        <h5>You have no events! Go schedule some bands in the search menu!</h5>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-6">
+  <div class="panel panel-default panel-dash">
+    <div class="panel-heading">
+      <h5 class="panel-title">Events with Pending Invitations</h5>
+    </div>
+    <div class="panel-body">
+      <% if current_entity.events.pending.any? %>
+        <% current_entity.events.pending.each do |event| %>
+          <div class="list-group-item">
+            <h4 class="list-group-item-heading"><%= link_to event.title, event %></h4>
+            <p class="list-group-item-text"><%= event.state %></p>
+          </div>
+        <% end %>
+      <% else %>
+        <h5>No Pending Events</h5>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-6">
+  <div class="panel panel-default panel-dash">
+    <div class="panel-heading">
+      <h5 class="panel-title">Public Events</h5>
+    </div>
+    <div class="panel-body">
+      <% if current_entity.events.open.any? %>
+        <% current_entity.events.open.each do |public_event| %>
+          <div class="list-group-item">
+            <h4 class="list-group-item-heading"><%= link_to public_event.title, public_event %></h4>
+            <p class="list-group-item-text"><%=  public_event.state %></p>
+          </div>
+        <% end %>
+      <% else %>
+        <h5>You don't have any public events!</h5>
+        <p>Go create one in your Manage Events tab</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-6">
+  <div class="panel panel-default panel-dash">
+    <div class="panel-heading">
+      <h5 class="panel-title">Private Events</h5>
+    </div>
+    <div class="panel-body">
+      <% if current_entity.events.closed.any? %>
+        <% current_entity.events.closed.each do |public_event| %>
+          <div class="list-group-item">
+            <h4 class="list-group-item-heading"><%= link_to public_event.title, public_event %></h4>
+            <p class="list-group-item-text"><%=  public_event.state %></p>
+          </div>
+        <% end %>
+      <% else %>
+        <h5>You don't have any private events!</h5>
+        <p>Go create one in your Manage Events tab</p>
+      <% end %>
+    </div>
+  </div>
+</div>
