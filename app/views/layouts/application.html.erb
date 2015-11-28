@@ -34,30 +34,34 @@
 			<nav class="outer-nav left vertical" id="effect-airbnb" hidden="true">
   			<a href="/"><i class="fa fa-tachometer"></i>    Dashboard</a>
   			<a href="/calendar"><i class="fa fa-calendar"></i>    Calendar</a>
-    			<% if @current_user.entity === 'band' %>
-            <a href="/parties/search"><i class="fa fa-search"></i>    Search</a>
-          <% else %>
-            <a href="/bands/search"><i class="fa fa-search"></i>    Search</a>
+    			<% if logged_in? %>
+            <% if @current_user.entity === 'band' %>
+              <a href="/parties/search"><i class="fa fa-search"></i>    Search</a>
+            <% else %>
+              <a href="/bands/search"><i class="fa fa-search"></i>    Search</a>
+            <% end %>
           <% end %>
   			<a href="/messages"><i class="fa fa-envelope"></i>    Messages</a>
         <a rel="nofollow" data-method="delete" href="/login"><i class="fa fa-sign-out"></i>   Logout</a>
 			</nav>
-    <% if @current_user.entity === 'band' %>
-      <nav class="outer-nav right vertical" id="effect-moveleft" hidden="true">
-				<a href="#dashboard-applications" role="tab" data-toggle="tab"><i class="fa fa-check-circle-o"></i>  Applications</a>
-				<a href="#dashboard-events" role="tab" data-toggle="tab"><i class="fa fa-calendar-check-o"></i>  Events</a>
-				<a href="#dashboard-favorites" role="tab" data-toggle="tab"><i class="fa fa-star"></i> Favorites</a>
-        <a href="#dashboard-edit-band" role="tab" data-toggle="tab"><i class="fa fa-headphones"></i>  Edit Companies</a>
-        <a href="#dashboard-edit-user" role="tab" data-toggle="tab"><i class="fa fa-user"></i>  Edit User</a>
-			</nav>
-    <% else %>
-    <nav class="outer-nav right vertical" id="effect-moveleft" hidden="true">
-      <a href="#dashboard-party-applications" data-toggle="tab" role="tab"><i class="fa fa-check-circle-o"></i>  Applications</a>
-      <a href="#dashboard-party-events" role="tab" data-toggle="tab"><i class="fa fa-calendar-check-o"></i>  Events</a>
-      <a href="#dashboard-party-favorites" role="tab" data-toggle="tab"><i class="fa fa-star"></i> Favorite Bands</a>
-      <a href="#dashboard-edit-party" role="tab" data-toggle="tab"><i class="fa fa-building"></i>  Edit Company</a>
-      <a href="#dashboard-edit-user" role="tab" data-toggle="tab"><i class="fa fa-user"></i>  Edit User</a>
-    </nav>
+    <% if logged_in? %>
+      <% if @current_user.entity === 'band' %>
+        <nav class="outer-nav right vertical" id="effect-moveleft" hidden="true">
+          <a href="#dashboard-applications" role="tab" data-toggle="tab"><i class="fa fa-check-circle-o"></i>  Applications</a>
+          <a href="#dashboard-events" role="tab" data-toggle="tab"><i class="fa fa-calendar-check-o"></i>  Events</a>
+          <a href="#dashboard-favorites" role="tab" data-toggle="tab"><i class="fa fa-star"></i> Favorites</a>
+          <a href="#dashboard-edit-band" role="tab" data-toggle="tab"><i class="fa fa-headphones"></i>  Edit Companies</a>
+          <a href="#dashboard-edit-user" role="tab" data-toggle="tab"><i class="fa fa-user"></i>  Edit User</a>
+        </nav>
+      <% else %>
+        <nav class="outer-nav right vertical" id="effect-moveleft" hidden="true">
+          <a href="#dashboard-party-applications" data-toggle="tab" role="tab"><i class="fa fa-check-circle-o"></i>  Applications</a>
+          <a href="#dashboard-party-events" role="tab" data-toggle="tab"><i class="fa fa-calendar-check-o"></i>  Events</a>
+          <a href="#dashboard-party-favorites" role="tab" data-toggle="tab"><i class="fa fa-star"></i> Favorite Bands</a>
+          <a href="#dashboard-edit-party" role="tab" data-toggle="tab"><i class="fa fa-building"></i>  Edit Company</a>
+          <a href="#dashboard-edit-user" role="tab" data-toggle="tab"><i class="fa fa-user"></i>  Edit User</a>
+        </nav>
+      <% end %>
     <% end %>
 		</div><!-- /perspective -->
 <%= javascript_include_tag "classietwo" %>
