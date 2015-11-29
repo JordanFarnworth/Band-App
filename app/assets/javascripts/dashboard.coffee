@@ -187,6 +187,9 @@ class Dashboard
         $('#event-end-date-edit').val(event.end)
         $('#event-description-edit').val(event.description)
         $('#eventModal').modal('show')
+        setTimeout (->
+          $('.modal-backdrop.fade.in').remove()
+          return), 300
     }
 
   getCalendarData: =>
@@ -456,7 +459,8 @@ $('.dashboard.calendar').ready ->
     bootbox.confirm 'Are you sure?', (result) ->
       if result == true
         new Dashboard().deleteEvent()
-
+  $('td').on 'click', ->
+    console.log 'anything'
 $('.dashboard.index').ready ->
   db = new Dashboard()
   $("[name='smt']").show()
