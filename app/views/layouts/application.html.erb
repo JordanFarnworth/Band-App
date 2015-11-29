@@ -16,14 +16,26 @@
   ENV = <%= js_env.to_json.html_safe %>;
 </script>
 <div id="perspective" class="perspective effect-airbnb">
+      <div id="image-urls" class="hidden" hidden="true">
+        <%=  image_tag("crowd-event.jpg").to_s %>
+        <%= image_tag("crowd-dash.jpg").to_s %>
+        <%= image_tag("crowd-main.jpg").to_s %>
+      </div>
 			<div class="container">
 				<div class="wrapper"><!-- wrapper needed for scroll -->
           <div class="container-fluid">
             <%= flash_messages %>
-            <div class="row">
-              <button id="showMenu" name="sm"<i class="fa fa-bars"></i></button>
-              <button hidden="true" class="pull-right" id="showMenu1" name="smt"><i class="fa fa-bars"></i></button>
-            </div>
+            <% if logged_in? %>
+              <div class="row text-center list-inline">
+                <button id="showMenu" class="pull-left" name="sm"><i class="fa fa-arrow-left"></i>  Main Menu  <i class="fa fa-list-alt"></i></button>
+                <% unless @current_user.user_data[:user_entity_type] === 'band' %>
+                <button id="showMenu2" name="event-manager"><i class="fa fa-calendar"></i>  Manage Events  <i class="fa fa-arrow-up"></i></button>
+                <% else %>
+                <button class="hidden" hidden="true" id="showMenu2" type="button" name="button"></button>
+                <% end %>
+                <button hidden="true" class="pull-right" id="showMenu1" name="smt"><i class="fa fa-tachometer"></i>  Dashboard Menu  <i class="fa fa-arrow-right"></i></button>
+              </div>
+            <% end %>
             <div id="content">
               <%= yield %>
             </div>
@@ -45,12 +57,12 @@
         <a rel="nofollow" data-method="delete" href="/login"><i class="fa fa-sign-out"></i>   Logout</a>
 			</nav>
     <% if logged_in? %>
-      <% if @current_user.entity === 'band' %>
+      <% if @current_user.user_data[:user_entity_type] === 'band' %>
         <nav class="outer-nav right vertical" id="effect-moveleft" hidden="true">
           <a href="#dashboard-applications" role="tab" data-toggle="tab"><i class="fa fa-check-circle-o"></i>  Applications</a>
           <a href="#dashboard-events" role="tab" data-toggle="tab"><i class="fa fa-calendar-check-o"></i>  Events</a>
           <a href="#dashboard-favorites" role="tab" data-toggle="tab"><i class="fa fa-star"></i> Favorites</a>
-          <a href="#dashboard-edit-band" role="tab" data-toggle="tab"><i class="fa fa-headphones"></i>  Edit Companies</a>
+          <a href="#dashboard-edit-band" role="tab" data-toggle="tab"><i class="fa fa-headphones"></i>  Edit Band</a>
           <a href="#dashboard-edit-user" role="tab" data-toggle="tab"><i class="fa fa-user"></i>  Edit User</a>
         </nav>
       <% else %>
@@ -61,6 +73,11 @@
           <a href="#dashboard-edit-party" role="tab" data-toggle="tab"><i class="fa fa-building"></i>  Edit Company</a>
           <a href="#dashboard-edit-user" role="tab" data-toggle="tab"><i class="fa fa-user"></i>  Edit User</a>
         </nav>
+
+        <nav class="outer-nav top horizontal" id="effect-laydown" hidden="true">
+          <a href="#dashboard-new-event" data-toggle="tab" role="tab"><i class="fa fa-plus"></i>  Create Event</a>
+          <a href="#dashboard-party-events" data-toggle="tab" role="tab"><i class="fa fa-list-alt"></i>  List My Events</a>
+        </nav>
       <% end %>
     <% end %>
 		</div><!-- /perspective -->
@@ -68,37 +85,7 @@
 <%= javascript_include_tag "menu" %>
 
 <% if logged_in? %>
-<!-- Modal -->
-<% if @current_user.entity === 'band' %>
-<div class="modal fade" id="application-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Send Application to <%= @party.name %></h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <form class="form-inline text-center" >
-            <h5>Availability</h5>
-            <div class="form-group">
-              <label for="application-start">Start Date</label>
-              <input type="text" class="form-control" id="application-start">
-            </div>
-            <div class="form-group">
-              <label for="application-end">End Date</label>
-              <input type="email" class="form-control" id="application-end">
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" id="create-normal-application" class="btn btn-primary">Apply!</button>
-      </div>
-    </div>
-  </div>
-</div>
+<% if @current_user.user_data[:user_entity_type] === 'party' %>
 <% end %>
 
 <!-- Create Band Modal -->
@@ -229,9 +216,7 @@
                   </div>
                 </form>
               </div>
-
             </div>
-
           </div>
         </div>
       </div>

@@ -42,7 +42,6 @@
 //= require bootstrap-datetimepicker
 //= require modernizr.custom.25376
 //= require_tree .
-
 function gmap_show(company) {
 	if ((company.latitude == null) || (company.longitude == null) ) {    // validation check if coordinates are there
 		return 0;

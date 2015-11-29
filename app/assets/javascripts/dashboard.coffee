@@ -73,7 +73,7 @@ class Dashboard
               window.location = window.location
 
   acceptEvent: (el) =>
-    event = el.attr('id')
+    event = $(el).attr('id')
     $.ajax "/api/v1/events/#{event}/accept_invite",
       type: 'post'
       dataType: 'json'
@@ -115,6 +115,8 @@ class Dashboard
           state: "accepted"
       success: (data) =>
         window.location = window.location
+      error: (data) =>
+
 
   acceptGeneralApplication: (el) =>
     app = el.attr('id')
@@ -134,7 +136,6 @@ class Dashboard
 
 
   declineGeneralApplication: (el) =>
-    console.log("Not sure why this won't return json succes ajax call in controller")
     app = el.attr('id')
     $.ajax "/api/v1/applications/#{app}/decline_app",
       type: 'post'
@@ -143,7 +144,8 @@ class Dashboard
         application:
           id: app
       success: (data) =>
-        console.log data
+        bootbox.alert 'Application Denied'
+        window.location = window.location
 
 
   validateForm: (pass, id) =>
@@ -432,8 +434,14 @@ class Dashboard
     $('#confirm-new-password').val('')
     $('#change-password-modal-form').data('formValidation').resetForm()
 
+$('.messages.index').ready ->
+  $("[name='event-manager']").hide()
+
+$('.bands.search').ready ->
+  $("[name='event-manager']").hide()
 
 $('.dashboard.calendar').ready ->
+  $("[name='event-manager']").hide()
   $('#event-end-date-edit').datetimepicker()
   $('#event-start-date-edit').datetimepicker()
   new Dashboard().getCalendarData()
@@ -452,6 +460,7 @@ $('.dashboard.calendar').ready ->
 $('.dashboard.index').ready ->
   db = new Dashboard()
   $("[name='smt']").show()
+  $("[name='event-manager']").show()
   $('#accept-event-start').datetimepicker()
   $('#accept-event-end').datetimepicker()
   $('#create-event-start').datetimepicker()

@@ -18,7 +18,7 @@
         <% elsif @current_user.entity %>
           <div class="alert alert-info" role="alert">
             <h5>
-              <a href="#" data-toggle="modal" data-target="#application-modal">Apply for a gig</a>, or you can browse through this company's <a href="#" data-toggle="modal" data-target="#party-open-ads">open ads</a>
+              <a href="#" data-toggle="modal" id="app-show-modal" data-target="#application-modal">Apply for a gig</a>, or you can browse through this company's <a href="#" data-toggle="modal" data-target="#party-open-ads">open ads</a>
             </h5>
             <div class="favorite-party-div">
 
@@ -88,3 +88,33 @@
 
 <!-- TODO Bold the first word of the general info lines -->
 <%= render 'scriptstore' %>
+
+<div class="modal fade" id="application-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Send Application to <%= @party.name %></h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <form class="form-inline text-center" >
+            <h5>Availability</h5>
+            <div class="form-group">
+              <label for="application-start">Start Date</label>
+              <input type="text" class="form-control" id="application-start">
+            </div>
+            <div class="form-group">
+              <label for="application-end">End Date</label>
+              <input type="email" class="form-control" id="application-end">
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="create-normal-application" class="btn btn-primary">Apply!</button>
+      </div>
+    </div>
+  </div>
+</div>

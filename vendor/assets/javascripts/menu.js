@@ -76,7 +76,7 @@
 			setTimeout( function() { classie.add( perspectiveWrapper, 'animate' ); }, 25 );
 		});
 
-		var showMenu2 = document.getElementById( 'showMenu1' ),
+		var showMenu2 = document.getElementById( 'showMenu2' ),
 			perspectiveWrapper = document.getElementById( 'perspective' ),
 			container = perspectiveWrapper.querySelector( '.container' ),
 			contentWrapper = container.querySelector( '.wrapper' );

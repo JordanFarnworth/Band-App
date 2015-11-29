@@ -3,9 +3,9 @@ class EventJoinersController < ApplicationController
   def create
     @ej = EventJoiner.new event_joiner_params
     if @ej.save
+      render json: { success: "Event Joiner created" }, status: :ok
       event = Event.find @ej.event_id
       event.delay.set_state
-      render json: { success: "Event Joiner created" }, status: :ok
     else
       render json: { error: @ej.errors.full_messages }, status: :bad_request
     end

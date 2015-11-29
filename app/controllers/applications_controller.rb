@@ -24,9 +24,9 @@ class ApplicationsController < ApplicationController
     if @application
       @application.status = 'declined'
       @application.save
-      render json: {success: "Application Updated"}, status: 200
+      render json: {success: "Application Updated"}, status: :ok
     else
-      render json: {error: @application.errors.messages}, status: 500
+      render json: {error: @application.errors.messages}, status: :bad_request
     end
   end
 

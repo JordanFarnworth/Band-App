@@ -1,0 +1,69 @@
+<div class="col-md-10 col-md-offset-1 well" id="new-event-page">
+  <div class="row text-center">
+    <h1>Create an Event</h1>
+  </div>
+  <form class="form-horizontal">
+    <fieldset>
+      <div class="form-group">
+        <label for="event-title" class="col-lg-2 control-label">Title</label>
+        <div class="col-lg-6">
+          <input type="text" class="form-control" id="create-event-title" style="cursor: auto; background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsPDhss3LcOZQAAAU5JREFUOMvdkzFLA0EQhd/bO7iIYmklaCUopLAQA6KNaawt9BeIgnUwLHPJRchfEBR7CyGWgiDY2SlIQBT/gDaCoGDudiy8SLwkBiwz1c7y+GZ25i0wnFEqlSZFZKGdi8iiiOR7aU32QkR2c7ncPcljAARAkgckb8IwrGf1fg/oJ8lRAHkR2VDVmOQ8AKjqY1bMHgCGYXhFchnAg6omJGcBXEZRtNoXYK2dMsaMt1qtD9/3p40x5yS9tHICYF1Vn0mOxXH8Uq/Xb389wff9PQDbQRB0t/QNOiPZ1h4B2MoO0fxnYz8dOOcOVbWhqq8kJzzPa3RAXZIkawCenHMjJN/+GiIqlcoFgKKq3pEMAMwAuCa5VK1W3SAfbAIopum+cy5KzwXn3M5AI6XVYlVt1mq1U8/zTlS1CeC9j2+6o1wuz1lrVzpWXLDWTg3pz/0CQnd2Jos49xUAAAAASUVORK5CYII=); background-attachment: scroll; background-position: 100% 50%; background-repeat: no-repeat;">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="textArea" class="col-lg-2 control-label">Description</label>
+        <div class="col-lg-8">
+          <textarea class="form-control" rows="3" id="create-event-description"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-lg-2 control-label">Privacy</label>
+        <div class="col-lg-10">
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+              Public
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+              Private
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="create-event-address" class="col-lg-2 control-label">Address of Event</label>
+        <div class="col-lg-6">
+          <input class="form-control" id="create-event-address">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="create-event-price" class="col-lg-2 control-label">Offering Price</label>
+        <div class="input-group col-lg-2">
+          <span class="input-group-addon">$</span>
+          <input id="create-event-price" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="application-start">Start Date</label>
+        <div class="col-lg-4">
+          <input class="form-control" id="create-event-start">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="application-end">End Date</label>
+        <div class="col-lg-4">
+          <input class="form-control" id="create-event-end">
+        </div>
+      </div>
+    </fieldset>
+  </form>
+  <div class="row">
+    <div class="col-md-offset-2">
+      <button type="button" class="btn btn-default">Close</button>
+      <button type="button" id="create-event-btn" class="btn btn-primary">Save changes</button>
+    </div>
+  </div>
+</div>

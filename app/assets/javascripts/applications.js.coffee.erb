@@ -6,6 +6,7 @@
 # DONT DELETE, NEDED THIS FOR JQUERY
 # Ex: <div id="test" class="foo bar"></div>
 # $('#test').classList() => ['foo', 'bar']
+
 $.fn.classList = ->
   @[0].className.split /\s+/
 
@@ -13,19 +14,28 @@ arrayContains = (needle, effect) ->
   arrhaystack.indexOf(needle) > -1
 
 # Fragile, handle with care / function that allows perspective on one dive
-# god forgive me
-linkButtonToDiv = (jbs, class_name, list_id) ->
+# VIEWHAXOR9000
+linkButtonToDiv = (jbs, class_name, list_id, img_url) ->
   $(jbs).on 'click', ->
     parent = $(jbs).parent().parent().parent().parent().parent()[0]
     arry = $(parent).classList()
     oldClass = arry[1]
     $(parent).removeClass(oldClass);
     $(parent).addClass("effect#{class_name}")
+    $(parent).css('background-image', 'url("' + img_url + '")');
     $('nav').hide()
     $(list_id).show()
 
+getImages = () ->
+  @IMAGES_URLS = []
+  $.each $('#image-urls img'), (i) ->
+    IMAGES_URLS.push $(this).attr('src')
+  return @IMAGES_URLS
+
 $ ->
+  images = getImages()
   $('.container').css('width', '100%')
-  linkButtonToDiv($("[name='sm']"), '-airbnb', '#effect-airbnb')
-  linkButtonToDiv($("[name='smt']"), '-rotateleft', '#effect-moveleft')
+  linkButtonToDiv($("[name='sm']"), '-airbnb', '#effect-airbnb', images[2])
+  linkButtonToDiv($("[name='smt']"), '-rotateleft', '#effect-moveleft', images[1])
+  linkButtonToDiv($("[name='event-manager']"), '-rotatetop', '#effect-laydown', images[0])
   $("[data-action='togglePicker']").css("color", "red")

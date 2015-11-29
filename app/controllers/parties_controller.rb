@@ -14,9 +14,6 @@ class PartiesController < ApplicationController
     @parties = Party.all
   end
 
-
-  end
-
   def index
     if params[:search_term]
       t = params[:search_term]
@@ -73,7 +70,8 @@ class PartiesController < ApplicationController
     end
   end
 
-private
-def party_parameters
-  params.require(:party).permit(:name, :description, :address, :longitude, :latitude, social_media: [:twitter, :instagram, :facebook], data: [:email, :phone_number, :owner])
+  private
+  def party_parameters
+    params.require(:party).permit(:name, :description, :address, :longitude, :latitude, social_media: [:twitter, :instagram, :facebook], data: [:email, :phone_number, :owner])
+  end
 end

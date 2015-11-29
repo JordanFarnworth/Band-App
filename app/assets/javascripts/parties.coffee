@@ -2,6 +2,12 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+modalHelper = (jquery_selector) ->
+  $(jquery_selector).on 'click', ->
+    setTimeout (->
+      $('.modal-backdrop.fade.in').remove()
+      return), 300
+
 class Party
   constructor: ->
     @party = window.location.pathname.match(/\/parties\/(\d+)/)[1]
@@ -20,7 +26,8 @@ class Party
         entity_id: ENV.current_entity
         status: 'application'
     success: (data) =>
-      bootbox.alert "Application has been sent! Check your dashboard for updates.", ->
+      bootbox.alert "Application has been sent! Check your dashboard for updates.", (result) ->
+        console.log result
         window.location = window.location
 
   addRemoveFavorite: (party, band) =>
@@ -70,7 +77,6 @@ class Party
       type: 'get'
       dataType: 'json'
       success: (data) =>
-        console.log data
         gmap_show data
         @populatePartyPage data
 
@@ -142,6 +148,7 @@ $('.parties.show').ready ->
   new Party().checkFavorite(@party, ENV.current_entity)
   $('.btn.btn-default.apply-to-event').on 'click', ->
     new Party().applyForEvent($(@).attr('id'))
+  modalHelper('#app-show-modal')
 
 $('.parties.search').ready ->
   $('#party-search-form label').css({'font-size': '24px', 'color': '#2ECBFF'})
