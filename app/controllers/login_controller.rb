@@ -2,9 +2,13 @@ class LoginController < ApplicationController
   include ApplicationHelper
 
   def verify
-    @user = User.active.find_by(username: params[:username]).try(:authenticate, params[:password])
+    @user = User.active.find_by(username: params[:user][:username]).try(:authenticate, params[:user][:password])
     session[:current_user_id] = @user.id if @user
-    render 'verify', status: (@user ? :ok : :unauthorized)
+    if @user
+      render json: { success: "logged in" }, status: :ok
+    else
+      render json: { error: "wrong username or password" }, status: :bad_request
+    end
   end
 
   def logout
@@ -24,9 +28,9 @@ class LoginController < ApplicationController
     @user = User.new register_params
     if @user.save
       UserMailer.register_email(@user, host_url + register_confirm_path(token: @user.registration_token)).deliver_later
-      redirect_to register_finish_path
+      render json: { success: "Registered User!"}, status: :ok
     else
-      render 'landing'
+      render json: { error: @user.error.full_messages }, status: :bad_request
       flash[:error] = "Registration failed, please try signing up again"
     end
   end
@@ -37,10 +41,11 @@ class LoginController < ApplicationController
       @user.confirm!
       session[:current_user_id] = @user.id
       flash[:success] = 'Success!  Your account has been confirmed, and you are now logged in.'
+      redirect_to dashboard_path
     else
+      redirect_to :root
       flash[:error] = "Oops, we couldn't find a user to confirm with the given token."
     end
-    redirect_to :root
   end
 
   private

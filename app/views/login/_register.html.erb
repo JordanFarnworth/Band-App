@@ -1,15 +1,47 @@
-<div class="row">
-  <div class="col-md-offset-2 col-md-12">
-    <%= bootstrap_form_for @user, url: register_path, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-6', html: { 'data-fv-framework' => 'bootstrap', 'data-fv-icon-valid' => 'glyphicon glyphicon-ok', 'data-fv-icon-invalid' => 'glyphicon glyphicon-remove', 'data-fv-icon-validating' => 'glyphicon glyphicon-refresh fa-spin' } do |u| %>
-      <%= u.text_field :username, 'data-fv-notempty' => true, 'data-fv-remote' => true, 'data-fv-remote-url' => '/api/v1/users/available_usernames', 'data-fv-remote-delay' => '1000', 'data-fv-remote-message' => 'This username is not available' %>
-      <%= u.text_field :display_name, 'data-fv-notempty' => true %>
-      <%= u.email_field :email, 'data-fv-notempty' => true, 'data-fv-remote' => true, 'data-fv-remote-url' => '/api/v1/users/available_emails', 'data-fv-remote-delay' => '1000', 'data-fv-remote-message' => 'This email has been registered' %>
-      <%= u.password_field :password, 'data-fv-notempty' => true %>
-      <%= u.password_field :password_confirmation, 'data-fv-identical' => true, 'data-fv-identical-field' => 'user[password]', 'data-fv-identical-message' => 'Passwords do not match' %>
-      <div class="col-md-offset-2 col-md-4" style="padding-left: 5px;">
-        <%= u.primary 'Submit', disabled: true %>
+<div id="signup-modal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Signup for That Band App</h4>
       </div>
-    <% end %>
-  </div>
+      <div class="modal-body">
+        <form id="register-form" ata-fv-framework="bootstrap"
+          data-fv-icon-valid="glyphicon glyphicon-ok"
+          data-fv-icon-invalid="glyphicon glyphicon-remove"
+          data-fv-icon-validating="glyphicon glyphicon-refresh">
 
+          <div class="form-group">
+            <label for="username">Username <i class="fa fa-user-secret"></i></label>
+            <input name="username" data-fv-notempty data-fv-remote="true" data-fv-remote-delay="1000" data-fv-remote-url="/api/v1/users/available_usernames" data-fv-remote-message="Username already taken" class="form-control" id="register-username" placeholder="Username..">
+            <span hidden=true id="register-username-helper"><em>This username is already taken</em></span>
+          </div>
+          <div class="form-group">
+            <label for="display-name">Dispaly Name <i class="fa fa-user"></i></label>
+            <input minlength="3" name="display-name" data-fv-notempty class="form-control" type="text" id="register-display-name" placeholder="Display Name..">
+          </div>
+          <div class="form-group">
+            <label for="new-email">Email <i class="fa fa-envelope"></i></label>
+            <input data-fv-notempty data-fv-remote="true" data-fv-remote-delay="1000" data-fv-remote-url="/api/v1/users/available_emails" data-fv-remote-message="Email already taken" name="email" data-fv-notempty class="form-control" type="text" id="register-email" placeholder="Email..">
+            <span hidden=true id="register-email-helper"><em>This email is already taken</em></span>
+          </div>
+          <div class="form-group">
+            <label for="register-password">Password</label>
+            <input min="6" type="password" class="form-control" id="register-password" placeholder="Password">
+            <span hidden=true id="register-password-helper"><em>This field does not match your password confirm</em></span>
+          </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input min="6" type="password" class="form-control" id="confirm-register-password" placeholder="Password Confirmation">
+            <span hidden=true id="confirm-register-password-helper"><em>This field does not match your password</em></span>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <button type="submit" class="btn pull-left" id="submit-registration" name="submit-registration">Register!</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
