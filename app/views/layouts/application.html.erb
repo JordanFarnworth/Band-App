@@ -25,17 +25,19 @@
 				<div class="wrapper"><!-- wrapper needed for scroll -->
           <div class="container-fluid">
             <%= flash_messages %>
-            <% if logged_in? %>
               <div class="row text-center list-inline">
                 <button id="showMenu" class="pull-left" name="sm"><i class="fa fa-arrow-left"></i>  Main Menu  <i class="fa fa-list-alt"></i></button>
-                <% unless @current_user.user_data[:user_entity_type] === 'band' %>
-                <button id="showMenu2" name="event-manager"><i class="fa fa-calendar"></i>  Manage Events  <i class="fa fa-arrow-up"></i></button>
+                <% if logged_in? %>
+                  <% unless @current_user.user_data[:user_entity_type] === 'band' %>
+                  <button id="showMenu2" name="event-manager"><i class="fa fa-calendar"></i>  Manage Events  <i class="fa fa-arrow-up"></i></button>
+                  <% else %>
+                  <button class="hidden" hidden="true" id="showMenu2" type="button" name="button"></button>
+                  <% end %>
                 <% else %>
-                <button class="hidden" hidden="true" id="showMenu2" type="button" name="button"></button>
+                  <button class="hidden" hidden="true" id="showMenu2" type="button" name="button"></button>
                 <% end %>
                 <button hidden="true" class="pull-right" id="showMenu1" name="smt"><i class="fa fa-tachometer"></i>  Dashboard Menu  <i class="fa fa-arrow-right"></i></button>
               </div>
-            <% end %>
             <div id="content">
               <%= yield %>
             </div>
@@ -390,7 +392,7 @@
         <h4 class="modal-title" id="myModalLabel">Modal title</h4>
       </div>
       <div class="modal-body">
-        <form id="change-password-modal-form" ata-fv-framework="bootstrap"
+        <form id="change-password-modal-form" data-fv-framework="bootstrap"
           data-fv-icon-valid="glyphicon glyphicon-ok"
           data-fv-icon-invalid="glyphicon glyphicon-remove"
           data-fv-icon-validating="glyphicon glyphicon-refresh">
@@ -595,33 +597,22 @@
 <% end %>
 
 <% unless logged_in? %>
+
 <div id="login-modal" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title">Login</h4>
+        <h4 class="modal-title">Login to That Band App</h4>
       </div>
       <div class="modal-body">
-        <%= render partial: 'shared/login', locals: { show_incorrect: false } %>
+        <%= render 'shared/login' %>
       </div>
     </div>
   </div>
 </div>
 
-<div id="signup-modal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title">Signup</h4>
-      </div>
-      <div class="modal-body">
-        <%= render 'register'%>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render 'register'%>
 <% end %>
 </body>
 </html>
