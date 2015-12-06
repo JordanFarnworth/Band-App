@@ -40,7 +40,7 @@ $('.login.landing').ready ->
       success: (data) ->
         window.location = '/'
       error: (data) ->
-        if data.status == 401
+        if data.status == 400
             $('#login-username').css('border-color', 'red')
             $('#login-password').css('border-color', 'red')
             $('#login-hint').show()
