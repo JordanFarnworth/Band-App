@@ -1,0 +1,11 @@
+<% if logged_in? %>
+<div class="row text-center list-inline" id="tba-nav">
+  <button id="showMenu" class="pull-left" name="sm"><i class="fa fa-arrow-left"></i>  Main Menu  <i class="fa fa-list-alt"></i></button>
+  <span class='pull-left' id='entity-nav'><a href="#"><%= @current_user.entity.name %></a></span>
+  <span><a href="#"><i class="fa fa-bell fa-lg nav-icons"></i></a></span>
+  <span id='nav-env'><a href="#"><i class="fa fa-envelope fa-lg nav-icons"></i></a></span>
+  <button id="showMenu2" name="event-manager"><i class="fa fa-calendar"></i>  Manage Events  <i class="fa fa-arrow-up"></i></button>
+  <span id='nav-name'><a href="#"><%= @current_user.display_name %></a></span>
+  <button class="pull-right" id="showMenu1" name="smt"><i class="fa fa-tachometer"></i>  Dashboard Menu  <i class="fa fa-arrow-right"></i></button>
+</div>
+<% end %>

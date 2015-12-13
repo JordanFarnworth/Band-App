@@ -11,6 +11,14 @@ class EventsController < ApplicationController
     @event = Event.find params[:id]
   end
 
+  def my_events
+
+  end
+
+  def search
+    
+  end
+
   def create
     ep = event_params
     start_time = event_params[:start_time]

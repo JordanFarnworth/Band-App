@@ -7,9 +7,9 @@
     <br>
     <%= @event.description %>
     <br>
-    <%= @event.start_time %>
+    <%= @event.start_time.to_formatted_s(:long_ordinal) %>
     <br>
-    <%= @event.end_time %>
+    <%= @event.end_time.to_formatted_s(:long_ordinal) %>
     <br>
     <%= @event.state %>
     <br>
@@ -17,7 +17,7 @@
     <br>
     <%= @event.address %>
     <br>
-    <%= @event.created_at %>
+    <%= @event.created_at.to_formatted_s(:long_ordinal) %>
   </div>
   <div class="row">
       <% if @event.longitude === nil || @event.latitude === nil %>

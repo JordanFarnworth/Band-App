@@ -7,7 +7,7 @@
       <% current_entity.favorites.band.each do |favorite| %>
         <div class="list-group-item">
           <h4 class="list-group-item-heading"><%= link_to favorite.party.name, favorite.party %></h4>
-          <p class="list-group-item-text"><%=  favorite.created_at %></p>
+          <p class="list-group-item-text">Favorited on: <%=  favorite.created_at.to_formatted_s(:long_ordinal) %></p>
         </div>
       <% end %>
     </div>

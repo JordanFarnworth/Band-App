@@ -99,6 +99,14 @@ $('.bands.show').ready ->
   $('#sticky-buttons').sticky topSpacing: 50
   new Band().checkFavorite(ENV.current_entity, @band)
 
+setBackground = (index) ->
+  @IMAGES_URLS = []
+  $.each $('#image-urls img'), (i) ->
+    IMAGES_URLS.push $(this).attr('src')
+  $('.container').css('background-image', 'url("' + @IMAGES_URLS[index] + '")')
+
+
 $('.bands.search').ready ->
+  setBackground(6)
   $('#bands-search-form label').css({'font-size': '24px', 'color': '#2ECBFF'})
   $('#band-simple-search-bar').autocomplete autocompleteBandParams()

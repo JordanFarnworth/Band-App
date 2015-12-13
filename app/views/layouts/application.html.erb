@@ -7,6 +7,11 @@
   <%= yield :scripts %>
   <%= yield :event_scripts %>
   <%= csrf_meta_tags %>
+  <%= google_webfonts_init(
+    {
+      google: ['Nunito', 'Oxygen', 'Droid Sans']
+    }
+  ) %>
 
   <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
@@ -20,24 +25,16 @@
         <%=  image_tag("crowd-event.jpg").to_s %>
         <%= image_tag("crowd-dash.jpg").to_s %>
         <%= image_tag("crowd-main.jpg").to_s %>
+        <%= image_tag("coffee.jpg").to_s %>
+        <%= image_tag("events.jpg").to_s %>
+        <%= image_tag("messages.jpg").to_s %>
+        <%= image_tag("search.jpg").to_s %>
       </div>
-			<div class="container">
+			<div class="container" id="container">
 				<div class="wrapper"><!-- wrapper needed for scroll -->
           <div class="container-fluid">
             <%= flash_messages %>
-              <div class="row text-center list-inline">
-                <button id="showMenu" class="pull-left" name="sm"><i class="fa fa-arrow-left"></i>  Main Menu  <i class="fa fa-list-alt"></i></button>
-                <% if logged_in? %>
-                  <% unless @current_user.user_data[:user_entity_type] === 'band' %>
-                  <button id="showMenu2" name="event-manager"><i class="fa fa-calendar"></i>  Manage Events  <i class="fa fa-arrow-up"></i></button>
-                  <% else %>
-                  <button class="hidden" hidden="true" id="showMenu2" type="button" name="button"></button>
-                  <% end %>
-                <% else %>
-                  <button class="hidden" hidden="true" id="showMenu2" type="button" name="button"></button>
-                <% end %>
-                <button hidden="true" class="pull-right" id="showMenu1" name="smt"><i class="fa fa-tachometer"></i>  Dashboard Menu  <i class="fa fa-arrow-right"></i></button>
-              </div>
+            <%= render '/shared/navbar' %>
             <div id="content">
               <%= yield %>
             </div>
@@ -49,7 +46,7 @@
   			<a href="/"><i class="fa fa-tachometer"></i>    Dashboard</a>
   			<a href="/calendar"><i class="fa fa-calendar"></i>    Calendar</a>
     			<% if logged_in? %>
-            <% if @current_user.entity === 'band' %>
+            <% if @current_user.user_data[:user_entity_type] === 'band' %>
               <a href="/parties/search"><i class="fa fa-search"></i>    Search</a>
             <% else %>
               <a href="/bands/search"><i class="fa fa-search"></i>    Search</a>
@@ -61,11 +58,16 @@
     <% if logged_in? %>
       <% if @current_user.user_data[:user_entity_type] === 'band' %>
         <nav class="outer-nav right vertical" id="effect-moveleft" hidden="true">
-          <a href="#dashboard-applications" role="tab" data-toggle="tab"><i class="fa fa-check-circle-o"></i>  Applications</a>
-          <a href="#dashboard-events" role="tab" data-toggle="tab"><i class="fa fa-calendar-check-o"></i>  Events</a>
-          <a href="#dashboard-favorites" role="tab" data-toggle="tab"><i class="fa fa-star"></i> Favorites</a>
-          <a href="#dashboard-edit-band" role="tab" data-toggle="tab"><i class="fa fa-headphones"></i>  Edit Band</a>
-          <a href="#dashboard-edit-user" role="tab" data-toggle="tab"><i class="fa fa-user"></i>  Edit User</a>
+          <a href="/dashboard/applications"><i class="fa fa-check-circle-o"></i>  Applications</a>
+          <a href="/dashboard/events"><i class="fa fa-calendar-check-o"></i>  Events</a>
+          <a href="/dashboard/favorites"><i class="fa fa-star"></i> Favorites</a>
+          <a href="/dashboard/edit_entity"><i class="fa fa-headphones"></i>  Edit Band</a>
+          <a href="/dashboard/self"><i class="fa fa-user"></i>  Edit User</a>
+        </nav>
+
+        <nav class="outer-nav top horizontal" id="effect-laydown" hidden="true">
+          <a href="/events/search"><i class="fa fa-plus"></i>  Find Events</a>
+          <a href="/events/my_events"><i class="fa fa-list-alt"></i>  My Events</a>
         </nav>
       <% else %>
         <nav class="outer-nav right vertical" id="effect-moveleft" hidden="true">
@@ -77,7 +79,7 @@
         </nav>
 
         <nav class="outer-nav top horizontal" id="effect-laydown" hidden="true">
-          <a href="#dashboard-new-event" data-toggle="tab" role="tab"><i class="fa fa-plus"></i>  Create Event</a>
+          <a href="#dashboard-new-event" data-toggle="tab" role="tab"><i class="fa fa-search"></i></i>  Create Event</a>
           <a href="#dashboard-party-events" data-toggle="tab" role="tab"><i class="fa fa-list-alt"></i>  List My Events</a>
         </nav>
       <% end %>

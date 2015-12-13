@@ -1,63 +1,61 @@
-<div class="container">
-  <div class="row col-md-10 col-md-offset-1" id="search-buttons">
-    <div class="btn-group btn-group-justified" role="tablist" aria-label="...">
-      <div class="btn-group" role="group">
-        <a href="#simple-search-div" role="tab" data-toggle="tab" type="button" id="simple-search-tab" class="btn btn-primary"><h4>Simple Search</h4></a>
-      </div>
-      <div class="btn-group" role="group">
-        <a href="#advanced-search-div" role="tab" data-toggle="tab" type="button" id="advanced-search-tab" class="btn btn-info"><h4>Advanced Search</h4></a>
-      </div>
+<div class="row col-md-10 col-md-offset-1" id="search-buttons">
+  <div class="btn-group btn-group-justified" role="tablist" aria-label="...">
+    <div class="btn-group" role="group">
+      <a href="#simple-search-div" role="tab" data-toggle="tab" type="button" id="simple-search-tab" class="btn btn-primary"><h4>Simple Search</h4></a>
+    </div>
+    <div class="btn-group" role="group">
+      <a href="#advanced-search-div" role="tab" data-toggle="tab" type="button" id="advanced-search-tab" class="btn btn-info"><h4>Advanced Search</h4></a>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div class="tab-content">
+  <div id="simple-search-div" role="tabpanel" class="tab-pane row text-center">
+    <div id="simple-search">
+      <h1 style="color: white;">Search for a band by name</h1>
+      <br>
+      <form name="search">
+        <label class="search-box">
+          <input type="text" id="band-simple-search-bar"/>
+          <span></span>
+        </label>
+      </form>
+    </div>
+    <br>
+    <div class="row ui-front" id="band-search-results">
+      <h5>Should append here</h5>
     </div>
   </div>
 
-  <br>
-
-  <div class="tab-content">
-    <div id="simple-search-div" role="tabpanel" class="tab-pane row text-center">
-      <div id="simple-search">
-        <h1>Search for a band by name</h1>
-        <br>
-        <form name="search">
-          <label class="search-box">
-            <input type="text" id="band-simple-search-bar"/>
-            <span></span>
-          </label>
-        </form>
-      </div>
+  <div id="advanced-search-div" role="tabpanel" class="tab-pane row text-center">
+    <div class="well" id="advanced-search-well">
+      <h2>Advanced Band Search</h2>
       <br>
-      <div class="row ui-front" id="band-search-results">
-        <h5>Should append here</h5>
-      </div>
-    </div>
-
-    <div id="advanced-search-div" role="tabpanel" class="tab-pane row text-center">
-      <div class="well" id="advanced-search-well">
-        <h2>Advanced Band Search</h2>
+      <form class="form-inline" id="bands-search-form">
+        <div class="form-group">
+          <label for="exampleInputName2">Band Name</label>
+          <input type="text" class="form-control" id="exampleInputName2">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputName2">Band Genre</label>
+          <input type="text" class="form-control" id="exampleInputName2" >
+        </div>
         <br>
-        <form class="form-inline" id="bands-search-form">
-          <div class="form-group">
-            <label for="exampleInputName2">Band Name</label>
-            <input type="text" class="form-control" id="exampleInputName2">
-          </div>
-          <div class="form-group">
-            <label for="exampleInputName2">Band Genre</label>
-            <input type="text" class="form-control" id="exampleInputName2" >
-          </div>
-          <br>
-          <div class="form-group btm-group">
-            <label for="exampleInputName2">Miles From You</label>
-            <input type="text" class="form-control" id="exampleInputName2" >
-          </div>
-          <div class="form-group btm-group">
-            <label for="exampleInputName2">Email</label>
-            <input type="text" class="form-control" id="exampleInputName2" >
-          </div>
-          <br>
-          <div id="advanced-search-btn">
-            <button class="btn btn-lg btn-info" id="search-btn" type="button" name="button">Search!</button>
-          </div>
-        </form>
-      </div>
+        <div class="form-group btm-group">
+          <label for="exampleInputName2">Miles From You</label>
+          <input type="text" class="form-control" id="exampleInputName2" >
+        </div>
+        <div class="form-group btm-group">
+          <label for="exampleInputName2">Email</label>
+          <input type="text" class="form-control" id="exampleInputName2" >
+        </div>
+        <br>
+        <div id="advanced-search-btn">
+          <button class="btn btn-lg btn-info" id="search-btn" type="button" name="button">Search!</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

@@ -148,6 +148,9 @@ autocompletePartyParams = ->
   }
 
 $('.events.show').ready ->
+  setBackground(6)
+
+$('.events.show').ready ->
   $('#edit-event-st').datetimepicker()
   $('#edit-event-st').val(new Date($('#edit-event-st').attr('name')).toLocaleString().replace(/:\d{2}\s/,' ').replace(/\,/, ''))
   $('#edit-event-ed').datetimepicker()

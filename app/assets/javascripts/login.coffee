@@ -25,6 +25,7 @@ $('.login.landing').ready ->
         $('#submit-registration').click()
       return
   $('button#showMenu').hide()
+  $('button#showMenu2').hide()
   $('#login-form').formValidation
     excluded: ':disabled'
   $('#register-form').formValidation

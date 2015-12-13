@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 # jquery classList method, gives array of class names
-# DONT DELETE, NEDED THIS FOR JQUERY
+# DONT DELETE, NEED THIS FOR JQUERY
 # Ex: <div id="test" class="foo bar"></div>
 # $('#test').classList() => ['foo', 'bar']
 
@@ -15,27 +15,20 @@ arrayContains = (needle, effect) ->
 
 # Fragile, handle with care / function that allows perspective on one dive
 # VIEWHAXOR9000
-linkButtonToDiv = (jbs, class_name, list_id, img_url) ->
+linkButtonToDiv = (jbs, class_name, list_id) ->
   $(jbs).on 'click', ->
     parent = $(jbs).parent().parent().parent().parent().parent()[0]
     arry = $(parent).classList()
     oldClass = arry[1]
     $(parent).removeClass(oldClass);
     $(parent).addClass("effect#{class_name}")
-    $(parent).css('background-image', 'url("' + img_url + '")');
+    $(parent).css('background-color', '#000000')
     $('nav').hide()
     $(list_id).show()
 
-getImages = () ->
-  @IMAGES_URLS = []
-  $.each $('#image-urls img'), (i) ->
-    IMAGES_URLS.push $(this).attr('src')
-  return @IMAGES_URLS
-
 $ ->
-  images = getImages()
   $('.container').css('width', '100%')
-  linkButtonToDiv($("[name='sm']"), '-airbnb', '#effect-airbnb', images[2])
-  linkButtonToDiv($("[name='smt']"), '-rotateleft', '#effect-moveleft', images[1])
-  linkButtonToDiv($("[name='event-manager']"), '-rotatetop', '#effect-laydown', images[0])
+  linkButtonToDiv($("[name='sm']"), '-airbnb', '#effect-airbnb')
+  linkButtonToDiv($("[name='smt']"), '-rotateleft', '#effect-moveleft')
+  linkButtonToDiv($("[name='event-manager']"), '-rotatetop', '#effect-laydown')
   $("[data-action='togglePicker']").css("color", "red")

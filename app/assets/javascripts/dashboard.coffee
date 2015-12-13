@@ -438,13 +438,19 @@ class Dashboard
     $('#change-password-modal-form').data('formValidation').resetForm()
 
 $('.messages.index').ready ->
-  $("[name='event-manager']").hide()
+  setBackground(1)
 
-$('.bands.search').ready ->
-  $("[name='event-manager']").hide()
+
+$('.events.search').ready ->
+  setBackground(4)
+
+$('.events.my_events').ready ->
+  setBackground(4)
+
+
 
 $('.dashboard.calendar').ready ->
-  $("[name='event-manager']").hide()
+  setCalBackground(3)
   $('#event-end-date-edit').datetimepicker()
   $('#event-start-date-edit').datetimepicker()
   new Dashboard().getCalendarData()
@@ -461,7 +467,38 @@ $('.dashboard.calendar').ready ->
         new Dashboard().deleteEvent()
   $('td').on 'click', ->
     console.log 'anything'
+
+$('.dashboard.applications').ready ->
+  setBackground(3)
+
+$('.dashboard.favorites').ready ->
+  setBackground(3)
+
+$('.dashboard.events').ready ->
+  setBackground(3)
+
+$('.dashboard.edit_entity').ready ->
+  setBackground(3)
+
+$('.dashboard.self').ready ->
+  setBackground(3)
+
+setBackground = (index) ->
+  @IMAGES_URLS = []
+  $.each $('#image-urls img'), (i) ->
+    IMAGES_URLS.push $(this).attr('src')
+  $('.container').css('background-image', 'url("' + @IMAGES_URLS[index] + '")')
+
+setCalBackground = (index) ->
+  @IMAGES_URLS = []
+  $.each $('#image-urls img'), (i) ->
+    IMAGES_URLS.push $(this).attr('src')
+  $('#container').css('background-image', 'url("' + @IMAGES_URLS[index] + '")')
+  c = $('.container')[1]
+  $(c).css('background-color', 'transparent')
+
 $('.dashboard.index').ready ->
+  setBackground(3)
   db = new Dashboard()
   $("[name='smt']").show()
   $("[name='event-manager']").show()

@@ -14,7 +14,12 @@ Rails.application.routes.draw do
 
   root to: 'dashboard#index'
   get 'login' => 'login#index'
-  get 'dashboard' => 'dashboard#index'
+  get 'dashboard/home' => 'dashboard#index'
+  get 'dashboard/applications' => 'dashboard#applications'
+  get 'dashboard/events' => 'dashboard#events'
+  get 'dashboard/favorites' => 'dashboard#favorites'
+  get 'dashboard/edit_entity' => 'dashboard#edit_entity'
+  get 'dashboard/self' => 'dashboard#self'
   get 'calendar' => 'dashboard#calendar'
   get 'landing' => 'login#landing'
   get 'about' => 'dashboard#about'
@@ -24,6 +29,8 @@ Rails.application.routes.draw do
   post 'register' => 'login#verify_register'
   get 'register/finish' => 'login#finish_registration'
   get 'register/confirm' => 'login#confirm_registration'
+  get 'events/search' => 'events#search'
+  get 'events/my_events' => 'events#my_events'
 
   resources :messages, only: [:index]
   resources :events

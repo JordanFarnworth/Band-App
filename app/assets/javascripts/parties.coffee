@@ -150,7 +150,14 @@ $('.parties.show').ready ->
     new Party().applyForEvent($(@).attr('id'))
   modalHelper('#app-show-modal')
 
+setBackground = (index) ->
+  @IMAGES_URLS = []
+  $.each $('#image-urls img'), (i) ->
+    IMAGES_URLS.push $(this).attr('src')
+  $('.container').css('background-image', 'url("' + @IMAGES_URLS[index] + '")')
+
 $('.parties.search').ready ->
-  $('#party-search-form label').css({'font-size': '24px', 'color': '#2ECBFF'})
+  setBackground(6)
+  $('#party-search-form label').css({'font-size': '24px', 'color': '#ffffff'})
   $('#party-simple-search-bar').autocomplete autocompletePartyParams()
   $('#simple-search-tab').click()

@@ -50,10 +50,15 @@
         </form>
       </div>
       <div class="modal-footer">
+        <% if @current_user.user_data[:user_entity_type] == 'party' %>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-danger" id="event-delete">Delete</button>
         <button type="button" class="btn btn-info" id="edit-event-toggle">Edit Event</button>
         <button type="button" class="btn btn-primary hidden" id="event-update">Update Event</button>
+        <% else %>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" >Go To Event</button>
+        <% end %>
       </div>
     </div>
   </div>
