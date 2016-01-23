@@ -137,6 +137,57 @@ autocompletePartyParams = ->
       window.location = "/parties/#{ui.item.value}"
   }
 
+advanceSearchParties = () ->
+  name = $('#company-name-asearch').val()
+  owner = $('#company-owner-asearch').val()
+  miles = $('#miles-away').val()
+  $('#advanced-search-well').hide()
+  $('#advanced-search-div').append(
+    "<div id='searching-icon' class=\"text-center\">
+      <h1 style='color: white;'>Searching<h1>
+      <i style='color: white;' class=\"fa fa-refresh fa-spin\"></i>
+    </div>
+    "
+  )
+  $.ajax "/api/v1/parties/advanced_search",
+    type: "post"
+    dataType: "json"
+    data:
+      name: name
+      owner: owner
+      miles: miles
+    success: (data) ->
+      $('#searching-icon').remove()``
+      if data == []
+        $('.results').append(
+          "
+            <div class='text-center'>
+              <h1 style='color: white;'>No Results</h1>
+            </div>
+          "
+        )
+      else
+        $.each data, (i) ->
+          $('.results').append(
+            "
+              <div class='row text-center'>
+                <a href='/parties/#{this.id}' style='color: white;'><h1>#{this.name}</h1></a>
+              </div>
+            "
+          )
+      $('.results').append(
+        "
+        <div class='row text-center'>
+          <button id='search-again' class='btn btn-default'>Search Again</button>
+        </div>
+        "
+      )
+      $('#search-again').on 'click', ->
+        $('.results').empty()
+        $('#advanced-search-well').show()
+
+
+
 
 $('.parties.show').ready ->
   @party = window.location.pathname.match(/\/parties\/(\d+)/)[1]
@@ -156,8 +207,13 @@ setBackground = (index) ->
     IMAGES_URLS.push $(this).attr('src')
   $('.container').css('background-image', 'url("' + @IMAGES_URLS[index] + '")')
 
+setListeners = () ->
+  $('#advanced-party-search-btn').on 'click', ->
+    advanceSearchParties()
+
 $('.parties.search').ready ->
   setBackground(6)
+  setListeners()
   $('#party-search-form label').css({'font-size': '24px', 'color': '#ffffff'})
   $('#party-simple-search-bar').autocomplete autocompletePartyParams()
   $('#simple-search-tab').click()

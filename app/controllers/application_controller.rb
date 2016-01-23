@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  before_action :set_current_user
+  before_action :set_current_user, :set_current_entity
 
   def api_request?
     request.format.symbol == :json
@@ -12,6 +12,10 @@ class ApplicationController < ActionController::Base
     min = date.match(/((:)[0-9])\d+/)
     date.gsub!(/((:)[0-9])\d+/, "#{min}:00").downcase!
     DateTime.strptime(date, '%m/%d/%Y %I:%M:%S %p')
+  end
+
+  def set_current_entity
+    current_entity
   end
 
   def set_current_user

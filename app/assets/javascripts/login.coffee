@@ -41,7 +41,7 @@ $('.login.landing').ready ->
       success: (data) ->
         window.location = '/'
       error: (data) ->
-        if data.status == 400
+        if data.status == 400 || data.status == 500
             $('#login-username').css('border-color', 'red')
             $('#login-password').css('border-color', 'red')
             $('#login-hint').show()

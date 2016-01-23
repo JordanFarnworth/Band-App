@@ -112,6 +112,8 @@ Rails.application.routes.draw do
       resources :parties, except: [:new, :edit] do
         collection do
           get 'search'
+          post 'advanced_search'
+          get 'search_finished'
         end
       end
     end

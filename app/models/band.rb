@@ -21,6 +21,38 @@ class Band < Entity
     @invitations
   end
 
+  def search_by_name_owner_miles(name, owner, miles)
+    @parties = Party.where('name LIKE ? AND owner LIKE ?', name, owner)
+    @miles = self.band_miles miles
+  end
+
+  def search_by_name_miles(name, miles)
+    results = []
+    @parties = Party.where('name ILIKE ?', "%#{name}%")
+    @miles = self.band_miles miles
+    @miles.each do |m|
+      @parties.each do |p|
+        if m.name == p.name
+          results << p
+        end
+      end
+    end
+    results.uniq
+  end
+
+  def search_by_owner_miles(owner, miles)
+    results = []
+    @parties = Party.where('owner LIKE ?', owner)
+    @miles = self.band_miles miles
+    @miles.each do |m|
+      @parties.each do |p|
+        if m.name == p.name
+          results << p
+        end
+      end
+    end
+  end
+
   def genre
     data['genre']
   end

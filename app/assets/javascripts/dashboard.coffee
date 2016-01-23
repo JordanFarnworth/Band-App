@@ -4,7 +4,6 @@
 
 # pretty much where all the dashboard things happen
 # moby dick
-
 class Dashboard
   constructor: ->
     if typeof ENV == 'undefined'
@@ -450,7 +449,7 @@ $('.events.my_events').ready ->
 
 
 $('.dashboard.calendar').ready ->
-  setCalBackground(3)
+  setCalBackground(12)
   $('#event-end-date-edit').datetimepicker()
   $('#event-start-date-edit').datetimepicker()
   new Dashboard().getCalendarData()
@@ -469,19 +468,23 @@ $('.dashboard.calendar').ready ->
     console.log 'anything'
 
 $('.dashboard.applications').ready ->
-  setBackground(3)
+  setBackground(8)
 
 $('.dashboard.favorites').ready ->
-  setBackground(3)
+  setBackground(9)
 
 $('.dashboard.events').ready ->
-  setBackground(3)
+  setBackground(10)
 
 $('.dashboard.edit_entity').ready ->
-  setBackground(3)
+  $('label').css('color', 'white')
+  setBackground(11)
+  new Dashboard().getEntityInfo()
 
 $('.dashboard.self').ready ->
-  setBackground(3)
+  $('label').css('color', 'white')
+  setBackground(11)
+  new Dashboard().getUserInfo()
 
 setBackground = (index) ->
   @IMAGES_URLS = []
@@ -500,8 +503,6 @@ setCalBackground = (index) ->
 $('.dashboard.index').ready ->
   setBackground(3)
   db = new Dashboard()
-  $("[name='smt']").show()
-  $("[name='event-manager']").show()
   $('#accept-event-start').datetimepicker()
   $('#accept-event-end').datetimepicker()
   $('#create-event-start').datetimepicker()

@@ -12,27 +12,36 @@
     </div>
   </div>
 
-  <div id="advanced-search-div" role="tabpanel" class="tab-pane row text-center">
+  <div id="advanced-search-div" role="tabpanel" class="tab-pane row">
+    <div class="results">
+
+    </div>
     <div id="advanced-search-well">
-      <h1 style="color: white;">Advanced Company Search</h1>
-      <br>
-      <form class="form-inline" id="party-search-form">
-        <div class="form-group">
-          <label for="exampleInputName2">Company Name</label>
-          <input type="text" class="form-control" id="exampleInputName2">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputName2">Owner Name</label>
-          <input type="text" class="form-control" id="exampleInputName2" >
-        </div>
-        <div class="form-group">
-          <label for="exampleInputName2">Miles From You</label>
-          <input type="text" class="form-control" id="exampleInputName2" >
-        </div>
-        <br>
+      <div class="text-center">
+        <h1 style="color: white;">Advanced Company Search</h1>
         <div id="advanced-search-btn">
-          <button class="btn btn-lg btn-default" type="button" name="button">Search!</button>
+          <button class="btn btn-lg btn-default" id="advanced-party-search-btn" type="button" name="button">Search!</button>
         </div>
+      </div>
+      <br>
+      <form id="party-search-form">
+        <div class="form-group col-md-8">
+          <label for="company-name-asearch">Company Name</label>
+          <input type="text" class="form-control" id="company-name-asearch">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="miles-away">Within how many miles?</label>
+          <select class="form-control" id="miles-away">
+            <% (1..100).each do |i| %>
+               <option><%=i%></option>
+            <% end %>
+          </select>
+        </div>
+        <!-- <div class="form-group col-md-8">
+          <label for="company-owner-asearch">Owner Name</label>
+          <input type="text" class="form-control" id="company-owner-asearch" >
+        </div> -->
+        <br>
       </form>
     </div>
   </div>

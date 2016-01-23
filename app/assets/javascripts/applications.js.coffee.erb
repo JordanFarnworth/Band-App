@@ -10,8 +10,11 @@
 $.fn.classList = ->
   @[0].className.split /\s+/
 
-arrayContains = (needle, effect) ->
-  arrhaystack.indexOf(needle) > -1
+setMainBackground = (index, element) ->
+  @IMAGES_URLS = []
+  $.each $('#image-urls img'), (i) ->
+    IMAGES_URLS.push $(this).attr('src')
+  $(element).css('background-image', 'url("' + @IMAGES_URLS[index] + '")')
 
 # Fragile, handle with care / function that allows perspective on one dive
 # VIEWHAXOR9000
@@ -22,7 +25,8 @@ linkButtonToDiv = (jbs, class_name, list_id) ->
     oldClass = arry[1]
     $(parent).removeClass(oldClass);
     $(parent).addClass("effect#{class_name}")
-    $(parent).css('background-color', '#000000')
+    $(parent).css('background-color', '#fffff')
+    setMainBackground(7, parent)
     $('nav').hide()
     $(list_id).show()
 

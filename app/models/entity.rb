@@ -23,6 +23,7 @@ class Entity < ActiveRecord::Base
   validate :validate_data
 
   serialize :social_media, Hash
+  serialize :data, Hash
   store_accessor :data
 
   after_initialize do
@@ -79,6 +80,13 @@ class Entity < ActiveRecord::Base
   def geocode_address
     self.geocode
     self.save
+  end
+
+  def band_miles(miles)
+    p = Party.new
+    p.address = self.address
+    p.geocode
+    p.nearbys miles
   end
 
   def validate_data

@@ -38,6 +38,41 @@ class PartiesController < ApplicationController
     end
   end
 
+  def advanced_search
+    respond_to do |format|
+      format.html do
+      end
+      format.json do
+        hash = {
+          :name => params["name"],
+          :owner => params["owner"],
+          :miles => params["miles"]
+        }
+        name = params["name"]
+        owner = params["owner"]
+        miles = params["miles"]
+        case
+        when name == "" && owner.nil?
+            parties = @current_entity.band_miles miles
+            render json: parties_json(parties), status: :ok
+          when name != "" && owner.nil?
+            parties = @current_entity.search_by_name_miles name, miles
+            render json: parties_json(parties), status: :ok
+          when name == "" && owner
+            parties = @current_entity.search_by_owner_miles name, miles
+            render json: parties_json(parties), status: :ok
+          when name != "" && owner != ""
+            parties = @current_entity.search_by_name_owner_miles name, owner, miles
+            render json: parties_json(parties), status: :ok
+        end
+      end
+    end
+  end
+
+  def search_finished?
+    render json: {:finished? => @search_finished}
+  end
+
   def create
     @party = Party.new party_parameters
     respond_to do |format|
