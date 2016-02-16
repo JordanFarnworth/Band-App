@@ -21,36 +21,16 @@ class Band < Entity
     @invitations
   end
 
-  def search_by_name_owner_miles(name, owner, miles)
-    @parties = Party.where('name LIKE ? AND owner LIKE ?', name, owner)
-    @miles = self.band_miles miles
-  end
-
-  def search_by_name_miles(name, miles)
-    results = []
-    @parties = Party.where('name ILIKE ?', "%#{name}%")
-    @miles = self.band_miles miles
-    @miles.each do |m|
-      @parties.each do |p|
-        if m.name == p.name
-          results << p
-        end
-      end
-    end
-    results.uniq
-  end
-
-  def search_by_owner_miles(owner, miles)
-    results = []
-    @parties = Party.where('owner LIKE ?', owner)
-    @miles = self.band_miles miles
-    @miles.each do |m|
-      @parties.each do |p|
-        if m.name == p.name
-          results << p
-        end
-      end
-    end
+  def search_parties(search_params, address)
+    party = Party.create(address: address)
+    party.geocode
+    query = party.nearbys search_params['miles'] #['miles'] should always be present
+    return query unless search_params[:name].present? || search_params[:owner].present?
+    query1 = query.where("name ILIKE ?", "%#{search_params[:name]}%") if search_params[:name].present?
+    query2 = query.where("data->'owner' ILIKE ?", "%#{search_params[:owner]}%") if search_params[:owner].present?
+    query1 ||= []
+    query2 ||= []
+    results = query1 + query2
   end
 
   def genre

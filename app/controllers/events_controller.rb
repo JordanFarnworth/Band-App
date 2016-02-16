@@ -16,7 +16,7 @@ class EventsController < ApplicationController
   end
 
   def search
-    
+
   end
 
   def create
@@ -43,7 +43,6 @@ class EventsController < ApplicationController
   end
 
   def create_accepted_event
-    debugger
     @application = Application.find params[:application]
     @application.accept_application
     @event = Event.new event_params

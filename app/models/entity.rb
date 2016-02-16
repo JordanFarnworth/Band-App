@@ -23,7 +23,6 @@ class Entity < ActiveRecord::Base
   validate :validate_data
 
   serialize :social_media, Hash
-  serialize :data, Hash
   store_accessor :data
 
   after_initialize do

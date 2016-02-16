@@ -95,7 +95,6 @@ class Event
         bootbox.alert("Bands Invited", null)
 
 updateDate = () ->
-  debugger
   start = $('#edit-event-st').val()
   start_frd = new Date(start).toLocaleTimeString()
   end = $('#edit-event-ed').val()

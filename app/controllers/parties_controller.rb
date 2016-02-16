@@ -40,31 +40,9 @@ class PartiesController < ApplicationController
 
   def advanced_search
     respond_to do |format|
-      format.html do
-      end
       format.json do
-        hash = {
-          :name => params["name"],
-          :owner => params["owner"],
-          :miles => params["miles"]
-        }
-        name = params["name"]
-        owner = params["owner"]
-        miles = params["miles"]
-        case
-        when name == "" && owner.nil?
-            parties = @current_entity.band_miles miles
-            render json: parties_json(parties), status: :ok
-          when name != "" && owner.nil?
-            parties = @current_entity.search_by_name_miles name, miles
-            render json: parties_json(parties), status: :ok
-          when name == "" && owner
-            parties = @current_entity.search_by_owner_miles name, miles
-            render json: parties_json(parties), status: :ok
-          when name != "" && owner != ""
-            parties = @current_entity.search_by_name_owner_miles name, owner, miles
-            render json: parties_json(parties), status: :ok
-        end
+        results = @current_entity.search_parties party_parameters['search_params'], @current_entity.address
+        render json: {:results => results.to_json}
       end
     end
   end
@@ -107,6 +85,6 @@ class PartiesController < ApplicationController
 
   private
   def party_parameters
-    params.require(:party).permit(:name, :description, :address, :longitude, :latitude, social_media: [:twitter, :instagram, :facebook], data: [:email, :phone_number, :owner])
+    params.require(:party).permit(:name, :description, :address, :longitude, :latitude, social_media: [:twitter, :instagram, :facebook], data: [:email, :phone_number, :owner], search_params: [:name, :owner, :miles])
   end
 end

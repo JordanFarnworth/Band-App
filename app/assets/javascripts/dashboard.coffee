@@ -449,7 +449,12 @@ $('.events.my_events').ready ->
 
 
 $('.dashboard.calendar').ready ->
-  setCalBackground(12)
+  $('.container-fluid').css('background-color', '#ffffff')
+  $('.container').css('background-color', '#ffffff')
+  setTimeout (->
+    $('.fc-view-container').css('background-color', '#696969')
+    $('.fc-left h2').css('color', '#696969')
+    return), 200
   $('#event-end-date-edit').datetimepicker()
   $('#event-start-date-edit').datetimepicker()
   new Dashboard().getCalendarData()
@@ -471,19 +476,19 @@ $('.dashboard.applications').ready ->
   setBackground(8)
 
 $('.dashboard.favorites').ready ->
-  setBackground(9)
+  setBackground(8)
 
 $('.dashboard.events').ready ->
-  setBackground(10)
+  setBackground(8)
 
 $('.dashboard.edit_entity').ready ->
   $('label').css('color', 'white')
-  setBackground(11)
+  setBackground(8)
   new Dashboard().getEntityInfo()
 
 $('.dashboard.self').ready ->
   $('label').css('color', 'white')
-  setBackground(11)
+  setBackground(8)
   new Dashboard().getUserInfo()
 
 setBackground = (index) ->

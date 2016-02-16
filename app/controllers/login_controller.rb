@@ -41,7 +41,7 @@ class LoginController < ApplicationController
       @user.confirm!
       session[:current_user_id] = @user.id
       flash[:success] = 'Success!  Your account has been confirmed, and you are now logged in.'
-      redirect_to dashboard_path
+      redirect_to :root
     else
       redirect_to :root
       flash[:error] = "Oops, we couldn't find a user to confirm with the given token."

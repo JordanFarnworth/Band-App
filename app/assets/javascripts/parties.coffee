@@ -153,12 +153,14 @@ advanceSearchParties = () ->
     type: "post"
     dataType: "json"
     data:
-      name: name
-      owner: owner
-      miles: miles
+      party:
+        search_params:
+          name: name
+          owner: owner
+          miles: miles
     success: (data) ->
-      $('#searching-icon').remove()``
-      if data == []
+      $('#searching-icon').remove()
+      if data.results == []
         $('.results').append(
           "
             <div class='text-center'>
@@ -167,7 +169,7 @@ advanceSearchParties = () ->
           "
         )
       else
-        $.each data, (i) ->
+        $.each JSON.parse(data.results), (i) ->
           $('.results').append(
             "
               <div class='row text-center'>

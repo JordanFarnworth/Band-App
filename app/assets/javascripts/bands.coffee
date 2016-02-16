@@ -14,7 +14,6 @@ class Band
         band_id: band
         party_id: party
       success: (data) =>
-        console.log 'data from check fav' + data.favorite
         if data.favorite == 'true'
           $('.favorite-band-div').html('<h1><a href="#"><i id="favorite-band" class="fa fa-star fa-6"></i></a></h1>
           <em>Favorited!</em>')
@@ -22,7 +21,6 @@ class Band
           $('.favorite-band-div').html('<h1><a href="#"><i id="favorite-band" class="fa fa-star-o fa-6"></i></a></h1>
           <em>Favorite This Band?</em>')
         $('i#favorite-band').on 'click', ->
-          console.log 'this is getting clicked'
           @band = window.location.pathname.match(/\/bands\/(\d+)/)[1]
           new Band().addRemoveFavorite(@band, ENV.current_entity)
 
@@ -36,7 +34,6 @@ class Band
           party_id: party
           owner: 'party'
       success: (data) =>
-        console.log data
         $('i#favorite-band').on 'click', ->
           new Band().addRemoveFavorite(@band, ENV.current_entity)
         if data.deleted == 'true'

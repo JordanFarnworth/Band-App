@@ -32,6 +32,8 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 gem 'rails_serve_static_assets'
 gem 'rails_stdout_logging'
 gem 'google-webfonts-rails'
+gem 'bullet'
+gem 'video-js-rails', '~> 4.3', '>= 4.3.0.1'
 
 group :development do
   gem 'letter_opener'
