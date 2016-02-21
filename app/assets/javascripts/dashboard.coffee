@@ -25,7 +25,6 @@ class Dashboard
   acceptEventApplication: (el) =>
     event_joiner = el.attr('id')
     event = el.attr('data-event-id')
-    debugger
     bootbox.confirm "Are you sure you want to accept this application?", ->
       if confirm
         bootbox.dialog
@@ -124,8 +123,8 @@ class Dashboard
     app = el.attr('id')
     id = el.attr('data-id')
     name = el.attr('data-name')
-    endDate = el.attr('data-s-date')
-    startDate = el.attr('data-e-date')
+    startDate = el.attr('data-s-date')
+    endDate = el.attr('data-e-date')
     $('#myEventAcceptModal').modal('show')
     $('.modal-body.new-event').prepend("<h3>For: #{name}</h3>
     <h4>Availability Dates Given:</h4>
