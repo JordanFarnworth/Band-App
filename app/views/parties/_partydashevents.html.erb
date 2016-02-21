@@ -4,8 +4,8 @@
       <h5 class="panel-title">Upcoming Events</h5>
     </div>
     <div class="panel-body">
-      <% if current_entity.events.accepted.any? %>
-        <% current_entity.events.accepted.each do |event| %>
+      <% if @accepted_events.any? %>
+        <% @accepted_events.each do |event| %>
           <div class="list-group-item">
             <h4 class="list-group-item-heading">Title of Event: <%= link_to event.title, event %></h4>
             <p class="list-group-item-text">Scheduled for: <%= event.start_time == nil ? 'TBD' : event.start_time.to_formatted_s(:long_ordinal) %></p>
@@ -24,8 +24,8 @@
       <h5 class="panel-title">Events with Pending Invitations</h5>
     </div>
     <div class="panel-body">
-      <% if current_entity.events.pending.any? %>
-        <% current_entity.events.pending.each do |event| %>
+      <% if @pending_events.any? %>
+        <% @pending_events.each do |event| %>
           <div class="list-group-item">
             <h4 class="list-group-item-heading">Title of Event: <%= link_to event.title, event %></h4>
             <p class="list-group-item-text">Event Status: <%= event.state %></p>
@@ -44,8 +44,8 @@
       <h5 class="panel-title">Public Events</h5>
     </div>
     <div class="panel-body">
-      <% if current_entity.events.open.any? %>
-        <% current_entity.events.open.each do |public_event| %>
+      <% if @public_events.any? %>
+        <% @public_events.each do |public_event| %>
           <div class="list-group-item">
             <h4 class="list-group-item-heading">Title of Event: <%= link_to public_event.title, public_event %></h4>
             <p class="list-group-item-text">Event Status: <%=  public_event.state %></p>
@@ -65,8 +65,8 @@
       <h5 class="panel-title">Private Events</h5>
     </div>
     <div class="panel-body">
-      <% if current_entity.events.closed.any? %>
-        <% current_entity.events.closed.each do |public_event| %>
+      <% if @private_events.any? %>
+        <% @private_events.each do |public_event| %>
           <div class="list-group-item">
             <h4 class="list-group-item-heading">Title of Event: <%= link_to public_event.title, public_event %></h4>
             <p class="list-group-item-text">Event Status: <%=  public_event.state %></p>

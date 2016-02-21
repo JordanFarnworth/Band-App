@@ -12,26 +12,4 @@
       <a href="/parties/search"><i class="fa fa-search fa-4x">Company Listings</i></a>
     </div>
   </div>
-<% else %>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="dashboard-applications">
-            <%= render 'bands/banddashapplications' %>
-          </div>
-          <div role="tabpanel" class="tab-pane fade" id="dashboard-events">
-            <%= render 'bands/banddashevents' %>
-          </div>
-          <div role="tabpanel" class="tab-pane fade" id="dashboard-favorites">
-            <%= render 'bands/banddashfavorites' %>
-          </div>
-          <div role="tabpanel" class="tab-pane fade" id="dashboard-edit-user">
-            <%= render 'dashboard/dashedituser' %>
-          </div>
-          <div role="tabpanel" class="tab-pane fade" id="dashboard-edit-band">
-            <%= render 'bands/banddasheditband' %>
-          </div>
-        </div>
-      </div>
-    </div>
 <% end %>

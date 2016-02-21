@@ -6,8 +6,8 @@
       </div>
       <div class="panel-body">
         <div class="row col-md-offset-1">
-        <% if current_entity.accepted_events.any? %>
-          <% current_entity.accepted_events.each do |event| %>
+        <% if @accepted_events.any? %>
+          <% @accepted_events.uniq.each do |event| %>
             <div class="list-group-item col-md-5 two-panel-page">
               <h4 class="list-group-item-heading">Event Title: <%= link_to event.title, event %></h4>
               <p class="list-group-item-text"><%=  event.start_time == nil ? 'Will by set by the company/party.' : event.start_time.to_formatted_s(:long_ordinal) %></p>
@@ -29,8 +29,8 @@
         <h3 class="panel-title">Event Invitations</h3>
       </div>
       <div class="panel-body">
-        <% if current_entity.invitations.any? %>
-          <% current_entity.invitations.each do |ej| %>
+        <% if @pending_invitations.any? %>
+          <% @pending_invitations.each do |ej| %>
             <div class="list-group-item col-md-6 two-panel-page">
               <h4 class="list-group-item-heading">
                 Event Title: <%= link_to ej.event.title, ej.event %>

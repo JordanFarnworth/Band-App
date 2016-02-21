@@ -6,6 +6,13 @@ class EventsController < ApplicationController
   before_action :find_event, only: [:show, :edit, :update, :destroy, :invite, :deny_applications]
   before_action :find_entity, only: :events
 
+  def search
+    #handled w/ajax
+  end
+
+  def new
+    #handled w/ajax
+  end
 
   def find_event
     @event = Event.find params[:id]
@@ -13,14 +20,6 @@ class EventsController < ApplicationController
 
   def my_events
     @events = current_entity.active_and_owner_events
-  end
-
-  def search
-
-  end
-
-  def new
-
   end
 
   def create
@@ -51,6 +50,8 @@ class EventsController < ApplicationController
     if @event.save
       EventJoiner.create_party_ej(params[:party], @event.id)
       EventJoiner.accept_band_ej(params[:band], @event.id)
+      @event.delay.geocode_address
+      @event.delay.set_state
       render json: event_json(@event), status: :ok
     else
       render json: { error: @event.errors.full_messages }, status: :bad_request
@@ -71,12 +72,19 @@ class EventsController < ApplicationController
     end
   end
 
+
   def show
     respond_to do |format|
       format.json do
         render json: event_json(@event), status: :ok
       end
       format.html do
+        if @current_entity && @current_entity.type == 'Party'
+          render 'events/_partyeventpage'
+        else
+          @ejs = @event.event_joiners.includes(:entity)
+          render 'events/_regulareventpage'
+        end
       end
     end
   end
@@ -133,10 +141,11 @@ class EventsController < ApplicationController
 
   def update
     ep = event_params
-    start_time = event_params[:start_time]
-    ep[:start_time] = DateTime.strptime start_time, '%m/%d/%Y %I:%M %p'
-    end_time = event_params[:end_time]
-    ep[:end_time] = DateTime.strptime end_time, '%m/%d/%Y %I:%M %p'
+    start_time = pop_last_word event_params[:start_time]
+    end_time = pop_last_word event_params[:end_time]
+    ep[:start_time] = DateTime.strptime start_time, '%m/%d/%Y %I:%M'
+    ep[:end_time] = DateTime.strptime end_time, '%m/%d/%Y %I:%M'
+    debugger
     if @event.update ep
       render json: event_json(@event), status: :ok
     else

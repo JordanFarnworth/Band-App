@@ -5,8 +5,8 @@
     </div>
     <div class="panel-body">
       <div class="list-group">
-        <% if current_entity.applications.pending.any? %>
-          <% current_entity.applications.pending.each do |application| %>
+        <% if @pending_general_applications.any? %>
+          <% @pending_general_applications.each do |application| %>
             <div class="list-group-item col-md-6">
               <h4 class="list-group-item-heading">Application from <%= link_to application.band.name, application.band %>
                 <span class="pull-right">
@@ -33,19 +33,17 @@
     </div>
     <div class="panel-body">
       <div class="list-group">
-        <% if current_entity.event_applications != [] %>
-          <% current_entity.events.each do |event| %>
-            <% event.applications.each do |application| %>
-              <div class="list-group-item col-md-6">
-                <h4 class="list-group-item-heading">Application for <%= link_to application.event.title, application.event %>
-                  <span class="pull-right">
-                    <button name="accept-event-app" data-event-id="<%= application.event.id %>" id="<%= application.id %>" type="button" class="btn btn-success">Accept</button>
-                    <button name="deny-event-app" id="<%= application.id %>" type="button" class="btn btn-danger">Deny</button>
-                  </span>
-                </h4>
-                <p class="list-group-item-text">From <%= link_to application.entity.name, application.entity %></p>
-              </div>
-            <% end %>
+        <% unless @pending_event_applications.empty? %>
+          <%  @pending_event_applications.each do |application| %>
+            <div class="list-group-item col-md-6">
+              <h4 class="list-group-item-heading">Application for <%= link_to application.event.title, application.event %>
+                <span class="pull-right">
+                  <button name="accept-event-app" data-event-id="<%= application.event.id %>" id="<%= application.id %>" type="button" class="btn btn-success">Accept</button>
+                  <button name="deny-event-app" id="<%= application.id %>" type="button" class="btn btn-danger">Deny</button>
+                </span>
+              </h4>
+              <p class="list-group-item-text">From <%= link_to application.entity.name, application.entity %></p>
+            </div>
           <% end %>
         <% else %>
           <h5>You have no applications!</h5>

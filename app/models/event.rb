@@ -9,6 +9,7 @@ class Event < ActiveRecord::Base
   scope :open, -> { where(is_public: true) }
   scope :closed, -> { where(is_public: false) }
   scope :declined, -> { where(state: 'declined') }
+  # scope :in_future, -> { where("start_time > ?", self.start_time) }
 
   def destroy
     self.delete
@@ -67,8 +68,12 @@ class Event < ActiveRecord::Base
   end
 
   def geocode_address
-    self.geocode
-    self.save
+    unless self.address.empty?
+      self.geocode
+      self.save
+    else
+      return
+    end
   end
 
 end

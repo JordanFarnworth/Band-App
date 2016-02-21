@@ -111,13 +111,15 @@ class Dashboard
           description: $('#accept-event-description').val()
           recurrence_pattern: "One Time Event"
           price: $('#accept-event-price').val()
+          address: $('#accept-event-address').val()
           start_time: $('#accept-event-start').val()
           end_time: $('#accept-event-end').val()
           state: "accepted"
+          is_public: false
       success: (data) =>
         window.location = window.location
       error: (data) =>
-
+        alert(data)
 
   acceptGeneralApplication: (el) =>
     app = el.attr('id')
@@ -530,7 +532,7 @@ $('.dashboard.self').ready ->
       new Dashboard().updateUserInfo()
   $('#change-pw-modal').on 'click', ->
     $(@).unbind()
-    console.log 'hello'
+    console.log 'to do fix this shit'
   $('#update-user-password').on 'click', ->
     if $('#change-password-modal-form').data('formValidation').isValid()
       new Dashboard().updateUserPassword()

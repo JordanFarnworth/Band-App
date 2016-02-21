@@ -50,6 +50,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'database_cleaner'
   gem 'forgery'
+  gem 'git_stats'
 end
 
 group :production do

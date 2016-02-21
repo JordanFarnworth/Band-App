@@ -29,8 +29,8 @@ class BandsController < ApplicationController
 
   def index
     if params[:search_term]
-      t = params[:search_term].downcase!
-      @bands = @bands.where('name LIKE ?', "%#{t}%".downcase)
+      t = params[:search_term]
+      @bands = @bands.where('name ILIKE ?', "%#{t}%")
     end
     respond_to do |format|
       format.html do

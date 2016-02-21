@@ -92,6 +92,6 @@ class Entity < ActiveRecord::Base
   end
 
   def validate_data
-    TODO
+  # TODO
   end
 end

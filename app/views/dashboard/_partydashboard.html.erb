@@ -12,28 +12,4 @@
       <a href="/bands/search"><i class="fa fa-search fa-4x">Bands</i></a>
     </div>
   </div>
-<% else %>
-  <div class="row">
-    <div class="tab-content">
-      <div role="tabpanel" class="tab-pane fade in" id="dashboard-party-events">
-        <%= render 'parties/partydashevents' %>
-      </div>
-      <div role="tabpanel" class="tab-pane fade in active" id="dashboard-party-applications">
-        <%= render 'parties/partydashapplication' %>
-      </div>
-      <div role="tabpanel" class="tab-pane fade in" id="dashboard-party-favorites">
-        <%= render 'parties/partydashfavorites' %>
-      </div>
-      <div role="tabpanel" class="tab-pane fade in" id="dashboard-edit-party">
-        <%= render 'parties/partydasheditparty' %>
-      </div>
-      <div role="tabpanel" class="tab-pane fade" id="dashboard-edit-user">
-        <%= render 'dashboard/dashedituser' %>
-      </div>
-      <div role="tabpanel" class="tab-pane fade" id="dashboard-new-event">
-        <%= render 'dashboard/newevent' %>
-      </div>
-    </div>
-  </div>
-</div>
 <% end %>

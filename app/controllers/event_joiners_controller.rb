@@ -1,23 +1,28 @@
 class EventJoinersController < ApplicationController
 
+  before_action :find_event_joiner, only: :update
+
+  def find_event_joiner
+    @ej = EventJoiner.find params[:id]
+  end
+
   def create
     @ej = EventJoiner.new event_joiner_params
     if @ej.save
+      @event = @ej.event
+      @event.delay.set_state
       render json: { success: "Event Joiner created" }, status: :ok
-      event = Event.find @ej.event_id
-      event.delay.set_state
     else
       render json: { error: @ej.errors.full_messages }, status: :bad_request
     end
   end
 
   def update
-    @ej = EventJoiner.find params[:id]
     @event = @ej.event
     @ej.update event_joiner_params
     if @ej.save
-      render json: { success: "Application Updated" }, status: :ok
       @event.delay.set_state
+      render json: { success: "Application Updated" }, status: :ok
     else
       render json: { error: @ej.errors.full_messages },status: :bad_request
     end
