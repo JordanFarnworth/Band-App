@@ -89,7 +89,7 @@ docker run --name band_app_temp --link postgres:db band_app bundle exec rake db:
 docker commit band_app_temp band_app
 docker rm band_app_temp
 
-echo "start band_app_lti"
+echo "start band_app"
 docker run --rm --link postgres:db band_app bundle exec rspec spec
 
 echo "shutdown postgres and delete"
