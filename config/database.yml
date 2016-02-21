@@ -20,8 +20,8 @@ development:
 test:
   <<: *default
   database: band_app_test
-  username: postgres
-  password:
+  username: postgresql
+  password: postgresql
 
 production:
   <<: *default

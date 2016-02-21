@@ -8,6 +8,9 @@ before_script:
   - gem install bundler
   - bundle install --without production
   - RAILS_ENV=test rake db:setup
+variables:
+  POSTGRES_USER: postgresql
+  POSTGRES_PASSWORD: postgresql
 rspec:
   script: rake spec
   type: test
