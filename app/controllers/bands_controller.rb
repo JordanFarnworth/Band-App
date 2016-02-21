@@ -51,6 +51,15 @@ class BandsController < ApplicationController
     end
   end
 
+  def advanced_search
+    respond_to do |format|
+      format.json do
+        results = @current_entity.search_bands band_parameters['search_params'], @current_entity.address
+        render json: {:results => results.to_json}
+      end
+    end
+  end
+
   def new
     respond_to do |format|
       format.json do
@@ -93,6 +102,6 @@ class BandsController < ApplicationController
 
   private
   def band_parameters
-    params.require(:band).permit(:name, :description, :address, :longitude, :latitude, social_media: [:twitter, :instagram, :facebook], data: [:email, :genre, :phone_number, :youtube_link])
+    params.require(:band).permit(:name, :description, :address, :longitude, :latitude, social_media: [:twitter, :instagram, :facebook], data: [:email, :genre, :phone_number, :youtube_link], search_params: [:name, :email, :miles, :genre])
   end
 end

@@ -34,6 +34,10 @@ class Entity < ActiveRecord::Base
     self.save
   end
 
+  def active_and_owner_events
+    @events = Event.joins(:event_joiners).where(event_joiners: { status: %w(accepted owner), entity_id: self.id })
+  end
+
   def event_applications
     apps = []
     self.events.each do |event|
@@ -49,16 +53,15 @@ class Entity < ActiveRecord::Base
     ej = self.event_joiners.accepted.each do |e|
       events << e.event
     end
-
     events
   end
 
   def has_event_application?(event_id)
-    @event_joiner = EventJoiner.where(event_id: event_id, entity_id: self.id)
+    @event_joiner = EventJoiner.where(event_id: event_id, entity_id: self.id, status: "application")
     if @event_joiner.any?
       return true
     else
-      false
+      return false
     end
   end
 

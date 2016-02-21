@@ -11,8 +11,21 @@ class Dashboard
     @user = ENV.current_user
     @entity = ENV.current_entity
 
+  denyOtherApplications: (event, event_joiner) =>
+    $.ajax "/api/v1/events/#{event}/deny_applications",
+      type: 'post'
+      dataType: 'json'
+      data:
+        ej: event_joiner
+        status: 'accepted'
+      success: (data) =>
+        bootbox.alert "Event Accepted and all other applications have been deleted", ->
+          window.location = window.location
+
   acceptEventApplication: (el) =>
     event_joiner = el.attr('id')
+    event = el.attr('data-event-id')
+    debugger
     bootbox.confirm "Are you sure you want to accept this application?", ->
       if confirm
         bootbox.dialog
@@ -45,17 +58,7 @@ class Dashboard
                       id: event_joiner
                       status: 'accepted'
                   success: (data) =>
-                    $.ajax "/api/v1/events/deny_applicaitons",
-                      type: 'post'
-                      dataType: 'json'
-                      data:
-                        event_joiner:
-                          id: event_joiner
-                          status: 'accepted'
-                      success: (data) =>
-                        bootbox.alert "Event Accepted and all other applications have been deleted", ->
-                          window.location = window.location
-
+                    new Dashboard().denyOtherApplications(event, event_joiner)
   denyEventApplication: (el) =>
     event_joiner = el.attr('id')
     bootbox.confirm "Are you sure you want to accept this application?", ->
@@ -125,9 +128,7 @@ class Dashboard
     startDate = el.attr('data-e-date')
     $('#myEventAcceptModal').modal('show')
     $('.modal-body.new-event').prepend("<h3>For: #{name}</h3>
-    <br>
     <h4>Availability Dates Given:</h4>
-    <br>
     <p>#{startDate} through #{endDate}</p>")
     $('#accept-event-btn').on 'click', ->
       new Dashboard().createAcceptedEvent(id, app)
@@ -473,23 +474,67 @@ $('.dashboard.calendar').ready ->
     console.log 'anything'
 
 $('.dashboard.applications').ready ->
+  db = new Dashboard()
   setBackground(8)
+  $('#accept-event-start').datetimepicker()
+  $('#accept-event-end').datetimepicker()
+  $("[name='decline-gen-app']").on 'click', ->
+    db.declineGeneralApplication($(@))
+  $("[name='accept-gen-app']").on 'click', ->
+    db.acceptGeneralApplication($(@))
+  $("[name='accept-event-app']").on 'click', ->
+    db.acceptEventApplication($(@))
+  $("[name='deny-event-app']").on 'click', ->
+    db.denyEventApplication($(@))
 
 $('.dashboard.favorites').ready ->
   setBackground(8)
 
 $('.dashboard.events').ready ->
+  db = new Dashboard()
   setBackground(8)
+  $("[name='accept-event']").on 'click', ->
+    db.acceptEvent($(@))
+  $("[name='decline-event']").on 'click', ->
+    db.declineEvent($(@))
 
 $('.dashboard.edit_entity').ready ->
+  db = new Dashboard()
   $('label').css('color', 'white')
   setBackground(8)
-  new Dashboard().getEntityInfo()
+  db.getEntityInfo()
+  $('#update-band-btn').on 'click', ->
+    db = new Dashboard()
+    $('#band-general-info-edit').formValidation('validate')
+    $('#band-contact-info-edit').formValidation('validate')
+    $('#band-social-media-edit').formValidation('validate')
+    # If the form is valid, will proceed with submission
+    if $('#band-general-info-edit').data('formValidation').isValid() && $('#band-contact-info-edit').data('formValidation').isValid() && $('#band-social-media-edit').data('formValidation').isValid()
+      db.updateBand()
+  $('#edit-party').on 'click', ->
+    db = new Dashboard()
+    $('#party-general-info-form-edit').formValidation('validate')
+    $('#party-social-media-form-edit').formValidation('validate')
+    $('#party-contact-info-form-edit').formValidation('validate')
+    # If the form is valid, will proceed with submission
+    if $('#party-general-info-form-edit').data('formValidation').isValid() && $('#party-social-media-form-edit').data('formValidation').isValid() && $('#party-contact-info-form-edit').data('formValidation').isValid()
+      db.updateParty()
 
 $('.dashboard.self').ready ->
+  db = new Dashboard()
   $('label').css('color', 'white')
   setBackground(8)
-  new Dashboard().getUserInfo()
+  db.getUserInfo()
+  $('#update-user-data-btn').on 'click', ->
+    $('#edit-user-data-form').formValidation 'validate'
+    if $('#edit-user-data-form').data('formValidation').isValid()
+      new Dashboard().updateUserInfo()
+  $('#change-pw-modal').on 'click', ->
+    $(@).unbind()
+    console.log 'hello'
+  $('#update-user-password').on 'click', ->
+    if $('#change-password-modal-form').data('formValidation').isValid()
+      new Dashboard().updateUserPassword()
 
 setBackground = (index) ->
   @IMAGES_URLS = []
@@ -508,10 +553,6 @@ setCalBackground = (index) ->
 $('.dashboard.index').ready ->
   setBackground(3)
   db = new Dashboard()
-  $('#accept-event-start').datetimepicker()
-  $('#accept-event-end').datetimepicker()
-  $('#create-event-start').datetimepicker()
-  $('#create-event-end').datetimepicker()
   $('#band-edit-form').formValidation()
   $('#band-general-info-form').formValidation
     excluded: ':disabled'
@@ -547,34 +588,6 @@ $('.dashboard.index').ready ->
     excluded: ':disabled'
   db.getUserInfo()
   db.getEntityInfo()
-  $('#update-user-data-btn').on 'click', ->
-    $('#edit-user-data-form').formValidation 'validate'
-    if $('#edit-user-data-form').data('formValidation').isValid()
-      new Dashboard().updateUserInfo()
-  $('#update-user-password').on 'click', ->
-    if $('#change-password-modal-form').data('formValidation').isValid()
-      new Dashboard().updateUserPassword()
-  $("[name='accept-event']").on 'click', ->
-    db.acceptEvent($(@))
-  $("[name='decline-event']").on 'click', ->
-    db.declineEvent($(@))
-  $("[name='decline-gen-app']").on 'click', ->
-    db.declineGeneralApplication($(@))
-  $("[name='accept-gen-app']").on 'click', ->
-    db.acceptGeneralApplication($(@))
-  $("[name='accept-event-app']").on 'click', ->
-    db.acceptEventApplication($(@))
-  $("[name='deny-event-app']").on 'click', ->
-    db.denyEventApplication($(@))
-
-  $('#update-band-btn').on 'click', ->
-    db = new Dashboard()
-    $('#band-general-info-edit').formValidation('validate')
-    $('#band-contact-info-edit').formValidation('validate')
-    $('#band-social-media-edit').formValidation('validate')
-    # If the form is valid, will proceed with submission
-    if $('#band-general-info-edit').data('formValidation').isValid() && $('#band-contact-info-edit').data('formValidation').isValid() && $('#band-social-media-edit').data('formValidation').isValid()
-      db.updateBand()
 
   $('#band-or-party').on 'click', ->
     db.assignEntityType()
@@ -592,8 +605,6 @@ $('.dashboard.index').ready ->
     # If the form is valid, will proceed with submission.
     if $('#band-general-info-form').data('formValidation').isValid() && $('#band-social-media-form').data('formValidation').isValid() && $('#band-contact-info-form').data('formValidation').isValid() && $('#band-audio-sample-form').data('formValidation').isValid()
       db.createBand()
-  $('#create-event-btn').on 'click', ->
-    new Dashboard().createEvent()
 
   $('#create-party').on 'click', ->
     db = new Dashboard()
@@ -606,13 +617,3 @@ $('.dashboard.index').ready ->
     # If the form is valid, will proceed with submission.
     if $('#party-general-info-form').data('formValidation').isValid() && $('#party-social-media-form').data('formValidation').isValid() && $('#party-contact-info-form').data('formValidation').isValid()
       db.createParty()
-
-  $('#edit-party').on 'click', ->
-    console.log 'clicked'
-    db = new Dashboard()
-    $('#party-general-info-form-edit').formValidation('validate')
-    $('#party-social-media-form-edit').formValidation('validate')
-    $('#party-contact-info-form-edit').formValidation('validate')
-    # If the form is valid, will proceed with submission
-    if $('#party-general-info-form-edit').data('formValidation').isValid() && $('#party-social-media-form-edit').data('formValidation').isValid() && $('#party-contact-info-form-edit').data('formValidation').isValid()
-      db.updateParty()

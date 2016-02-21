@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
   end
 
   def js_env(opts = {})
-    @js_env ||= { current_user: current_user.try(:id), current_entity: current_entity.try(:id) }
+    @js_env ||= { current_user: current_user.try(:id), current_entity: current_entity.try(:id), entity_type:  current_entity.try(:type)}
     @js_env.merge!(opts) unless opts.empty?
     @js_env
   end

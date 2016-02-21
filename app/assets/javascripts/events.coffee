@@ -6,7 +6,8 @@ class Event
   constructor: ->
     @user = ENV.current_user
     @entity = ENV.current_entity
-    @event_id = window.location.pathname.match(/\/events\/(\d+)/)[1]
+    if $('.events.show')[0] != undefined
+      @event_id = window.location.pathname.match(/\/events\/(\d+)/)[1]
 
   showMap: (lat, long) =>
     hash = {
@@ -16,6 +17,25 @@ class Event
       "longitude": long
       }
     gmap_show hash
+
+  createEvent: =>
+    $.ajax '/api/v1/events',
+    type: 'post'
+    dataType: 'json'
+    data:
+      party: @entity
+      event:
+        title: $('#create-event-title').val()
+        description: $('#create-event-description').val()
+        recurrence_pattern: "One Time Event"
+        price: $('#create-event-price').val()
+        start_time: $('#create-event-start').val()
+        end_time: $('#create-event-end').val()
+        address: $('#create-event-address').val()
+        state: "No Invitations"
+        is_public: $('#optionsRadios1').prop("checked")
+    success: (data) =>
+      window.location = "/events/#{data.id}"
 
   removeFromFavorites: (favorite) =>
     bootbox.confirm "Do you want to remove this band From your Favorites list?", (result) ->
@@ -37,6 +57,7 @@ class Event
       $('#add-band-to-event').hide()
 
   updateEvent: () =>
+    console.log 'got here'
     $.ajax "/api/v1/events/#{@event_id}",
       type: 'put'
       dataType: 'json'
@@ -92,7 +113,8 @@ class Event
       data:
         bands: bands
       success: (data) =>
-        bootbox.alert("Bands Invited", null)
+        bootbox.alert("Bands Invited", ->
+          $('#bands-to-invite').children().remove())
 
 updateDate = () ->
   start = $('#edit-event-st').val()
@@ -146,8 +168,22 @@ autocompletePartyParams = ->
           null
   }
 
+setBackground = (index) ->
+  @IMAGES_URLS = []
+  $.each $('#image-urls img'), (i) ->
+    IMAGES_URLS.push $(this).attr('src')
+  $('.container').css('background-image', 'url("' + @IMAGES_URLS[index] + '")')
+
+
 $('.events.show').ready ->
+  #TODO make this background white
+
+$('.events.new').ready ->
   setBackground(6)
+  $('#create-event-start').datetimepicker()
+  $('#create-event-end').datetimepicker()
+  $('#create-event-btn').on 'click', ->
+    new Event().createEvent()
 
 $('.events.show').ready ->
   $('#edit-event-st').datetimepicker()
@@ -165,3 +201,8 @@ $('.events.show').ready ->
     new Event().removeFromFavorites($(this))
   new Event().showHideAddToEventButton()
   new Event().showMap($('#event-latitude').val(), $('#event-longitude').val())
+  $('#edit-event-st').triggerHandler( "focus" )
+  $('#edit-event-ed').triggerHandler( "focus" )
+  $('#edit-event-st').focusout()
+  $('#edit-event-ed').focusout()
+  $('#edit-event-title').focus()

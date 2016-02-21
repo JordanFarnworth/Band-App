@@ -11,51 +11,59 @@
 
 <br>
 
-<div class="tab-content">
-  <div id="simple-search-div" role="tabpanel" class="tab-pane row text-center">
-    <div id="simple-search">
-      <h1 style="color: white;">Search for a band by name</h1>
-      <br>
-      <form name="search">
-        <label class="search-box">
-          <input type="text" id="band-simple-search-bar"/>
-          <span></span>
-        </label>
-      </form>
+<div class="row">
+  <div class="tab-content">
+    <div id="simple-search-div" role="tabpanel" class="tab-pane row text-center active">
+      <div id="simple-search">
+        <h1 style="color: white;">Search for a Band by name</h1>
+        <br>
+        <form name="search">
+          <label class="search-box">
+            <input type="text" id="band-simple-search-bar"/>
+            <span></span>
+          </label>
+        </form>
+      </div>
     </div>
-    <br>
-    <div class="row ui-front" id="band-search-results">
-      <h5>Should append here</h5>
-    </div>
-  </div>
 
-  <div id="advanced-search-div" role="tabpanel" class="tab-pane row text-center">
-    <div class="well" id="advanced-search-well">
-      <h2>Advanced Band Search</h2>
+    <div id="advanced-search-div" role="tabpanel" class="tab-pane row text-center">
+      <div id="advanced-search-well">
+        <div class="text-center">
+          <h1 style="color: white;">Advanced Band Search</h1>
+          <div id="advanced-search-btn">
+            <button class="btn btn-lg btn-default" id="advanced-band-search-btn" type="button" name="button">Search!</button>
+          </div>
+        </div>
+        <br>
+        <form id="party-search-form">
+          <div class="form-group col-md-8">
+            <label for="band-name-asearch" style="color: white;">Band Name</label>
+            <input type="text" class="form-control" id="band-name-asearch">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="miles-away" style="color: white;">Within how many miles?</label>
+            <select class="form-control" id="miles-away">
+              <% (1..100).each do |i| %>
+                 <option><%=i%></option>
+              <% end %>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="band-genre-asearch" style="color: white;">Genre</label>
+            <input type="text" class="form-control" id="band-genre-asearch" >
+          </div>
+          <div class="form-group col-md-8">
+            <label for="band-email-asearch" style="color: white;">Email</label>
+            <input type="text" class="form-control" id="band-email-asearch" >
+          </div>
+          <br>
+        </form>
+      </div>
       <br>
-      <form class="form-inline" id="bands-search-form">
-        <div class="form-group">
-          <label for="exampleInputName2">Band Name</label>
-          <input type="text" class="form-control" id="exampleInputName2">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputName2">Band Genre</label>
-          <input type="text" class="form-control" id="exampleInputName2" >
-        </div>
-        <br>
-        <div class="form-group btm-group">
-          <label for="exampleInputName2">Miles From You</label>
-          <input type="text" class="form-control" id="exampleInputName2" >
-        </div>
-        <div class="form-group btm-group">
-          <label for="exampleInputName2">Email</label>
-          <input type="text" class="form-control" id="exampleInputName2" >
-        </div>
-        <br>
-        <div id="advanced-search-btn">
-          <button class="btn btn-lg btn-info" id="search-btn" type="button" name="button">Search!</button>
-        </div>
-      </form>
     </div>
   </div>
+</div>
+
+<div class="results">
+
 </div>

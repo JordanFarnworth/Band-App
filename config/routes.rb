@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get 'about' => 'dashboard#about'
   post 'login' => 'login#verify'
   delete 'login' => 'login#logout'
+  get 'logout' => 'login#logout'
   get 'register' => 'login#register'
   post 'register' => 'login#verify_register'
   get 'register/finish' => 'login#finish_registration'
@@ -76,9 +77,9 @@ Rails.application.routes.draw do
           post 'accept_invite'
           post 'decline_invite'
           put 'update'
+          post 'deny_applications'
         end
         collection do
-          post 'deny_applications'
           post 'create_accepted_event'
         end
       end
@@ -95,6 +96,7 @@ Rails.application.routes.draw do
       resources :bands, except: [:new, :edit] do
         collection do
           get 'search'
+          post 'advanced_search'
         end
       end
       resources :messages, only: [:create]
@@ -113,7 +115,6 @@ Rails.application.routes.draw do
         collection do
           get 'search'
           post 'advanced_search'
-          get 'search_finished'
         end
       end
     end

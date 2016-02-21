@@ -194,8 +194,8 @@ advanceSearchParties = () ->
 $('.parties.show').ready ->
   @party = window.location.pathname.match(/\/parties\/(\d+)/)[1]
   new Party().getPartyInfo()
-  $('#application-start').datepicker()
-  $('#application-end').datepicker()
+  $('#application-start').datetimepicker()
+  $('#application-end').datetimepicker()
   $('#create-normal-application').on 'click', ->
     new Party().createApplication()
   new Party().checkFavorite(@party, ENV.current_entity)

@@ -29,7 +29,7 @@ class Event < ActiveRecord::Base
         ej.status = 'denied'
       end
     end
-    self.delay.set_state
+    self.state = 'accepted' && self.save
   end
 
   def public?

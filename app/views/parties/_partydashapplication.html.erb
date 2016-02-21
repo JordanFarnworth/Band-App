@@ -7,7 +7,7 @@
       <div class="list-group">
         <% if current_entity.applications.pending.any? %>
           <% current_entity.applications.pending.each do |application| %>
-            <div class="list-group-item">
+            <div class="list-group-item col-md-6">
               <h4 class="list-group-item-heading">Application from <%= link_to application.band.name, application.band %>
                 <span class="pull-right">
                   <button id="<%= application.id %>" name="accept-gen-app" data-name="<%= application.band.name %>" data-id="<%= application.band.id %>" data-s-date="<%= application.start_time %>"
@@ -15,7 +15,7 @@
                   <button id="<%= application.id %>" name="decline-gen-app" type="button" class="btn btn-danger">Deny</button>
                 </span>
               </h4>
-              <p class="list-group-item-text"><%= application.status %></p>
+              <p class="list-group-item-text">Status: <%= application.status %></p>
             </div>
           <% end %>
         <% else %>
@@ -36,10 +36,10 @@
         <% if current_entity.event_applications != [] %>
           <% current_entity.events.each do |event| %>
             <% event.applications.each do |application| %>
-              <div class="list-group-item">
+              <div class="list-group-item col-md-6">
                 <h4 class="list-group-item-heading">Application for <%= link_to application.event.title, application.event %>
                   <span class="pull-right">
-                    <button name="accept-event-app" id="<%= application.id %>" type="button" class="btn btn-success">Accept</button>
+                    <button name="accept-event-app" data-event-id="<%= application.event.id %>" id="<%= application.id %>" type="button" class="btn btn-success">Accept</button>
                     <button name="deny-event-app" id="<%= application.id %>" type="button" class="btn btn-danger">Deny</button>
                   </span>
                 </h4>

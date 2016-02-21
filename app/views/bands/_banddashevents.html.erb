@@ -1,53 +1,53 @@
-<div class="col-md-12">
-  <div class="panel panel-default panel-dash">
-    <div class="panel-heading text-center">
-      <h3 class="panel-title">Upcoming Events</h3>
-    </div>
-    <div class="panel-body">
-      <div class="row col-md-offset-1">
-      <% if current_entity.accepted_events.any? %>
-        <% current_entity.accepted_events.each do |event| %>
-          <div class="list-group-item col-md-5 two-panel-page">
-            <h4 class="list-group-item-heading">Event: <%= event.title %></h4>
-            <p class="list-group-item-text"><%=  event.start_time == nil ? 'Will by set by the company/party.' : event.start_time.to_formatted_s(:long_ordinal) %></p>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default panel-dash">
+      <div class="panel-heading text-center">
+        <h3 class="panel-title">Upcoming Events</h3>
+      </div>
+      <div class="panel-body">
+        <div class="row col-md-offset-1">
+        <% if current_entity.accepted_events.any? %>
+          <% current_entity.accepted_events.each do |event| %>
+            <div class="list-group-item col-md-5 two-panel-page">
+              <h4 class="list-group-item-heading">Event Title: <%= link_to event.title, event %></h4>
+              <p class="list-group-item-text"><%=  event.start_time == nil ? 'Will by set by the company/party.' : event.start_time.to_formatted_s(:long_ordinal) %></p>
+            </div>
+          <% end %>
+        <% else %>
+        </div>
+          <div class="list-group-item col-md-6 col-md-offset-3">
+            <h3>No upcoming events, yet.</h3>
           </div>
         <% end %>
-      <% else %>
       </div>
-        <div class="list-group-item col-md-6 col-md-offset-3">
-          <h3>No upcoming events, yet.</h3>
-        </div>
-      <% end %>
     </div>
   </div>
-</div>
 
-<div class="col-md-12">
-  <div class="panel panel-default panel-dash">
-    <div class="panel-heading text-center">
-      <h3 class="panel-title">Event Invitations</h3>
-    </div>
-    <div class="panel-body">
-      <% if current_entity.invitations.any? %>
-        <% current_entity.invitations.each do |ej| %>
-          <div class="row">
-            <div class="list-group-item col-md-5 two-panel-page">
+  <div class="col-md-12">
+    <div class="panel panel-default panel-dash">
+      <div class="panel-heading text-center">
+        <h3 class="panel-title">Event Invitations</h3>
+      </div>
+      <div class="panel-body">
+        <% if current_entity.invitations.any? %>
+          <% current_entity.invitations.each do |ej| %>
+            <div class="list-group-item col-md-6 two-panel-page">
               <h4 class="list-group-item-heading">
-                <%= ej.event.title %>
+                Event Title: <%= link_to ej.event.title, ej.event %>
                 <span class="pull-right">
                   <button id="<%= ej.event.id %>" name="accept-event" type="button" class="btn btn-success">Accept</button>
                   <button id="<%= ej.event.id %>" name="decline-event" type="button" class="btn btn-danger">Deny</button>
                 </span>
               </h4>
-              <p class="list-group-item-text"><%= ej.event.start_time.to_formatted_s(:long_ordinal) %></p>
+              <p class="list-group-item-text"><b>Event Start Time:</b> <%= ej.event.start_time.to_formatted_s(:long_ordinal) %></p>
             </div>
+          <% end %>
+        <% else %>
+          <div class="list-group-item col-md-6 col-md-offset-3">
+            <h3>No Invitations, yet.</h3>
           </div>
         <% end %>
-      <% else %>
-        <div class="list-group-item col-md-6 col-md-offset-3">
-          <h3>No Invitations, yet.</h3>
-        </div>
-      <% end %>
+      </div>
     </div>
   </div>
 </div>

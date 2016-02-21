@@ -55,7 +55,7 @@
                     </span>
                     <% end %>
                   </h4>
-                  <p class="list-group-item-text"><%= e.created_at %></p>
+                  <p class="list-group-item-text"><%= e.created_at.to_formatted_s(:long_ordinal) %></p>
                 </div>
               <% end %>
             <% else %>

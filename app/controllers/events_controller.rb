@@ -3,7 +3,7 @@ class EventsController < ApplicationController
 
   #probably a lot in this controller could be better
 
-  before_action :find_event, only: [:show, :edit, :update, :destroy, :invite]
+  before_action :find_event, only: [:show, :edit, :update, :destroy, :invite, :deny_applications]
   before_action :find_entity, only: :events
 
 
@@ -12,10 +12,14 @@ class EventsController < ApplicationController
   end
 
   def my_events
-
+    @events = current_entity.active_and_owner_events
   end
 
   def search
+
+  end
+
+  def new
 
   end
 
@@ -36,9 +40,7 @@ class EventsController < ApplicationController
   end
 
   def deny_applications
-    @ej = EventJoiner.find params[:id]
-    event = ej.event
-    event.delay.deny_applications params[:id]
+    @event.delay.deny_applications params[:ej]
     render json: { success: "Applications Denied" }, status: :ok
   end
 

@@ -6,9 +6,9 @@
     <div class="panel-body">
       <% if current_entity.favorites.party.any? %>
         <% current_entity.favorites.party.each do |favorite| %>
-          <div class="list-group-item col-md-3">
+          <div class="list-group-item col-md-3" style="margin-left:5px; margin-right:5px;">
             <h4 class="list-group-item-heading"><%= link_to favorite.band.name, favorite.band %></h4>
-            <p class="list-group-item-text"><%=  favorite.created_at %></p>
+            <p class="list-group-item-text">Favorited on: <%=  favorite.created_at.to_formatted_s(:short) %></p>
           </div>
         <% end %>
       <% else %>

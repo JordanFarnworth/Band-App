@@ -26,7 +26,7 @@
         <%= image_tag("crowd-dash.jpg").to_s %>
         <%= image_tag("crowd-main.jpg").to_s %>
         <%= image_tag("coffee.jpg").to_s %>
-        <%= image_tag("events.jpg").to_s %>
+        <%= image_tag("fireworks.jpg").to_s %>
         <%= image_tag("messages.jpg").to_s %>
         <%= image_tag("search.jpg").to_s %>
         <%= image_tag("stars.jpg").to_s %>
@@ -73,16 +73,17 @@
         </nav>
       <% else %>
         <nav class="outer-nav right vertical" id="effect-moveleft" hidden="true">
-          <a href="#dashboard-party-applications" data-toggle="tab" role="tab"><i class="fa fa-check-circle-o"></i>  Applications</a>
-          <a href="#dashboard-party-events" role="tab" data-toggle="tab"><i class="fa fa-calendar-check-o"></i>  Events</a>
-          <a href="#dashboard-party-favorites" role="tab" data-toggle="tab"><i class="fa fa-star"></i> Favorite Bands</a>
-          <a href="#dashboard-edit-party" role="tab" data-toggle="tab"><i class="fa fa-building"></i>  Edit Company</a>
-          <a href="#dashboard-edit-user" role="tab" data-toggle="tab"><i class="fa fa-user"></i>  Edit User</a>
+          <a href="/dashboard/applications"><i class="fa fa-check-circle-o"></i>  Applications</a>
+          <a href="/dashboard/events"><i class="fa fa-calendar-check-o"></i>  Events</a>
+          <a href="/dashboard/favorites"><i class="fa fa-star"></i> Favorites</a>
+          <a href="/dashboard/edit_entity"><i class="fa fa-building"></i>  Edit Company</a>
+          <a href="/dashboard/self"><i class="fa fa-user"></i>  Edit User</a>
         </nav>
 
         <nav class="outer-nav top horizontal" id="effect-laydown" hidden="true">
-          <a href="#dashboard-new-event" data-toggle="tab" role="tab"><i class="fa fa-search"></i></i>  Create Event</a>
-          <a href="#dashboard-party-events" data-toggle="tab" role="tab"><i class="fa fa-list-alt"></i>  List My Events</a>
+          <a href="/events/search"><i class="fa fa-search"></i>  Find Events</a>
+          <a href="/events/my_events"><i class="fa fa-list-alt"></i>  My Events</a>
+          <a href="/events/new"><i class="fa fa-plus"></i>  New Event</a>
         </nav>
       <% end %>
     <% end %>
@@ -554,7 +555,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" id="accept-event-btn" class="btn btn-primary">Save changes</button>
+        <button type="button" id="accept-event-btn" class="btn btn-primary">Create Event</button>
       </div>
     </div>
   </div>

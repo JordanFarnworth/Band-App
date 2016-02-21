@@ -1,7 +1,11 @@
 class ApplicationsController < ApplicationController
 
   def create
-    @application = Application.new application_params
+    ap = application_params
+    ap[:start_time] = DateTime.strptime ap[:start_time], '%m/%d/%Y %I:%M %p'
+    ap[:end_time] = DateTime.strptime ap[:end_time], '%m/%d/%Y %I:%M %p'
+    debugger
+    @application = Application.new ap
     band = params["application"]["band_id"].to_i
     party = params["application"]["party_id"].to_i
     respond_to do |format|

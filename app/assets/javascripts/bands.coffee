@@ -69,6 +69,63 @@ class Band
     temp = $(template(data))
     $("#" + elid).html(temp)
 
+advanceSearchBands = () ->
+  name = $('#band-name-asearch').val()
+  genre = $('#band-genre-asearch').val()
+  email = $('#band-email-asearch').val()
+  miles = $('#miles-away').val()
+  $('#advanced-search-well').hide()
+  $('#advanced-search-div').append(
+    "<div id='searching-icon' class=\"text-center\">
+      <h1 style='color: white;'>Searching<h1>
+      <i style='color: white;' class=\"fa fa-refresh fa-spin\"></i>
+    </div>
+    "
+  )
+  $.ajax "/api/v1/bands/advanced_search",
+    type: "post"
+    dataType: "json"
+    data:
+      band:
+        search_params:
+          name: name
+          genre: genre
+          miles: miles
+          email: email
+    success: (data) ->
+      $('#searching-icon').remove()
+      if data.results == []
+        $('.results').append(
+          "
+            <div class='text-center'>
+              <h1 style='color: white;'>No Results</h1>
+            </div>
+          "
+        )
+      else
+        $.each JSON.parse(data.results), (i) ->
+          $('.results').append(
+            "
+              <div class='row text-center'>
+                <a href='/bands/#{this.id}' style='color: white;'><h1>#{this.name}</h1></a>
+              </div>
+            "
+          )
+      $('.results').append(
+        "
+        <div class='row text-center'>
+          <button id='search-again' class='btn btn-default'>Search Again</button>
+        </div>
+        "
+      )
+      $('#search-again').on 'click', ->
+        $('.results').empty()
+        $('#advanced-search-well').show()
+
+setListeners = () ->
+    $('#advanced-band-search-btn').on 'click', ->
+      advanceSearchBands()
+
 autocompleteBandParams = ->
   {
     appendTo: '#band-search-results'
@@ -105,5 +162,6 @@ setBackground = (index) ->
 
 $('.bands.search').ready ->
   setBackground(6)
+  setListeners()
   $('#bands-search-form label').css({'font-size': '24px', 'color': '#2ECBFF'})
   $('#band-simple-search-bar').autocomplete autocompleteBandParams()
