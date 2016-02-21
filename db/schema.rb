@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151121230507) do
+ActiveRecord::Schema.define(version: 20151121221305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,16 +98,12 @@ ActiveRecord::Schema.define(version: 20151121230507) do
     t.text     "social_media"
     t.hstore   "data"
     t.datetime "deleted_at"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.string   "address"
     t.float    "longitude"
     t.float    "latitude"
     t.integer  "user_id"
-    t.string   "profile_picture_file_name"
-    t.string   "profile_picture_content_type"
-    t.integer  "profile_picture_file_size"
-    t.datetime "profile_picture_updated_at"
   end
 
   add_index "entities", ["data"], name: "index_entities_on_data", using: :gin
@@ -131,18 +127,14 @@ ActiveRecord::Schema.define(version: 20151121230507) do
     t.datetime "recurrence_ends_at"
     t.string   "state"
     t.integer  "price"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.string   "title"
     t.text     "description"
     t.boolean  "is_public"
     t.string   "address"
     t.string   "longitude"
     t.string   "latitude"
-    t.string   "profile_picture_file_name"
-    t.string   "profile_picture_content_type"
-    t.integer  "profile_picture_file_size"
-    t.datetime "profile_picture_updated_at"
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -201,7 +193,6 @@ ActiveRecord::Schema.define(version: 20151121230507) do
     t.integer  "review_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "state"
   end
 
   add_index "review_joiners", ["entity_id"], name: "index_review_joiners_on_entity_id", using: :btree
@@ -210,9 +201,12 @@ ActiveRecord::Schema.define(version: 20151121230507) do
   create_table "reviews", force: :cascade do |t|
     t.text     "description"
     t.integer  "rating"
+    t.integer  "entity_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  add_index "reviews", ["entity_id"], name: "index_reviews_on_entity_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "username"
@@ -246,4 +240,5 @@ ActiveRecord::Schema.define(version: 20151121230507) do
   add_foreign_key "notifications", "entities"
   add_foreign_key "review_joiners", "entities"
   add_foreign_key "review_joiners", "reviews"
+  add_foreign_key "reviews", "entities"
 end

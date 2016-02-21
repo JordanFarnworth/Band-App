@@ -7,7 +7,7 @@ class LoginController < ApplicationController
     if @user
       render json: { success: "logged in" }, status: :ok
     else
-      render json: { error: "wrong username or password" }, status: :bad_request
+      render json: { error: "wrong username or password" }, status: 401
     end
   end
 

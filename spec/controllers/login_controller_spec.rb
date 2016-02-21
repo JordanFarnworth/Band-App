@@ -13,7 +13,7 @@ RSpec.describe LoginController, :type => :controller do
 
     describe 'successful login' do
       let :params do
-        { username: user.username, password: 'abcd', format: :js }
+        {user: { username: user.username, password: 'abcd' }, format: :js }
       end
 
       it 'should assign a new login session as a cookie' do
@@ -24,10 +24,10 @@ RSpec.describe LoginController, :type => :controller do
 
     describe 'unsuccessful login' do
       let(:params) do
-        { username: user.username, password: '1234', format: :js }
+        {user: { username: user.username, password: '1234' }, format: :js }
       end
 
-      it 'should render an unauthorized status' do
+      it 'should render an unauthorized error for ajax' do
         post :verify, params
         expect(response.status).to eql 401
       end
@@ -38,7 +38,7 @@ RSpec.describe LoginController, :type => :controller do
     let(:user) { create :user, password: 'abcd' }
 
     let(:params) do
-      { username: user.username, password: 'abcd', format: :js }
+      {user: { username: user.username, password: 'abcd' }, format: :js }
     end
 
     it 'should expire the login session' do
@@ -60,27 +60,6 @@ RSpec.describe LoginController, :type => :controller do
     end
   end
 
-  context 'registration' do
-    it 'renders a registration page' do
-      get :register
-      expect(response).to render_template 'register'
-    end
-
-    it 'redirects to a landing page after successful initiation' do
-      post :verify_register, user: attributes_for(:user)
-      expect(response).to redirect_to register_finish_path
-    end
-
-    it 'renders register if the user contains errors' do
-      post :verify_register, user: { display_name: '' }
-      expect(response).to render_template 'register'
-    end
-
-    it 'renders the register template upon failure' do
-      user = create :user
-      post :register, user: attributes_for(:user).merge(username: user.username)
-      expect(response).to render_template 'register'
-    end
 
     it 'confirms a user\'s registration' do
       user = create :user, state: :pending_approval
@@ -89,4 +68,3 @@ RSpec.describe LoginController, :type => :controller do
       expect(user.reload.state).to eql 'active'
     end
   end
-end
