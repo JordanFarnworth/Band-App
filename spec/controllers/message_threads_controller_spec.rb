@@ -17,9 +17,9 @@ RSpec.describe MessageThreadsController, type: :controller do
     it 'returns message threads' do
       get :index, entity_id: sender.id, include: ['latest_message', 'entities']
       json = JSON.parse(response.body)
-      expect(json['results'].map { |r| r['id'] }).to eql [message_thread.id]
-      expect(json['results'].first['entities'].map { |e| e['id'] }).to eql [sender.id, entity1.id]
-      expect(json['results'].first['latest_message']['id']).to eql message.id
+      expect(json.map { |r| r['id'] }).to eql [message_thread.id]
+      expect(json.first['entities'].map { |e| e['id'] }).to eql [sender.id, entity1.id]
+      expect(json.first['latest_message']['id']).to eql message.id
     end
   end
 
