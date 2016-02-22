@@ -8,8 +8,4 @@
   <span id='nav-name'><a href="#"><%= @current_user.display_name %></a></span>
   <button class="pull-right" id="showMenu1" name="smt"><i class="fa fa-tachometer"></i>  Dashboard Menu  <i class="fa fa-arrow-right"></i></button>
 </div>
-<% else %>
-  <% if logged_in? %>
-    <h3>Create an event!</h3>
-  <% end %>
 <% end %>

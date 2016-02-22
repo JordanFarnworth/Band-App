@@ -6,22 +6,20 @@
 
   <div class="row">
     <div class="col-md-6 text-center col-md-offset-1" id="company-choice">
-      <%= video_player src: { mp4: '/assets/business_video.mp4' }, controls: true %>
       <label class="radio">
         <h2><i class="fa fa-building"></i>Company<i class="fa fa-building-o"></i></h2>
         <input type="radio" name="inlineRadioOptions" id="party-option" value="option1">
       </label>
     </div>
     <div class="col-md-6 text-center col-md-offset-1" id="band-choice">
-      <%= video_player src: { mp4: '/assets/party_video.mp4' }, controls: true %>
       <label class="radio">
         <h2><i class="fa fa-music"></i>Band<i class="fa fa-headphones"></i></h2>
         <input type="radio" name="inlineRadioOptions" id="band-option" value="option2">
       </label>
     </div>
   </div>
+</div>
 
-  <div class="row text-center">
-    <button type="button" name="button" id="band-or-party" class="btn btn-primary">Continue</button>
-  </div>
+<div class="row text-center">
+  <button type="button" name="button" id="band-or-party" class="btn btn-lg btn-primary">Continue</button>
 </div>
