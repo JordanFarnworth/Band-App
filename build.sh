@@ -75,23 +75,23 @@ echo "Building Base Image"
 docker build -t band_app .
 
 echo "Starting Postgresql"
-docker run -d --name postgres postgres
+docker run -d --name postgres-band-app postgres
 
 sleep 5
 
 echo "create/migrate db"
-docker run --name band_app_temp --link postgres:db band_app bundle exec rake db:create
+docker run --name band_app_temp --link postgres-band-app:db band_app bundle exec rake db:create
 docker commit band_app_temp band_app
 docker rm band_app_temp
 
 echo "migrate db"
-docker run --name band_app_temp --link postgres:db band_app bundle exec rake db:migrate
+docker run --name band_app_temp --link postgres-band-app:db band_app bundle exec rake db:migrate
 docker commit band_app_temp band_app
 docker rm band_app_temp
 
 echo "start band_app"
-docker run --rm --link postgres:db band_app bundle exec rspec spec
+docker run --rm --link postgres-band-app:db band_app bundle exec rspec spec
 
 echo "shutdown postgres and delete"
-docker stop postgres
-docker rm postgres
+docker stop postgres-band-app
+docker rm -f postgres-band-app
