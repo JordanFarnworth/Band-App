@@ -1,10 +1,19 @@
 class DashboardController < ApplicationController
   before_action :check_auth
 
-  def index
+  def calendar
   end
 
-  def calendar
+  def index
+    if @current_entity
+      return
+    elsif @current_user.user_data[:user_entity_type] === 'none'
+      render '_pickentity'
+    elsif @current_user.user_data[:user_entity_type] === 'band'
+      render '_banddashboard'
+    elsif @current_user.user_data[:user_entity_type] === 'party'
+      render '_partydashboard'
+    end
   end
 
   def check_auth

@@ -1,22 +1,18 @@
-<% if @current_user.user_data[:user_entity_type] === 'none' %>
-  <%= render 'pickentity' %>
-<% else %>
-  <div class="row" id="dashboard-home">
-    <br>
-    <br>
-    <br>
-    <h1>Welcome to Your Dashboard</h1>
-    <br>
-    <h3>To navigate through your dashboard, use the far right nav button</h3>
-    <h3>To look through your events, use the top middle nav button</h3>
-    <h3>To see the main menu, use the top left nav button</h3>
-    <br>
-    <h4>Your <a href="/calendar">Calendar</a> can be found in the Main Menu</h4>
-    <h4>As well as your <a href="/messages">Messages</a></h4>
-    <br>
-    <h4>As always, if you need help or have questions, <a href="#">just ask.</a></h4>
-  </div>
-  <div class="row">
-    <%= image_tag('logofrd.png', size: "400x300", class: "pull-right") %>
-  </div>
-<% end %>
+<div class="row" id="dashboard-home">
+  <br>
+  <br>
+  <br>
+  <h1>Welcome to Your Dashboard</h1>
+  <br>
+  <h3>To navigate through your dashboard, use the far right nav button</h3>
+  <h3>To look through your events, use the top middle nav button</h3>
+  <h3>To see the main menu, use the top left nav button</h3>
+  <br>
+  <h4>Your <a href="/calendar">Calendar</a> can be found in the Main Menu</h4>
+  <h4>As well as your <a href="/messages">Messages</a></h4>
+  <br>
+  <h4>As always, if you need help or have questions, <a href="#">just ask.</a></h4>
+</div>
+<div class="row">
+  <%= image_tag('logofrd.png', size: "400x300", class: "pull-right") %>
+</div>
