@@ -201,8 +201,3 @@ $('.events.show').ready ->
     new Event().removeFromFavorites($(this))
   new Event().showHideAddToEventButton()
   new Event().showMap($('#event-latitude').val(), $('#event-longitude').val())
-  $('#edit-event-st').triggerHandler( "focus" )
-  $('#edit-event-ed').triggerHandler( "focus" )
-  $('#edit-event-st').focusout()
-  $('#edit-event-ed').focusout()
-  $('#edit-event-title').focus()

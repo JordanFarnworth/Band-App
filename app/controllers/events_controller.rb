@@ -139,13 +139,25 @@ class EventsController < ApplicationController
     end
   end
 
+  def format_event_date date
+   date = date.split(' ')
+   date.pop
+   if date.last == 'P2'
+     date << 'PM'
+   elsif date.last == 'PM2'
+     date << 'AM'
+   end
+   date.join(' ')
+ end
+
   def update
     ep = event_params
-    start_time = pop_last_word event_params[:start_time]
-    end_time = pop_last_word event_params[:end_time]
-    ep[:start_time] = DateTime.strptime start_time, '%m/%d/%Y %I:%M'
-    ep[:end_time] = DateTime.strptime end_time, '%m/%d/%Y %I:%M'
-    debugger
+    start_time = event_params[:start_time]
+    end_time = event_params[:end_time]
+    start_time = format_event_date start_time
+    end_time = format_event_date end_time
+    ep[:start_time] = DateTime.strptime start_time, '%m/%d/%Y %I:%M %p'
+    ep[:end_time] = DateTime.strptime end_time, '%m/%d/%Y %I:%M %p'
     if @event.update ep
       render json: event_json(@event), status: :ok
     else
