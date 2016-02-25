@@ -1,3 +1,5 @@
+config/initializers/braintree.rb
+
 # Created by https://www.gitignore.io
 
 ### Rails ###

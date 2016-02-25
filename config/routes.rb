@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     end
   end
   resources :message_threads, only: [:show]
+  resources :payments, only: [:new, :create, :show, :index]
 
   scope :api, defaults: { format: :json }, constraints: { format: :json } do
     scope :v1 do
@@ -56,6 +57,7 @@ Rails.application.routes.draw do
           put 'update'
         end
       end
+      resources :payments, only: [:index]
 
       resources :applications do
         member do
