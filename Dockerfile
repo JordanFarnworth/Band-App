@@ -1,4 +1,4 @@
-FROM ruby:2.2.0
+FROM ruby:2.3.0
 MAINTAINER jyf0000@gmail.com
 
 ENV LC_ALL C.UTF-8
