@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :user do
-    username { Forgery('internet').user_name }
+    sequence(:username) { |n| "#{Forgery('internet').user_name}-#{n}" }
     display_name { Forgery('name').full_name }
     email { Forgery('email').address }
     password { Forgery('basic').password }

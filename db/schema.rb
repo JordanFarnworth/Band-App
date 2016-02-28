@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151121221305) do
+ActiveRecord::Schema.define(version: 20160225024948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,12 +98,14 @@ ActiveRecord::Schema.define(version: 20151121221305) do
     t.text     "social_media"
     t.hstore   "data"
     t.datetime "deleted_at"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.string   "address"
     t.float    "longitude"
     t.float    "latitude"
     t.integer  "user_id"
+    t.string   "braintree_customer_id"
+    t.datetime "subscription_expires_at"
   end
 
   add_index "entities", ["data"], name: "index_entities_on_data", using: :gin
@@ -188,6 +190,20 @@ ActiveRecord::Schema.define(version: 20151121221305) do
 
   add_index "notifications", ["entity_id"], name: "index_notifications_on_entity_id", using: :btree
 
+  create_table "payments", force: :cascade do |t|
+    t.integer  "entity_id"
+    t.string   "uuid"
+    t.string   "gateway"
+    t.decimal  "amount",                   precision: 6, scale: 2
+    t.string   "state"
+    t.string   "braintree_transaction_id"
+    t.text     "parameters"
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+  end
+
+  add_index "payments", ["entity_id"], name: "index_payments_on_entity_id", using: :btree
+
   create_table "review_joiners", force: :cascade do |t|
     t.integer  "entity_id"
     t.integer  "review_id"
@@ -238,6 +254,7 @@ ActiveRecord::Schema.define(version: 20151121221305) do
   add_foreign_key "message_participants", "message_threads"
   add_foreign_key "messages", "message_threads"
   add_foreign_key "notifications", "entities"
+  add_foreign_key "payments", "entities"
   add_foreign_key "review_joiners", "entities"
   add_foreign_key "review_joiners", "reviews"
   add_foreign_key "reviews", "entities"

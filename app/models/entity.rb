@@ -14,18 +14,21 @@ class Entity < ActiveRecord::Base
   has_many :reviews, through: :review_joiners
   has_many :ads
   has_many :notifications
+  has_many :payments
   acts_as_paranoid
   geocoded_by :address
 
   validates :name, presence: true
   validates :description, presence: true
   validates :address, presence: true
+  validates :braintree_customer_id, uniqueness: true
   validate :validate_data
 
   serialize :social_media, Hash
   store_accessor :data
 
   after_initialize do
+    self.braintree_customer_id ||= SecureRandom.hex 8
     self.data ||= Hash.new
   end
 
@@ -93,5 +96,15 @@ class Entity < ActiveRecord::Base
 
   def validate_data
   # TODO
+  end
+
+  def email
+    data['email']
+  end
+
+  def update_subscription(duration)
+    self.subscription_expires_at = Time.now if subscription_expires_at.nil? || subscription_expires_at < Time.now
+    self.subscription_expires_at += duration
+    save!
   end
 end
